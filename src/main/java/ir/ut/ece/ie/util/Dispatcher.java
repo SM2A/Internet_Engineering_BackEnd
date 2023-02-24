@@ -9,6 +9,8 @@ import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.service.commodity.CommodityServiceImpl;
+import ir.ut.ece.ie.service.provider.ProviderServiceImpl;
+import ir.ut.ece.ie.service.user.UserServiceImpl;
 
 public class Dispatcher {
     private UserController userController;
@@ -19,8 +21,8 @@ public class Dispatcher {
     public Dispatcher() {
         GsonBuilder builder = new GsonBuilder();
         this.gson = builder.create();
-        this.userController = new UserController();
-        this.providerController = new ProviderController();
+        this.userController = new UserController(new UserServiceImpl());
+        this.providerController = new ProviderController(new ProviderServiceImpl());
         this.commodityController = new CommodityController(new CommodityServiceImpl());
     }
 

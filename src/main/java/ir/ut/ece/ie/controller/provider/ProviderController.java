@@ -7,8 +7,8 @@ import ir.ut.ece.ie.service.provider.ProviderServiceImpl;
 public class ProviderController {
     private ProviderService providerService;
 
-    public ProviderController() {
-        this.providerService = new ProviderServiceImpl();
+    public ProviderController(ProviderService service) {
+        this.providerService = service;
     }
 
     public Provider addProvider(Provider provider) {
