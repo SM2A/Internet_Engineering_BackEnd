@@ -1,6 +1,6 @@
 package ir.ut.ece.ie.service.commodity;
 
-import ir.ut.ece.ie.domain.models.Commodity;
+import ir.ut.ece.ie.domain.commodity.Commodity;
 
 import java.util.List;
 

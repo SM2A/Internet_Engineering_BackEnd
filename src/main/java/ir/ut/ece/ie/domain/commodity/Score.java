@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.domain.models;
+package ir.ut.ece.ie.domain.commodity;
 
 public class Score {
     private String username;

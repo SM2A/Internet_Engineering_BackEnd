@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.domain.models;
+package ir.ut.ece.ie.domain.provider;
 
 import java.time.LocalDate;
 
