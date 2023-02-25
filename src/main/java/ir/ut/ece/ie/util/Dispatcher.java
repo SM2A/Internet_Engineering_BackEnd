@@ -9,6 +9,12 @@ import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.exception.OnlineShopException;
+import ir.ut.ece.ie.repository.commodity.CommodityRepository;
+import ir.ut.ece.ie.repository.commodity.CommodityRepositoryImpl;
+import ir.ut.ece.ie.repository.provider.ProviderRepository;
+import ir.ut.ece.ie.repository.provider.ProviderRepositoryImpl;
+import ir.ut.ece.ie.repository.user.UserRepository;
+import ir.ut.ece.ie.repository.user.UserRepositoryImpl;
 import ir.ut.ece.ie.service.commodity.CommodityServiceImpl;
 import ir.ut.ece.ie.service.provider.ProviderServiceImpl;
 import ir.ut.ece.ie.service.user.UserServiceImpl;
@@ -22,9 +28,12 @@ public class Dispatcher {
     public Dispatcher() {
         GsonBuilder builder = new GsonBuilder();
         this.gson = builder.create();
-        this.userController = new UserController(new UserServiceImpl());
-        this.providerController = new ProviderController(new ProviderServiceImpl());
-        this.commodityController = new CommodityController(new CommodityServiceImpl());
+        UserRepository userRepository = new UserRepositoryImpl();
+        ProviderRepository providerRepository = new ProviderRepositoryImpl();
+        CommodityRepository commodityRepository = new CommodityRepositoryImpl();
+        this.userController = new UserController(new UserServiceImpl(userRepository));
+        this.providerController = new ProviderController(new ProviderServiceImpl(providerRepository));
+        this.commodityController = new CommodityController(new CommodityServiceImpl(commodityRepository, providerRepository));
     }
 
     public Object dispatch(String request) {
