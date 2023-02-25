@@ -4,6 +4,7 @@ import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.service.commodity.CommodityService;
 
+import java.util.List;
 import java.util.Optional;
 
 public class CommodityController {
@@ -20,5 +21,9 @@ public class CommodityController {
     public Commodity getCommodityById(Long id) {
         return Optional.ofNullable(commodityService.getCommodityById(id))
                 .orElseThrow(() -> new OnlineShopException("commodity not found"));
+    }
+
+    public List<Commodity> getCommodities() {
+        return commodityService.getCommodities();
     }
 }

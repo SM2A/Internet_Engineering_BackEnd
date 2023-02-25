@@ -8,4 +8,6 @@ public interface CommodityRepository {
     Commodity save(Commodity commodity);
 
     Optional<Commodity> findById(Long id);
+
+    Iterable<Commodity> findAll();
 }

@@ -19,4 +19,9 @@ public class CommodityRepositoryImpl implements CommodityRepository {
     public Optional<Commodity> findById(Long id) {
         return Optional.ofNullable(commodities.get(id));
     }
+
+    @Override
+    public Iterable<Commodity> findAll() {
+        return commodities.values().stream().toList();
+    }
 }

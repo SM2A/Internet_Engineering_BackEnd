@@ -29,7 +29,7 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public List<Commodity> getCommodities() {
-        return null;
+        return (List<Commodity>) commodityRepository.findAll();
     }
 
     @Override

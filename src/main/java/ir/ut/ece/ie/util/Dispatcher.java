@@ -40,11 +40,12 @@ public class Dispatcher {
     public Object dispatch(String request) {
         String[] parts = request.split(" ");
         String command = parts[0];
-        String data = parts[1];
+        String data = parts.length == 2 ? parts[1] : null;
         return switch (command) {
             case "addUser" -> userController.addUser(gson.fromJson(data, User.class));
             case "addProvider" -> providerController.addProvider(gson.fromJson(data, Provider.class));
             case "addCommodity" -> commodityController.addCommodity(gson.fromJson(data, Commodity.class));
+            case "getCommodities" -> commodityController.getCommodities();
             case "getCommodityById" ->
                     commodityController.getCommodityById(gson.fromJson(data, JsonObject.class).get("id").getAsLong());
             default -> throw new OnlineShopException("command not found");
