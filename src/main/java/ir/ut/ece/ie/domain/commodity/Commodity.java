@@ -1,7 +1,10 @@
 package ir.ut.ece.ie.domain.commodity;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class Commodity {
     private Long id;
     private String name;
