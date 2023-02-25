@@ -8,6 +8,7 @@ import ir.ut.ece.ie.controller.user.UserController;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.domain.user.User;
+import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.service.commodity.CommodityServiceImpl;
 import ir.ut.ece.ie.service.provider.ProviderServiceImpl;
 import ir.ut.ece.ie.service.user.UserServiceImpl;
@@ -26,7 +27,7 @@ public class Dispatcher {
         this.commodityController = new CommodityController(new CommodityServiceImpl());
     }
 
-    public Object dispatch(String request) throws Exception {
+    public Object dispatch(String request) {
         String[] parts = request.split(" ");
         String command = parts[0];
         String data = parts[1];
@@ -34,7 +35,7 @@ public class Dispatcher {
             case "addUser" -> userController.addUser(gson.fromJson(data, User.class));
             case "addProvider" -> providerController.addProvider(gson.fromJson(data, Provider.class));
             case "addCommodity" -> commodityController.addCommodity(gson.fromJson(data, Commodity.class));
-            default -> throw new Exception("command not found");
+            default -> throw new OnlineShopException("command not found");
         };
     }
 }
