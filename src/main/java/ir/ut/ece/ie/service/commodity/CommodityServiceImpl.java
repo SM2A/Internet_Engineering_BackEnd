@@ -8,9 +8,11 @@ import java.util.List;
 
 public class CommodityServiceImpl implements CommodityService {
     private CommodityRepository repository;
+
     public CommodityServiceImpl() {
         this.repository = new CommodityRepositoryImpl();
     }
+
     @Override
     public Commodity addCommodity(Commodity commodity) {
         return repository.save(commodity);
