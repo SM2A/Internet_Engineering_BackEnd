@@ -2,6 +2,7 @@ package ir.ut.ece.ie.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import ir.ut.ece.ie.controller.commodity.CommodityController;
 import ir.ut.ece.ie.controller.provider.ProviderController;
 import ir.ut.ece.ie.controller.user.UserController;
@@ -44,6 +45,8 @@ public class Dispatcher {
             case "addUser" -> userController.addUser(gson.fromJson(data, User.class));
             case "addProvider" -> providerController.addProvider(gson.fromJson(data, Provider.class));
             case "addCommodity" -> commodityController.addCommodity(gson.fromJson(data, Commodity.class));
+            case "getCommodityById" ->
+                    commodityController.getCommodityById(gson.fromJson(data, JsonObject.class).get("id").getAsLong());
             default -> throw new OnlineShopException("command not found");
         };
     }
