@@ -10,4 +10,6 @@ public interface CommodityRepository {
     Optional<Commodity> findById(Long id);
 
     Iterable<Commodity> findAll();
+
+    Iterable<Commodity> findAllByCategory(String category);
 }

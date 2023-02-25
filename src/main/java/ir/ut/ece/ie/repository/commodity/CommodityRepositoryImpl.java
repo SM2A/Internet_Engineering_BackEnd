@@ -24,4 +24,11 @@ public class CommodityRepositoryImpl implements CommodityRepository {
     public Iterable<Commodity> findAll() {
         return commodities.values().stream().toList();
     }
+
+    @Override
+    public Iterable<Commodity> findAllByCategory(String category) {
+        return commodities.values().stream()
+                .filter(commodity -> commodity.getCategories().contains(category))
+                .toList();
+    }
 }

@@ -34,7 +34,7 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public List<Commodity> getCommoditiesByCategory(String category) {
-        return null;
+        return (List<Commodity>) commodityRepository.findAllByCategory(category);
     }
 
     @Override

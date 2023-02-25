@@ -26,4 +26,8 @@ public class CommodityController {
     public List<Commodity> getCommodities() {
         return commodityService.getCommodities();
     }
+
+    public List<Commodity> getCommoditiesByCategory(String category) {
+        return commodityService.getCommoditiesByCategory(category);
+    }
 }

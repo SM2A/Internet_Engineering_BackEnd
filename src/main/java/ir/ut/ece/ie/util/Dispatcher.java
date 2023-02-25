@@ -46,8 +46,10 @@ public class Dispatcher {
             case "addProvider" -> providerController.addProvider(gson.fromJson(data, Provider.class));
             case "addCommodity" -> commodityController.addCommodity(gson.fromJson(data, Commodity.class));
             case "getCommodities" -> commodityController.getCommodities();
-            case "getCommodityById" ->
-                    commodityController.getCommodityById(gson.fromJson(data, JsonObject.class).get("id").getAsLong());
+            case "getCommodityById" -> commodityController
+                    .getCommodityById(gson.fromJson(data, JsonObject.class).get("id").getAsLong());
+            case "getCommoditiesByCategory" -> commodityController
+                    .getCommoditiesByCategory(gson.fromJson(data, JsonObject.class).get("category").getAsString());
             default -> throw new OnlineShopException("command not found");
         };
     }
