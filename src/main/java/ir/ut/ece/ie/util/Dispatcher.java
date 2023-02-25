@@ -8,6 +8,13 @@ import ir.ut.ece.ie.controller.user.UserController;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.domain.user.User;
+import ir.ut.ece.ie.exception.OnlineShopException;
+import ir.ut.ece.ie.repository.commodity.CommodityRepository;
+import ir.ut.ece.ie.repository.commodity.CommodityRepositoryImpl;
+import ir.ut.ece.ie.repository.provider.ProviderRepository;
+import ir.ut.ece.ie.repository.provider.ProviderRepositoryImpl;
+import ir.ut.ece.ie.repository.user.UserRepository;
+import ir.ut.ece.ie.repository.user.UserRepositoryImpl;
 import ir.ut.ece.ie.service.commodity.CommodityServiceImpl;
 import ir.ut.ece.ie.service.provider.ProviderServiceImpl;
 import ir.ut.ece.ie.service.user.UserServiceImpl;
@@ -21,12 +28,15 @@ public class Dispatcher {
     public Dispatcher() {
         GsonBuilder builder = new GsonBuilder();
         this.gson = builder.create();
-        this.userController = new UserController(new UserServiceImpl());
-        this.providerController = new ProviderController(new ProviderServiceImpl());
-        this.commodityController = new CommodityController(new CommodityServiceImpl());
+        UserRepository userRepository = new UserRepositoryImpl();
+        ProviderRepository providerRepository = new ProviderRepositoryImpl();
+        CommodityRepository commodityRepository = new CommodityRepositoryImpl();
+        this.userController = new UserController(new UserServiceImpl(userRepository));
+        this.providerController = new ProviderController(new ProviderServiceImpl(providerRepository));
+        this.commodityController = new CommodityController(new CommodityServiceImpl(commodityRepository, providerRepository));
     }
 
-    public Object dispatch(String request) throws Exception {
+    public Object dispatch(String request) {
         String[] parts = request.split(" ");
         String command = parts[0];
         String data = parts[1];
@@ -34,7 +44,7 @@ public class Dispatcher {
             case "addUser" -> userController.addUser(gson.fromJson(data, User.class));
             case "addProvider" -> providerController.addProvider(gson.fromJson(data, Provider.class));
             case "addCommodity" -> commodityController.addCommodity(gson.fromJson(data, Commodity.class));
-            default -> throw new Exception("command not found");
+            default -> throw new OnlineShopException("command not found");
         };
     }
 }

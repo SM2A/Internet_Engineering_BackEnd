@@ -2,15 +2,21 @@ package ir.ut.ece.ie.repository.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Commodity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class CommodityRepositoryImpl implements CommodityRepository {
-    private List<Commodity> commodities = new ArrayList<>();
+    private Map<Long, Commodity> commodities = new HashMap<>();
 
     @Override
     public Commodity save(Commodity commodity) {
-        commodities.add(commodity);
+        commodities.put(commodity.getId(), commodity);
         return commodity;
+    }
+
+    @Override
+    public Optional<Commodity> findById(Long id) {
+        return Optional.ofNullable(commodities.get(id));
     }
 }

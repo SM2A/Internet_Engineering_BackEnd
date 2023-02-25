@@ -1,24 +1,30 @@
 package ir.ut.ece.ie.service.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Commodity;
+import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
-import ir.ut.ece.ie.repository.commodity.CommodityRepositoryImpl;
+import ir.ut.ece.ie.repository.provider.ProviderRepository;
 
 import java.util.List;
 
 public class CommodityServiceImpl implements CommodityService {
-    private CommodityRepository repository;
-    public CommodityServiceImpl() {
-        this.repository = new CommodityRepositoryImpl();
+    private CommodityRepository commodityRepository;
+    private ProviderRepository providerRepository;
+
+    public CommodityServiceImpl(CommodityRepository commodityRepository, ProviderRepository providerRepository) {
+        this.commodityRepository = commodityRepository;
+        this.providerRepository = providerRepository;
     }
+
     @Override
     public Commodity addCommodity(Commodity commodity) {
-        return repository.save(commodity);
+        providerRepository.findById(commodity.getProviderId()).orElseThrow(() -> new OnlineShopException("provider not found"));
+        return commodityRepository.save(commodity);
     }
 
     @Override
     public Commodity getCommodityById(Long id) {
-        return null;
+        return commodityRepository.findById(id).orElse(null);
     }
 
     @Override
