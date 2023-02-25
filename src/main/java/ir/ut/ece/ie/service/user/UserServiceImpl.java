@@ -7,7 +7,7 @@ import ir.ut.ece.ie.repository.user.UserRepository;
 import java.util.regex.Pattern;
 
 public class UserServiceImpl implements UserService {
-    private UserRepository repository;
+    private final UserRepository repository;
 
     public UserServiceImpl(UserRepository repository) {
         this.repository = repository;

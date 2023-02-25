@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class CommodityRepositoryImpl implements CommodityRepository {
-    private Map<Long, Commodity> commodities = new HashMap<>();
+    private final Map<Long, Commodity> commodities = new HashMap<>();
 
     @Override
     public Commodity save(Commodity commodity) {

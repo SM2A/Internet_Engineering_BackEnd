@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CommodityController {
-    private CommodityService commodityService;
+    private final CommodityService commodityService;
 
     public CommodityController(CommodityService service) {
         this.commodityService = service;

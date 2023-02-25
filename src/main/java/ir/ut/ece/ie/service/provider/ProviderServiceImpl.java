@@ -4,7 +4,7 @@ import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 
 public class ProviderServiceImpl implements ProviderService {
-    private ProviderRepository repository;
+    private final ProviderRepository repository;
 
     public ProviderServiceImpl(ProviderRepository repository) {
         this.repository = repository;

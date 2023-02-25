@@ -11,10 +11,10 @@ import ir.ut.ece.ie.repository.user.UserRepository;
 import java.util.List;
 
 public class CommodityServiceImpl implements CommodityService {
-    private CommodityRepository commodityRepository;
-    private ScoreRepository scoreRepository;
-    private ProviderRepository providerRepository;
-    private UserRepository userRepository;
+    private final CommodityRepository commodityRepository;
+    private final ScoreRepository scoreRepository;
+    private final ProviderRepository providerRepository;
+    private final UserRepository userRepository;
 
     public CommodityServiceImpl(CommodityRepository commodityRepository, ScoreRepository scoreRepository,
                                 ProviderRepository providerRepository, UserRepository userRepository) {

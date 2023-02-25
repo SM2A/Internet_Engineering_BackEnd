@@ -24,10 +24,10 @@ import ir.ut.ece.ie.service.provider.ProviderServiceImpl;
 import ir.ut.ece.ie.service.user.UserServiceImpl;
 
 public class Dispatcher {
-    private UserController userController;
-    private ProviderController providerController;
-    private CommodityController commodityController;
-    private Gson gson;
+    private final UserController userController;
+    private final ProviderController providerController;
+    private final CommodityController commodityController;
+    private final Gson gson;
 
     public Dispatcher() {
         GsonBuilder builder = new GsonBuilder();

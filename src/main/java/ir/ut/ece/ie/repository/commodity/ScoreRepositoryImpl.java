@@ -5,9 +5,10 @@ import ir.ut.ece.ie.domain.commodity.Score;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ScoreRepositoryImpl implements ScoreRepository {
-    private Map<AbstractMap.SimpleEntry<String, Long>, Score> scores = new HashMap<>();
+    private final Map<AbstractMap.SimpleEntry<String, Long>, Score> scores = new HashMap<>();
 
     @Override
     public Score save(Score score) {
@@ -20,7 +21,7 @@ public class ScoreRepositoryImpl implements ScoreRepository {
     @Override
     public Iterable<Score> findAllByCommodityId(Long commodityId) {
         return scores.values().stream()
-                .filter(score -> score.getCommodityId() == commodityId)
+                .filter(score -> Objects.equals(score.getCommodityId(), commodityId))
                 .toList();
     }
 }

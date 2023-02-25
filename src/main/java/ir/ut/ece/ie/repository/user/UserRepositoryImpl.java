@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class UserRepositoryImpl implements UserRepository {
-    private Map<String, User> users = new HashMap<>();
+    private final Map<String, User> users = new HashMap<>();
 
     @Override
     public User save(User user) {

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ProviderRepositoryImpl implements ProviderRepository {
-    private Map<Integer, Provider> providers = new HashMap<>();
+    private final Map<Integer, Provider> providers = new HashMap<>();
 
     @Override
     public Provider save(Provider provider) {
