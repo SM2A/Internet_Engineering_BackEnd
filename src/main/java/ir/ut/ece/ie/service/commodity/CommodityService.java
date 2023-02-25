@@ -1,6 +1,7 @@
 package ir.ut.ece.ie.service.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Commodity;
+import ir.ut.ece.ie.domain.commodity.Score;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface CommodityService {
 
     List<Commodity> getCommoditiesByCategory(String category);
 
-    Commodity rateCommodity(String username, Long commodityId, Integer score);
+    Commodity rateCommodity(Score score);
 }

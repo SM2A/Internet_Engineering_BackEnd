@@ -7,11 +7,14 @@ import ir.ut.ece.ie.controller.commodity.CommodityController;
 import ir.ut.ece.ie.controller.provider.ProviderController;
 import ir.ut.ece.ie.controller.user.UserController;
 import ir.ut.ece.ie.domain.commodity.Commodity;
+import ir.ut.ece.ie.domain.commodity.Score;
 import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.commodity.CommodityRepositoryImpl;
+import ir.ut.ece.ie.repository.commodity.ScoreRepository;
+import ir.ut.ece.ie.repository.commodity.ScoreRepositoryImpl;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepositoryImpl;
 import ir.ut.ece.ie.repository.user.UserRepository;
@@ -32,9 +35,11 @@ public class Dispatcher {
         UserRepository userRepository = new UserRepositoryImpl();
         ProviderRepository providerRepository = new ProviderRepositoryImpl();
         CommodityRepository commodityRepository = new CommodityRepositoryImpl();
+        ScoreRepository scoreRepository = new ScoreRepositoryImpl();
         this.userController = new UserController(new UserServiceImpl(userRepository));
         this.providerController = new ProviderController(new ProviderServiceImpl(providerRepository));
-        this.commodityController = new CommodityController(new CommodityServiceImpl(commodityRepository, providerRepository));
+        this.commodityController = new CommodityController(new CommodityServiceImpl(commodityRepository,
+                scoreRepository, providerRepository, userRepository));
     }
 
     public Object dispatch(String request) {
@@ -46,6 +51,7 @@ public class Dispatcher {
             case "addProvider" -> providerController.addProvider(gson.fromJson(data, Provider.class));
             case "addCommodity" -> commodityController.addCommodity(gson.fromJson(data, Commodity.class));
             case "getCommodities" -> commodityController.getCommodities();
+            case "rateCommodity" -> commodityController.rateCommodity(gson.fromJson(data, Score.class));
             case "getCommodityById" -> commodityController
                     .getCommodityById(gson.fromJson(data, JsonObject.class).get("id").getAsLong());
             case "getCommoditiesByCategory" -> commodityController

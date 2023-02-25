@@ -1,6 +1,7 @@
 package ir.ut.ece.ie.controller.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Commodity;
+import ir.ut.ece.ie.domain.commodity.Score;
 import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.service.commodity.CommodityService;
 
@@ -29,5 +30,9 @@ public class CommodityController {
 
     public List<Commodity> getCommoditiesByCategory(String category) {
         return commodityService.getCommoditiesByCategory(category);
+    }
+
+    public Commodity rateCommodity(Score score) {
+        return commodityService.rateCommodity(score);
     }
 }

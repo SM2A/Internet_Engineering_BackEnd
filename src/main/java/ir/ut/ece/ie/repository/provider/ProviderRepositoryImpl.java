@@ -17,6 +17,6 @@ public class ProviderRepositoryImpl implements ProviderRepository {
 
     @Override
     public Optional<Provider> findById(Integer id) {
-        return Optional.ofNullable(providers.get(id));
+        return Optional.ofNullable(providers.getOrDefault(id, null));
     }
 }
