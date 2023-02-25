@@ -24,7 +24,7 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public Commodity getCommodityById(Long id) {
-        return null;
+        return commodityRepository.findById(id).orElse(null);
     }
 
     @Override
