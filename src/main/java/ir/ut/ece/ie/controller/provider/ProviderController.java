@@ -2,13 +2,12 @@ package ir.ut.ece.ie.controller.provider;
 
 import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.service.provider.ProviderService;
-import ir.ut.ece.ie.service.provider.ProviderServiceImpl;
 
 public class ProviderController {
-    private ProviderService providerService;
+    private final ProviderService providerService;
 
-    public ProviderController() {
-        this.providerService = new ProviderServiceImpl();
+    public ProviderController(ProviderService service) {
+        this.providerService = service;
     }
 
     public Provider addProvider(Provider provider) {
