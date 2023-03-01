@@ -32,6 +32,9 @@ public class CommodityTest {
 
         UserRepository userRepository = new UserRepositoryImpl();
         userRepository.save(new User("123", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
+        userRepository.save(new User("456", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
+        userRepository.save(new User("789", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
+        userRepository.save(new User("012", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
 
         commodityService = new CommodityServiceImpl(
                 new CommodityRepositoryImpl(),
@@ -106,9 +109,9 @@ public class CommodityTest {
     public void add_multiple_rating() {
         addCommodity(1, List.of("AA"));
         commodityService.rateCommodity(new Score("123", 1L, 10));
-        commodityService.rateCommodity(new Score("123", 1L, 5));
-        commodityService.rateCommodity(new Score("123", 1L, 7));
-        commodityService.rateCommodity(new Score("123", 1L, 8));
+        commodityService.rateCommodity(new Score("456", 1L, 5));
+        commodityService.rateCommodity(new Score("789", 1L, 7));
+        commodityService.rateCommodity(new Score("012", 1L, 8));
         assertEquals(commodityService.getCommodityById(1L).getRating(), 7.5D);
     }
 
