@@ -4,6 +4,7 @@ import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.commodity.Score;
 import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.domain.user.User;
+import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.repository.commodity.CommodityRepositoryImpl;
 import ir.ut.ece.ie.repository.commodity.ScoreRepositoryImpl;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
@@ -20,12 +21,12 @@ import java.util.List;
 
 public class CommodityTest {
 
-    long lastItem;
-    CommodityService commodityService;
+    private long id;
+    private CommodityService commodityService;
 
     @BeforeEach
     public void initialization() {
-        lastItem = 1;
+        id = 1;
         ProviderRepository providerRepository = new ProviderRepositoryImpl();
         providerRepository.save(new Provider(1, "a", "2023-09-15"));
 
@@ -95,16 +96,34 @@ public class CommodityTest {
     }
 
     @Test
-    public void add_rating_higher_than_now() {
+    public void add_one_rating_valid() {
         addCommodity(1, List.of("AA"));
         commodityService.rateCommodity(new Score("123", 1L, 10));
+        assertEquals(commodityService.getCommodityById(1L).getRating(), 10);
+    }
+
+    @Test
+    public void add_multiple_rating() {
+        addCommodity(1, List.of("AA"));
+        commodityService.rateCommodity(new Score("123", 1L, 10));
+        commodityService.rateCommodity(new Score("123", 1L, 5));
+        commodityService.rateCommodity(new Score("123", 1L, 7));
+        commodityService.rateCommodity(new Score("123", 1L, 8));
         assertEquals(commodityService.getCommodityById(1L).getRating(), 7.5D);
+    }
+
+    @Test
+    public void add_one_rating_invalid() {
+        addCommodity(1, List.of("AA"));
+        commodityService.rateCommodity(new Score("123", 1L, 10));
+        assertThrows(OnlineShopException.class,
+                () -> commodityService.rateCommodity(new Score("123", 1L, 15)));
     }
 
     private void addCommodity(int count, List<String> category) {
         for (long i = 1; i <= count; i++) {
-            commodityService.addCommodity(new Commodity(lastItem, "abc"+lastItem, 1, 1000L, category, 5.0D, 10));
-            lastItem++;
+            commodityService.addCommodity(new Commodity(id, "abc"+ id, 1, 1000L, category, 5.0D, 10));
+            id++;
         }
     }
 }

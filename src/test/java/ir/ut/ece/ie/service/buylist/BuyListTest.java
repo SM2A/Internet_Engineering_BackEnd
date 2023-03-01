@@ -18,25 +18,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BuyListTest {
 
-    BuyListService buyListService;
-
+    private BuyListService buyListService;
 
     @BeforeEach
     public void initialization() {
-        long lastItem = 1;
+        long id = 1;
 
         CommodityRepository commodityRepository = new CommodityRepositoryImpl();
         for (long i = 1; i <= 5; i++) {
-            commodityRepository.save(new Commodity(lastItem, "abc" + lastItem, 1, 1000L, List.of("AA"), 5.0D, 10));
-            lastItem++;
+            commodityRepository.save(new Commodity(id, "abc" + id, 1, 1000L, List.of("AA"), 5.0D, 10));
+            id++;
         }
         for (long i = 1; i <= 5; i++) {
-            commodityRepository.save(new Commodity(lastItem, "abc" + lastItem, 1, 1000L, List.of("BB"), 5.0D, 10));
-            lastItem++;
+            commodityRepository.save(new Commodity(id, "abc" + id, 1, 1000L, List.of("BB"), 5.0D, 10));
+            id++;
         }
         for (long i = 1; i <= 5; i++) {
-            commodityRepository.save(new Commodity(lastItem, "abc" + lastItem, 1, 1000L, List.of("CC"), 5.0D, 10));
-            lastItem++;
+            commodityRepository.save(new Commodity(id, "abc" + id, 1, 1000L, List.of("CC"), 5.0D, 10));
+            id++;
         }
 
         UserRepository userRepository = new UserRepositoryImpl();
