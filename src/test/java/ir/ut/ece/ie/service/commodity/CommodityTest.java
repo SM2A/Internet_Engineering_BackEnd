@@ -17,16 +17,13 @@ import java.util.List;
 
 public class CommodityTest {
 
-    CommodityService commodityService;
-
-    ProviderRepository providerRepository;
-
     long lastItem;
+    CommodityService commodityService;
 
     @BeforeEach
     public void initialization() {
         lastItem = 1;
-        providerRepository = new ProviderRepositoryImpl();
+        ProviderRepository providerRepository = new ProviderRepositoryImpl();
         providerRepository.save(new Provider(1, "a", "2023-09-15"));
 
         commodityService = new CommodityServiceImpl(
@@ -40,7 +37,6 @@ public class CommodityTest {
     @AfterEach
     public void cleanUp() {
         commodityService = null;
-        providerRepository = null;
     }
 
     @Test
