@@ -47,29 +47,26 @@ public class CommodityTest {
 
     @Test
     public void one_item_found() {
-        commodityService.addCommodity(new Commodity(1L, "abc", 1, 1L, List.of("AA"), 5.0D, 10));
-
+        addCommodity(1, List.of("AA"));
         assertEquals(commodityService.getCommodityById(1L).getId(), 1);
     }
 
     @Test
     public void multiple_item_found() {
-        commodityService.addCommodity(new Commodity(1L, "abc", 1, 1L, List.of("AA"), 5.0D, 10));
-        commodityService.addCommodity(new Commodity(2L, "abc", 1, 1L, List.of("AA"), 5.0D, 10));
-        commodityService.addCommodity(new Commodity(3L, "abc", 1, 1L, List.of("AA"), 5.0D, 10));
-        commodityService.addCommodity(new Commodity(4L, "abc", 1, 1L, List.of("AA"), 5.0D, 10));
-
+        addCommodity(4, List.of("AA"));
         assertEquals(commodityService.getCommodityById(1L).getId(), 1);
     }
 
     @Test
     public void multiple_item_not_found() {
-        commodityService.addCommodity(new Commodity(1L, "abc", 1, 1L, List.of("AA"), 5.0D, 10));
-        commodityService.addCommodity(new Commodity(2L, "abc", 1, 1L, List.of("AA"), 5.0D, 10));
-        commodityService.addCommodity(new Commodity(3L, "abc", 1, 1L, List.of("AA"), 5.0D, 10));
-        commodityService.addCommodity(new Commodity(4L, "abc", 1, 1L, List.of("AA"), 5.0D, 10));
-
+        addCommodity(4, List.of("AA"));
         assertNull(commodityService.getCommodityById(5L));
     }
 
+
+    private void addCommodity(int count, List<String> category) {
+        for (long i = 1; i <= count; i++) {
+            commodityService.addCommodity(new Commodity(i, "abc"+i, 1, 1000L, category, 5.0D, 10));
+        }
+    }
 }
