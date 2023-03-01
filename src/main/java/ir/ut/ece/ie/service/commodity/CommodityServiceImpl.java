@@ -53,10 +53,10 @@ public class CommodityServiceImpl implements CommodityService {
             throw new OnlineShopException("Commodity not found");
         if (userRepository.findById(score.getUsername()).isEmpty())
             throw new OnlineShopException("User not found");
-        Score newScore = scoreRepository.save(score);
         int numOfRatings = ((List<Score>) scoreRepository.findAllByCommodityId(score.getCommodityId())).size();
+        Score newScore = scoreRepository.save(score);
         Commodity commodity = getCommodityById(score.getCommodityId());
-        commodity.setRating((commodity.getRating() * numOfRatings + newScore.getScore()) / numOfRatings);
+        commodity.setRating((commodity.getRating() * numOfRatings + newScore.getScore()) / (numOfRatings + 1));
         commodityRepository.save(commodity);
         return commodity;
     }
