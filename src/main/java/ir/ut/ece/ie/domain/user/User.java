@@ -10,4 +10,13 @@ public class User {
     private String birthDate;
     private String address;
     private Long credit;
+
+    public User(String username, String password, String email, String birthDate, String address, Long credit) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.address = address;
+        this.credit = credit;
+    }
 }

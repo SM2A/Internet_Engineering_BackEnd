@@ -13,4 +13,14 @@ public class Commodity {
     private List<String> categories;
     private Double rating;
     private Integer inStock;
+
+    public Commodity(Long id, String name, Integer providerId, Long price, List<String> categories, Double rating, Integer inStock) {
+        this.id = id;
+        this.name = name;
+        this.providerId = providerId;
+        this.price = price;
+        this.categories = categories;
+        this.rating = rating;
+        this.inStock = inStock;
+    }
 }
