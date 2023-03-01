@@ -1,11 +1,14 @@
 package ir.ut.ece.ie.service.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Commodity;
+import ir.ut.ece.ie.domain.commodity.Score;
 import ir.ut.ece.ie.domain.provider.Provider;
+import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.repository.commodity.CommodityRepositoryImpl;
 import ir.ut.ece.ie.repository.commodity.ScoreRepositoryImpl;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepositoryImpl;
+import ir.ut.ece.ie.repository.user.UserRepository;
 import ir.ut.ece.ie.repository.user.UserRepositoryImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,11 +29,14 @@ public class CommodityTest {
         ProviderRepository providerRepository = new ProviderRepositoryImpl();
         providerRepository.save(new Provider(1, "a", "2023-09-15"));
 
+        UserRepository userRepository = new UserRepositoryImpl();
+        userRepository.save(new User("123", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
+
         commodityService = new CommodityServiceImpl(
                 new CommodityRepositoryImpl(),
                 new ScoreRepositoryImpl(),
                 providerRepository,
-                new UserRepositoryImpl()
+                userRepository
         );
     }
 
@@ -86,6 +92,13 @@ public class CommodityTest {
         addCommodity(4, List.of("AA", "CC"));
         addCommodity(4, List.of("BB"));
         assertEquals(commodityService.getCommoditiesByCategory("AA").size(), 4);
+    }
+
+    @Test
+    public void add_rating_higher_than_now() {
+        addCommodity(1, List.of("AA"));
+        commodityService.rateCommodity(new Score("123", 1L, 10));
+        assertEquals(commodityService.getCommodityById(1L).getRating(), 7.5D);
     }
 
     private void addCommodity(int count, List<String> category) {
