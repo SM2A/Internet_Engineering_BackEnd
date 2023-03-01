@@ -21,8 +21,11 @@ public class CommodityTest {
 
     ProviderRepository providerRepository;
 
+    long lastItem;
+
     @BeforeEach
     public void initialization() {
+        lastItem = 1;
         providerRepository = new ProviderRepositoryImpl();
         providerRepository.save(new Provider(1, "a", "2023-09-15"));
 
@@ -63,10 +66,36 @@ public class CommodityTest {
         assertNull(commodityService.getCommodityById(5L));
     }
 
+    @Test
+    public void no_item_in_category() {
+        addCommodity(4, List.of("AA"));
+        assertEquals(commodityService.getCommoditiesByCategory("BB").size(), 0);
+    }
+
+    @Test
+    public void all_item_in_one_category() {
+        addCommodity(4, List.of("AA"));
+        assertEquals(commodityService.getCommoditiesByCategory("AA").size(), 4);
+    }
+
+    @Test
+    public void multiple_item_in_multiple_category() {
+        addCommodity(4, List.of("AA"));
+        addCommodity(4, List.of("BB"));
+        assertEquals(commodityService.getCommoditiesByCategory("AA").size(), 4);
+    }
+
+    @Test
+    public void multiple_item_with_multiple_category() {
+        addCommodity(4, List.of("AA", "CC"));
+        addCommodity(4, List.of("BB"));
+        assertEquals(commodityService.getCommoditiesByCategory("AA").size(), 4);
+    }
 
     private void addCommodity(int count, List<String> category) {
         for (long i = 1; i <= count; i++) {
-            commodityService.addCommodity(new Commodity(i, "abc"+i, 1, 1000L, category, 5.0D, 10));
+            commodityService.addCommodity(new Commodity(lastItem, "abc"+lastItem, 1, 1000L, category, 5.0D, 10));
+            lastItem++;
         }
     }
 }
