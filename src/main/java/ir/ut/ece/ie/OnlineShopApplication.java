@@ -1,34 +1,20 @@
 package ir.ut.ece.ie;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import ir.ut.ece.ie.util.Dispatcher;
-import ir.ut.ece.ie.util.ResponseModel;
+import io.javalin.Javalin;
+import ir.ut.ece.ie.util.DataInitializer;
 
-import java.util.Scanner;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OnlineShopApplication {
-    public static void main(String[] args) {
-        run();
-    }
+    public static void main(String[] args) throws IOException, InterruptedException {
+        DataInitializer.loadData("http://5.253.25.110:5000");
+        Javalin app = Javalin.create().start(8000);
+        app.get("/", ctx -> ctx.html("Hello world"));
 
-    public static void run() {
-        Dispatcher dispatcher = new Dispatcher();
-        Scanner scanner = new Scanner(System.in);
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-
-        ResponseModel responseModel = new ResponseModel();
-        while (scanner.hasNextLine()) {
-            String request = scanner.nextLine();
-            try {
-                responseModel.setData(dispatcher.dispatch(request));
-                responseModel.setSuccess(true);
-            } catch (Exception e) {
-                responseModel.setData(e.getMessage());
-                responseModel.setSuccess(false);
-            }
-            System.out.println(gson.toJson(responseModel));
-        }
+        Map<String, Object> model = new HashMap<>();
+        model.put("name", "morteza");
+        app.get("/render", ctx -> ctx.render("home.pebble", model));
     }
 }
