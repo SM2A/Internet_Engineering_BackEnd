@@ -24,7 +24,7 @@ public class BuyListTest {
     public void initialization() {
         long id = 1;
 
-        CommodityRepository commodityRepository = new CommodityRepositoryImpl();
+        CommodityRepository commodityRepository = CommodityRepositoryImpl.getInstance();
         for (long i = 1; i <= 5; i++) {
             commodityRepository.save(new Commodity(id, "abc" + id, 1, 1000L, List.of("AA"), 5.0D, 10));
             id++;

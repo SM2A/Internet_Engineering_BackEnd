@@ -39,7 +39,7 @@ public class Dispatcher {
         this.gson = builder.create();
         UserRepository userRepository = UserRepositoryImpl.getInstance();
         ProviderRepository providerRepository = new ProviderRepositoryImpl();
-        CommodityRepository commodityRepository = new CommodityRepositoryImpl();
+        CommodityRepository commodityRepository = CommodityRepositoryImpl.getInstance();
         ScoreRepository scoreRepository = new ScoreRepositoryImpl();
         BuyListRepository buyListRepository = new BuyListRepositoryImpl();
         this.userController = new UserController(new UserServiceImpl(userRepository));

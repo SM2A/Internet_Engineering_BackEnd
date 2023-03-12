@@ -7,12 +7,29 @@ import java.util.Map;
 import java.util.Optional;
 
 public class CommodityRepositoryImpl implements CommodityRepository {
+    private static CommodityRepositoryImpl INSTANCE = null;
     private final Map<Long, Commodity> commodities = new HashMap<>();
+
+    private CommodityRepositoryImpl() {
+
+    }
+
+    public static CommodityRepositoryImpl getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new CommodityRepositoryImpl();
+        return INSTANCE;
+    }
 
     @Override
     public Commodity save(Commodity commodity) {
         commodities.put(commodity.getId(), commodity);
         return commodity;
+    }
+
+    @Override
+    public Iterable<Commodity> saveAll(Iterable<Commodity> commodities) {
+        commodities.forEach(commodity -> this.commodities.put(commodity.getId(), commodity));
+        return commodities;
     }
 
     @Override

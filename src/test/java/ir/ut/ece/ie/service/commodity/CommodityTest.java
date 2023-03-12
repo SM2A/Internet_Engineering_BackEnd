@@ -37,7 +37,7 @@ public class CommodityTest {
         userRepository.save(new User("012", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
 
         commodityService = new CommodityServiceImpl(
-                new CommodityRepositoryImpl(),
+                CommodityRepositoryImpl.getInstance(),
                 new ScoreRepositoryImpl(),
                 providerRepository,
                 userRepository
