@@ -15,9 +15,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CommodityTest {
 
@@ -27,7 +27,7 @@ public class CommodityTest {
     @BeforeEach
     public void initialization() {
         id = 1;
-        ProviderRepository providerRepository = new ProviderRepositoryImpl();
+        ProviderRepository providerRepository = ProviderRepositoryImpl.getInstance();
         providerRepository.save(new Provider(1, "a", "2023-09-15"));
 
         UserRepository userRepository = UserRepositoryImpl.getInstance();
@@ -125,7 +125,7 @@ public class CommodityTest {
 
     private void addCommodity(int count, List<String> category) {
         for (long i = 1; i <= count; i++) {
-            commodityService.addCommodity(new Commodity(id, "abc"+ id, 1, 1000L, category, 5.0D, 10));
+            commodityService.addCommodity(new Commodity(id, "abc" + id, 1, 1000L, category, 5.0D, 10));
             id++;
         }
     }
