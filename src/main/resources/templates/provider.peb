@@ -1,0 +1,10 @@
+{% extends "./base.peb" %}
+    {% block title %} Provider {% endblock %}
+
+{% block content %}
+    <ul>
+        <li id="id">Id:  {{ provider.getId() }} </li>
+        <li id="name">Name: Apple</li>
+        <li id="registryDate">Registry Date: 1990/09/15</li>
+    </ul>
+{% endblock %}
