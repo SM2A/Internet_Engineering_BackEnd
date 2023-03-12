@@ -38,7 +38,7 @@ public class CommodityTest {
 
         commodityService = new CommodityServiceImpl(
                 CommodityRepositoryImpl.getInstance(),
-                new ScoreRepositoryImpl(),
+                ScoreRepositoryImpl.getInstance(),
                 providerRepository,
                 userRepository
         );

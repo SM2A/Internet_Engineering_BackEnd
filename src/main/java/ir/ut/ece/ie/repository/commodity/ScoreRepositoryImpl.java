@@ -8,7 +8,18 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ScoreRepositoryImpl implements ScoreRepository {
+    private static ScoreRepositoryImpl INSTANCE = null;
     private final Map<AbstractMap.SimpleEntry<String, Long>, Score> scores = new HashMap<>();
+
+    private ScoreRepositoryImpl() {
+
+    }
+
+    public static ScoreRepositoryImpl getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new ScoreRepositoryImpl();
+        return INSTANCE;
+    }
 
     @Override
     public Score save(Score score) {
