@@ -37,7 +37,7 @@ public class Dispatcher {
     public Dispatcher() {
         GsonBuilder builder = new GsonBuilder();
         this.gson = builder.create();
-        UserRepository userRepository = new UserRepositoryImpl();
+        UserRepository userRepository = UserRepositoryImpl.getInstance();
         ProviderRepository providerRepository = new ProviderRepositoryImpl();
         CommodityRepository commodityRepository = new CommodityRepositoryImpl();
         ScoreRepository scoreRepository = new ScoreRepositoryImpl();

@@ -30,7 +30,7 @@ public class CommodityTest {
         ProviderRepository providerRepository = new ProviderRepositoryImpl();
         providerRepository.save(new Provider(1, "a", "2023-09-15"));
 
-        UserRepository userRepository = new UserRepositoryImpl();
+        UserRepository userRepository = UserRepositoryImpl.getInstance();
         userRepository.save(new User("123", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
         userRepository.save(new User("456", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
         userRepository.save(new User("789", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));

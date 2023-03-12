@@ -38,7 +38,7 @@ public class BuyListTest {
             id++;
         }
 
-        UserRepository userRepository = new UserRepositoryImpl();
+        UserRepository userRepository = UserRepositoryImpl.getInstance();
         userRepository.save(new User("123", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
         userRepository.save(new User("321", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
 
