@@ -13,4 +13,8 @@ public class ProviderController {
     public Provider addProvider(Provider provider) {
         return providerService.addProvider(provider);
     }
+
+    public Provider getProviderById(Integer id) {
+        return providerService.getProvider(id);
+    }
 }

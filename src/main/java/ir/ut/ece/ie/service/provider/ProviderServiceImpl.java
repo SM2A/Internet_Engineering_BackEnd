@@ -14,4 +14,9 @@ public class ProviderServiceImpl implements ProviderService {
     public Provider addProvider(Provider provider) {
         return repository.save(provider);
     }
+
+    @Override
+    public Provider getProvider(Integer id) {
+        return repository.findById(id).orElse(null);
+    }
 }
