@@ -7,11 +7,10 @@
 </head>
 <body>
 	<div id="content">
-		{% block content %}Hello World!{% endblock %}
+		{% block content %}{% endblock %}
 	</div>
 	<div id="footer">
 		{% block footer %}
-			Copyright 2023
 		{% endblock %}
 	</div>
 </body>

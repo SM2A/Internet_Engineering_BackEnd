@@ -12,7 +12,6 @@ public class OnlineShopApplication {
         DataInitializer.loadData("http://5.253.25.110:5000");
 
         Javalin app = Javalin.create().start(8000);
-        app.get("/", ctx -> ctx.render("templates/base.peb"));
         app.get("/commodities", CommodityHandler.getAllCommodities);
         app.get("/commodities/{commodity_id}", CommodityHandler.getCommodityById);
         app.get("/providers/{provider_id}", ProviderHandler.getProvider);

@@ -3,6 +3,7 @@ package ir.ut.ece.ie.util;
 import ir.ut.ece.ie.controller.commodity.CommentController;
 import ir.ut.ece.ie.controller.commodity.CommodityController;
 import ir.ut.ece.ie.controller.provider.ProviderController;
+import ir.ut.ece.ie.controller.user.UserController;
 import ir.ut.ece.ie.repository.commodity.*;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepositoryImpl;
@@ -11,22 +12,24 @@ import ir.ut.ece.ie.repository.user.UserRepositoryImpl;
 import ir.ut.ece.ie.service.commodity.CommentServiceImpl;
 import ir.ut.ece.ie.service.commodity.CommodityServiceImpl;
 import ir.ut.ece.ie.service.provider.ProviderServiceImpl;
+import ir.ut.ece.ie.service.user.UserServiceImpl;
 
 public class Factory {
-    private static CommodityRepository commodityRepository = new CommodityRepositoryImpl();
-    private static CommentRepository commentRepository = new CommentRepositoryImpl();
-    private static ScoreRepository scoreRepository = new ScoreRepositoryImpl();
-    private static ProviderRepository providerRepository = new ProviderRepositoryImpl();
-    private static UserRepository userRepository = new UserRepositoryImpl();
-    private static CommodityController commodityController = new CommodityController(
+    private static final CommodityRepository commodityRepository = new CommodityRepositoryImpl();
+    private static final CommentRepository commentRepository = new CommentRepositoryImpl();
+    private static final ScoreRepository scoreRepository = new ScoreRepositoryImpl();
+    private static final ProviderRepository providerRepository = new ProviderRepositoryImpl();
+    private static final UserRepository userRepository = new UserRepositoryImpl();
+    private static final CommodityController commodityController = new CommodityController(
             new CommodityServiceImpl(
                     commodityRepository,
                     scoreRepository,
                     providerRepository,
                     userRepository)
     );
-    private static CommentController commentController = new CommentController(new CommentServiceImpl(commentRepository));
-    private static ProviderController providerController = new ProviderController(new ProviderServiceImpl(providerRepository));
+    private static final CommentController commentController = new CommentController(new CommentServiceImpl(commentRepository));
+    private static final ProviderController providerController = new ProviderController(new ProviderServiceImpl(providerRepository));
+    private static final UserController userController = new UserController(new UserServiceImpl(userRepository));
 
     public static CommodityRepository getCommodityRepository() {
         return commodityRepository;
@@ -58,5 +61,9 @@ public class Factory {
 
     public static ProviderController getProviderController() {
         return providerController;
+    }
+
+    public static UserController getUserController() {
+        return userController;
     }
 }
