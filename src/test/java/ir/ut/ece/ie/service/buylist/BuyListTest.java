@@ -5,9 +5,8 @@ import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.repository.buylist.BuyListRepository;
 import ir.ut.ece.ie.repository.buylist.BuyListRepositoryImpl;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
-import ir.ut.ece.ie.repository.commodity.CommodityRepositoryImpl;
 import ir.ut.ece.ie.repository.user.UserRepository;
-import ir.ut.ece.ie.repository.user.UserRepositoryImpl;
+import ir.ut.ece.ie.util.Factory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ public class BuyListTest {
     public void initialization() {
         long id = 1;
 
-        CommodityRepository commodityRepository = CommodityRepositoryImpl.getInstance();
+        CommodityRepository commodityRepository = Factory.getCommodityRepository();
         for (long i = 1; i <= 5; i++) {
             commodityRepository.save(new Commodity(id, "abc" + id, 1, 1000L, List.of("AA"), 5.0D, 10));
             id++;
@@ -38,7 +37,7 @@ public class BuyListTest {
             id++;
         }
 
-        UserRepository userRepository = UserRepositoryImpl.getInstance();
+        UserRepository userRepository = Factory.getUserRepository();
         userRepository.save(new User("123", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
         userRepository.save(new User("321", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
 

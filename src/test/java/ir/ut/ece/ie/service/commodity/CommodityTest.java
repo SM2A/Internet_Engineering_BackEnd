@@ -11,6 +11,7 @@ import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepositoryImpl;
 import ir.ut.ece.ie.repository.user.UserRepository;
 import ir.ut.ece.ie.repository.user.UserRepositoryImpl;
+import ir.ut.ece.ie.util.Factory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,18 +28,18 @@ public class CommodityTest {
     @BeforeEach
     public void initialization() {
         id = 1;
-        ProviderRepository providerRepository = ProviderRepositoryImpl.getInstance();
+        ProviderRepository providerRepository = Factory.getProviderRepository();
         providerRepository.save(new Provider(1, "a", "2023-09-15"));
 
-        UserRepository userRepository = UserRepositoryImpl.getInstance();
+        UserRepository userRepository = Factory.getUserRepository();
         userRepository.save(new User("123", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
         userRepository.save(new User("456", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
         userRepository.save(new User("789", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
         userRepository.save(new User("012", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
 
         commodityService = new CommodityServiceImpl(
-                CommodityRepositoryImpl.getInstance(),
-                ScoreRepositoryImpl.getInstance(),
+                Factory.getCommodityRepository(),
+                Factory.getScoreRepository(),
                 providerRepository,
                 userRepository
         );

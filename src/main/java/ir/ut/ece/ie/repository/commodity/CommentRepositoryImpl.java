@@ -7,18 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommentRepositoryImpl implements CommentRepository {
-    private static CommentRepositoryImpl INSTANCE = null;
     private final Map<Long, Comment> comments = new HashMap<>();
-
-    private CommentRepositoryImpl() {
-
-    }
-
-    public static CommentRepositoryImpl getInstance() {
-        if (INSTANCE == null)
-            INSTANCE = new CommentRepositoryImpl();
-        return INSTANCE;
-    }
 
     @Override
     public Comment save(Comment comment) {
