@@ -28,6 +28,10 @@ public class CommodityController {
         return commodityService.getCommodities();
     }
 
+    public List<Commodity> getCommoditiesByProviderId(Integer id) {
+        return commodityService.getCommoditiesByProviderId(id);
+    }
+
     public List<Commodity> getCommoditiesByCategory(String category) {
         return commodityService.getCommoditiesByCategory(category);
     }

@@ -41,6 +41,11 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
+    public List<Commodity> getCommoditiesByProviderId(Integer id) {
+        return (List<Commodity>) commodityRepository.findAllByProviderId(id);
+    }
+
+    @Override
     public List<Commodity> getCommoditiesByCategory(String category) {
         return (List<Commodity>) commodityRepository.findAllByCategory(category);
     }

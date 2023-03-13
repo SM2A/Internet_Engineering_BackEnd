@@ -11,7 +11,7 @@ public interface CommodityService {
     Commodity getCommodityById(Long id);
 
     List<Commodity> getCommodities();
-
+    List<Commodity> getCommoditiesByProviderId(Integer id);
     List<Commodity> getCommoditiesByCategory(String category);
 
     Commodity rateCommodity(Score score);

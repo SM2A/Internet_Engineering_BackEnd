@@ -4,6 +4,7 @@ import ir.ut.ece.ie.domain.commodity.Commodity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 public class CommodityRepositoryImpl implements CommodityRepository {
@@ -29,6 +30,13 @@ public class CommodityRepositoryImpl implements CommodityRepository {
     @Override
     public Iterable<Commodity> findAll() {
         return commodities.values().stream().toList();
+    }
+
+    @Override
+    public Iterable<Commodity> findAllByProviderId(Integer id) {
+        return commodities.values().stream()
+                .filter(commodity -> Objects.equals(commodity.getProviderId(), id))
+                .toList();
     }
 
     @Override
