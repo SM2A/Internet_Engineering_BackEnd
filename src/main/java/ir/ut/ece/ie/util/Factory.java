@@ -1,11 +1,13 @@
 package ir.ut.ece.ie.util;
 
+import ir.ut.ece.ie.controller.commodity.CommentController;
 import ir.ut.ece.ie.controller.commodity.CommodityController;
 import ir.ut.ece.ie.repository.commodity.*;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepositoryImpl;
 import ir.ut.ece.ie.repository.user.UserRepository;
 import ir.ut.ece.ie.repository.user.UserRepositoryImpl;
+import ir.ut.ece.ie.service.commodity.CommentServiceImpl;
 import ir.ut.ece.ie.service.commodity.CommodityServiceImpl;
 
 public class Factory {
@@ -21,6 +23,7 @@ public class Factory {
                     providerRepository,
                     userRepository)
     );
+    private static CommentController commentController = new CommentController(new CommentServiceImpl(commentRepository));
 
     public static CommodityRepository getCommodityRepository() {
         return commodityRepository;
@@ -44,5 +47,9 @@ public class Factory {
 
     public static CommodityController getCommodityController() {
         return commodityController;
+    }
+
+    public static CommentController getCommentController() {
+        return commentController;
     }
 }
