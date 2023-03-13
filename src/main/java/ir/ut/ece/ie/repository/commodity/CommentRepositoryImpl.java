@@ -22,4 +22,11 @@ public class CommentRepositoryImpl implements CommentRepository {
         comments.forEach(comment -> this.comments.put(comment.getId(), comment));
         return comments;
     }
+
+    @Override
+    public Iterable<Comment> findAllByCommodityId(Long commodityId) {
+        return comments.values().stream()
+                .filter(comment -> comment.getCommodityId() == commodityId)
+                .toList();
+    }
 }
