@@ -5,6 +5,7 @@ public class Path {
         public static final String COMMODITIES = "/commodities";
         public static final String COMMODITY = "/commodities/{commodity_id}";
         public static final String COMMODITIES_IN_PRICE_RANGE = "/commodities/search/{start_price}/{end_price}";
+        public static final String COMMODITIES_IN_CATEGORY = "/commodities/search/{category}";
         public static final String PROVIDER = "/providers/{provider_id}";
         public static final String USER = "/users/{user_id}";
         public static final String ADD_TO_BUYLIST = "/addToBuyList/{username}/{commodityId}";

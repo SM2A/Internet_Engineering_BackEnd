@@ -24,9 +24,12 @@ public class CommodityHandler {
                             "comments", commentController.getCommentsOfCommodity(Long.valueOf(ctx.pathParam("commodity_id"))))
             );
     public static Handler getAllCommoditiesInPriceRange = ctx ->
-            ctx.render(Path.Template.COMMODITIES, Collections.singletonMap(
-                    "commodities",
+            ctx.render(Path.Template.COMMODITIES, Collections.singletonMap("commodities",
                     commodityController.getCommoditiesInPriceRange(
                             Long.valueOf(ctx.pathParam("start_price")),
                             Long.valueOf(ctx.pathParam("end_price")))));
+
+    public static Handler getAllCommoditiesInCategory = ctx ->
+            ctx.render(Path.Template.COMMODITIES, Collections.singletonMap("commodities",
+                    commodityController.getCommoditiesByCategory(ctx.pathParam("category"))));
 }
