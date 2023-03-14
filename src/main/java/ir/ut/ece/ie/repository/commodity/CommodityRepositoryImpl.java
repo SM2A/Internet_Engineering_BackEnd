@@ -2,10 +2,7 @@ package ir.ut.ece.ie.repository.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Commodity;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class CommodityRepositoryImpl implements CommodityRepository {
     private final Map<Long, Commodity> commodities = new HashMap<>();
@@ -42,8 +39,10 @@ public class CommodityRepositoryImpl implements CommodityRepository {
     @Override
     public Iterable<Commodity> findAllByCategory(String category) {
         return commodities.values().stream()
-                .filter(commodity -> commodity.getCategories().contains(category))
-                .toList();
+                .filter(commodity -> {
+                    List<String> categories = commodity.getCategories().stream().map(String::toLowerCase).toList();
+                    return categories.contains(category.toLowerCase());
+                }).toList();
     }
 
     @Override
