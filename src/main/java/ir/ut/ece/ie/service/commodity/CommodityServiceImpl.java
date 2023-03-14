@@ -51,6 +51,11 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
+    public List<Commodity> getCommoditiesInPriceRange(Long from, Long to) {
+        return (List<Commodity>) commodityRepository.findAllByPriceInRange(from, to);
+    }
+
+    @Override
     public Commodity rateCommodity(Score score) {
         if (score.getScore() < 1 || score.getScore() > 10)
             throw new OnlineShopException("Invalid score.It must be between 1 and 10");

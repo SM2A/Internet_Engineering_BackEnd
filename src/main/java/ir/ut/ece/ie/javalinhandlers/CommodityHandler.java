@@ -23,4 +23,10 @@ public class CommodityHandler {
                             "commodity", commodityController.getCommodityById(Long.valueOf(ctx.pathParam("commodity_id"))),
                             "comments", commentController.getCommentsOfCommodity(Long.valueOf(ctx.pathParam("commodity_id"))))
             );
+    public static Handler getAllCommoditiesInPriceRange = ctx ->
+            ctx.render(Path.Template.COMMODITIES, Collections.singletonMap(
+                    "commodities",
+                    commodityController.getCommoditiesInPriceRange(
+                            Long.valueOf(ctx.pathParam("start_price")),
+                            Long.valueOf(ctx.pathParam("end_price")))));
 }

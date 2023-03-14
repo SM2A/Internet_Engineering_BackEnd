@@ -45,4 +45,11 @@ public class CommodityRepositoryImpl implements CommodityRepository {
                 .filter(commodity -> commodity.getCategories().contains(category))
                 .toList();
     }
+
+    @Override
+    public Iterable<Commodity> findAllByPriceInRange(Long from, Long to) {
+        return commodities.values().stream()
+                .filter(commodity -> commodity.getPrice() >= from && commodity.getPrice() <= to)
+                .toList();
+    }
 }

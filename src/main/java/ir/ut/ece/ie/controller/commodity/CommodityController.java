@@ -35,7 +35,9 @@ public class CommodityController {
     public List<Commodity> getCommoditiesByCategory(String category) {
         return commodityService.getCommoditiesByCategory(category);
     }
-
+    public List<Commodity> getCommoditiesInPriceRange(Long from, Long to) {
+        return commodityService.getCommoditiesInPriceRange(from, to);
+    }
     public Commodity rateCommodity(Score score) {
         return commodityService.rateCommodity(score);
     }

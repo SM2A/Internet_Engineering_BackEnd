@@ -13,6 +13,7 @@ public interface CommodityService {
     List<Commodity> getCommodities();
     List<Commodity> getCommoditiesByProviderId(Integer id);
     List<Commodity> getCommoditiesByCategory(String category);
+    List<Commodity> getCommoditiesInPriceRange(Long from, Long to);
 
     Commodity rateCommodity(Score score);
 }

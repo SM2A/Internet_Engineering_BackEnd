@@ -17,6 +17,7 @@ public class OnlineShopApplication {
         Javalin app = Javalin.create().start(8000);
         app.get(Path.Web.COMMODITIES, CommodityHandler.getAllCommodities);
         app.get(Path.Web.COMMODITY, CommodityHandler.getCommodityById);
+        app.get(Path.Web.COMMODITIES_IN_PRICE_RANGE, CommodityHandler.getAllCommoditiesInPriceRange);
         app.get(Path.Web.PROVIDER, ProviderHandler.getProvider);
         app.get(Path.Web.USER, UserHandler.getUser);
         app.post(Path.Web.ADD_TO_BUYLIST, BuyListHandler.addToBuyList);
