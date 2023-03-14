@@ -6,7 +6,6 @@ import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.service.commodity.CommodityService;
 
 import java.util.List;
-import java.util.Optional;
 
 public class CommodityController {
     private final CommodityService commodityService;
@@ -20,8 +19,7 @@ public class CommodityController {
     }
 
     public Commodity getCommodityById(Long id) {
-        return Optional.ofNullable(commodityService.getCommodityById(id))
-                .orElseThrow(() -> new OnlineShopException("commodity not found"));
+        return commodityService.getCommodityById(id).orElseThrow(() -> new OnlineShopException("commodity not found"));
     }
 
     public List<Commodity> getCommodities() {
@@ -35,9 +33,11 @@ public class CommodityController {
     public List<Commodity> getCommoditiesByCategory(String category) {
         return commodityService.getCommoditiesByCategory(category);
     }
+
     public List<Commodity> getCommoditiesInPriceRange(Long from, Long to) {
         return commodityService.getCommoditiesInPriceRange(from, to);
     }
+
     public Commodity rateCommodity(Score score) {
         return commodityService.rateCommodity(score);
     }

@@ -47,25 +47,25 @@ public class CommodityTest {
 
     @Test
     public void no_item_not_found() {
-        assertNull(commodityService.getCommodityById(5L));
+        assertTrue(commodityService.getCommodityById(5L).isEmpty());
     }
 
     @Test
     public void one_item_found() {
         addCommodity(1, List.of("AA"));
-        assertEquals(commodityService.getCommodityById(1L).getId(), 1);
+        assertEquals(commodityService.getCommodityById(1L).get().getId(), 1);
     }
 
     @Test
     public void multiple_item_found() {
         addCommodity(4, List.of("AA"));
-        assertEquals(commodityService.getCommodityById(1L).getId(), 1);
+        assertEquals(commodityService.getCommodityById(1L).get().getId(), 1);
     }
 
     @Test
     public void multiple_item_not_found() {
         addCommodity(4, List.of("AA"));
-        assertNull(commodityService.getCommodityById(5L));
+        assertTrue(commodityService.getCommodityById(5L).isEmpty());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class CommodityTest {
     public void add_one_rating_valid() {
         addCommodity(1, List.of("AA"));
         commodityService.rateCommodity(new Score("123", 1L, 10));
-        assertEquals(commodityService.getCommodityById(1L).getRating(), 10);
+        assertEquals(commodityService.getCommodityById(1L).get().getRating(), 10);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class CommodityTest {
         commodityService.rateCommodity(new Score("456", 1L, 5));
         commodityService.rateCommodity(new Score("789", 1L, 7));
         commodityService.rateCommodity(new Score("012", 1L, 8));
-        assertEquals(commodityService.getCommodityById(1L).getRating(), 7.5D);
+        assertEquals(commodityService.getCommodityById(1L).get().getRating(), 7.5D);
     }
 
     @Test

@@ -73,7 +73,7 @@
               {% endfor %}
             </table>
         {% endblock %}
-        {% block script %}
+    {% block script %}
              <script>
                 function addToBuyList() {
                     var username = document.getElementById("user_id").value;

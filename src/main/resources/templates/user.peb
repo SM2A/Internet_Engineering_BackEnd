@@ -1,6 +1,6 @@
-{% extends "./base.peb" %}
-{% block title %} User {% endblock %}
-{% block style %}
+    {% extends "./base.peb" %}
+        {% block title %} User {% endblock %}
+        {% block style %}
         li {
         	padding: 5px
         }
@@ -10,7 +10,7 @@
         }
     {% endblock style %}
 
-{% block content %}
+        {% block content %}
     <ul>
         <li id="username">Username: {{ user.getUsername() }}</li>
         <li id="email">Email: {{ user.getEmail() }}</li>
@@ -61,7 +61,7 @@
     </table>
     <br>
 {% endblock %}
-{% block script %}
+    {% block script %}
      <script>
         function removeFromBuyList() {
             var commodityId = document.getElementById("form_commodity_id").value;

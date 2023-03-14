@@ -9,6 +9,7 @@ import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CommodityServiceImpl implements CommodityService {
     private final CommodityRepository commodityRepository;
@@ -31,8 +32,8 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
-    public Commodity getCommodityById(Long id) {
-        return commodityRepository.findById(id).orElse(null);
+    public Optional<Commodity> getCommodityById(Long id) {
+        return commodityRepository.findById(id);
     }
 
     @Override
@@ -59,13 +60,11 @@ public class CommodityServiceImpl implements CommodityService {
     public Commodity rateCommodity(Score score) {
         if (score.getScore() < 1 || score.getScore() > 10)
             throw new OnlineShopException("Invalid score.It must be between 1 and 10");
-        if (commodityRepository.findById(score.getCommodityId()).isEmpty())
-            throw new OnlineShopException("Commodity not found");
-        if (userRepository.findById(score.getUsername()).isEmpty())
-            throw new OnlineShopException("User not found");
+        Commodity commodity = getCommodityById(score.getCommodityId())
+                .orElseThrow(() -> new OnlineShopException("Commodity not found"));
+        userRepository.findById(score.getUsername()).orElseThrow(() -> new OnlineShopException("User not found"));
         int numOfRatings = ((List<Score>) scoreRepository.findAllByCommodityId(score.getCommodityId())).size();
         Score newScore = scoreRepository.save(score);
-        Commodity commodity = getCommodityById(score.getCommodityId());
         commodity.setRating((commodity.getRating() * numOfRatings + newScore.getScore()) / (numOfRatings + 1));
         commodityRepository.save(commodity);
         return commodity;

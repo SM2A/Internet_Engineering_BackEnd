@@ -16,5 +16,6 @@ public interface CommodityRepository {
     Iterable<Commodity> findAllByProviderId(Integer id);
 
     Iterable<Commodity> findAllByCategory(String category);
+
     Iterable<Commodity> findAllByPriceInRange(Long from, Long to);
 }

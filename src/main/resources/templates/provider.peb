@@ -1,6 +1,6 @@
-{% extends "./base.peb" %}
-    {% block title %} Provider {% endblock %}
-    {% block style %}
+    {% extends "./base.peb" %}
+        {% block title %} Provider {% endblock %}
+        {% block style %}
         li {
         	padding: 5px
         }
@@ -9,7 +9,7 @@
             text-align: center;
         }
     {% endblock style %}
-{% block content %}
+    {% block content %}
     <ul>
         <li id="id">Id:  {{ provider.getId() }} </li>
         <li id="name">Name: {{ provider.getName() }}</li>

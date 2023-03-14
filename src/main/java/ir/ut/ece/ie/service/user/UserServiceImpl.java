@@ -4,6 +4,7 @@ import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.repository.user.UserRepository;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class UserServiceImpl implements UserService {
@@ -22,8 +23,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String username) {
-        return repository.findById(username).orElseThrow(() -> new OnlineShopException("User not found!"));
+    public Optional<User> getUser(String username) {
+        return repository.findById(username);
     }
 
 }

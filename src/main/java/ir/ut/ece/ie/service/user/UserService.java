@@ -2,9 +2,11 @@ package ir.ut.ece.ie.service.user;
 
 import ir.ut.ece.ie.domain.user.User;
 
+import java.util.Optional;
+
 public interface UserService {
     User addUser(User user);
 
-    User getUser(String username);
+    Optional<User> getUser(String username);
 
 }

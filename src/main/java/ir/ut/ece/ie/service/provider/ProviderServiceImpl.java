@@ -1,8 +1,9 @@
 package ir.ut.ece.ie.service.provider;
 
 import ir.ut.ece.ie.domain.provider.Provider;
-import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
+
+import java.util.Optional;
 
 public class ProviderServiceImpl implements ProviderService {
     private final ProviderRepository repository;
@@ -17,7 +18,7 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
-    public Provider getProvider(Integer id) {
-        return repository.findById(id).orElseThrow(() -> new OnlineShopException("Provider not found!"));
+    public Optional<Provider> getProvider(Integer id) {
+        return repository.findById(id);
     }
 }
