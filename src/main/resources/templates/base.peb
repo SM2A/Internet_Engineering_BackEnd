@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
 	<title>{% block title %}Baloot Online Shop{% endblock %}</title>
-	<style>{% block style %} {% endblock style %}</style>
+	<style>{% block style %} {% endblock %}</style>
 </head>
 <body>
 	<div id="content">
 		{% block content %}{% endblock %}
 	</div>
 	<div id="footer">
-		{% block footer %}
-		{% endblock %}
+		{% block footer %}{% endblock %}
 	</div>
+	{% block script %}{% endblock %}
 </body>
 </html>
