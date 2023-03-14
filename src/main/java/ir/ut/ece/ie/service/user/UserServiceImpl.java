@@ -20,4 +20,10 @@ public class UserServiceImpl implements UserService {
             throw new OnlineShopException("Invalid username");
         return repository.save(user);
     }
+
+    @Override
+    public User getUser(String username) {
+        return repository.findById(username).orElseThrow(() -> new OnlineShopException("User not found!"));
+    }
+
 }

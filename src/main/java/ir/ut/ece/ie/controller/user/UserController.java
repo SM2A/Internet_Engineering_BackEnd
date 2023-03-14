@@ -13,4 +13,8 @@ public class UserController {
     public User addUser(User user) {
         return userService.addUser(user);
     }
+
+    public User getUser(String username) {
+        return userService.getUser(username);
+    }
 }
