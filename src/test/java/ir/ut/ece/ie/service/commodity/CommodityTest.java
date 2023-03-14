@@ -5,6 +5,8 @@ import ir.ut.ece.ie.domain.commodity.Score;
 import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.exception.OnlineShopException;
+import ir.ut.ece.ie.repository.commodity.CommodityRepositoryImpl;
+import ir.ut.ece.ie.repository.commodity.ScoreRepositoryImpl;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
 import ir.ut.ece.ie.util.Factory;
@@ -34,8 +36,8 @@ public class CommodityTest {
         userRepository.save(new User("012", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
 
         commodityService = new CommodityServiceImpl(
-                Factory.getCommodityRepository(),
-                Factory.getScoreRepository(),
+                new CommodityRepositoryImpl(),
+                new ScoreRepositoryImpl(),
                 providerRepository,
                 userRepository);
     }
