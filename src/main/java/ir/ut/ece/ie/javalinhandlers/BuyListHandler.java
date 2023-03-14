@@ -15,4 +15,12 @@ public class BuyListHandler {
             ctx.result(e.getMessage());
         }
     };
+    public static Handler removeFromBuyList = ctx -> {
+        try {
+            buyListController.removeFromBuyList(ctx.pathParam("username"), Long.valueOf(ctx.pathParam("commodityId")));
+            ctx.render(Path.Template.SUCCESS);
+        } catch (Exception e) {
+            ctx.result(e.getMessage());
+        }
+    };
 }

@@ -7,6 +7,7 @@ public class Path {
         public static final String PROVIDER = "/providers/{provider_id}";
         public static final String USER = "/users/{user_id}";
         public static final String ADD_TO_BUYLIST = "/addToBuyList/{username}/{commodityId}";
+        public static final String REMOVE_FROM_BUYLIST = "/removeFromBuyList/{username}/{commodityId}";
     }
 
     public static class Template {

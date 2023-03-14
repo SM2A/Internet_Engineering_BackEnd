@@ -51,8 +51,8 @@
                 <td>{{ commodity.getInStock() }}</td>
                 <td><a href="/commodities/{{ commodity.getId() }}">Link</a></td>
                 <td>
-                    <form action="" method="POST" >
-                        <input id="form_commodity_id" type="hidden" name="commodityId" value="2341">
+                    <form id="removeBuyItem" action="" method="POST" onsubmit="removeFromBuyList()">
+                        <input id="form_commodity_id" type="hidden" name="commodityId" value={{ commodity.getId() }}>
                         <button type="submit">Remove</button>
                     </form>
                 </td>
@@ -60,4 +60,12 @@
         </tr>
     </table>
     <br>
+{% endblock %}
+{% block script %}
+     <script>
+        function removeFromBuyList() {
+            var commodityId = document.getElementById("form_commodity_id").value;
+            document.getElementById("removeBuyItem").action = "/removeFromBuyList/" + "{{ user.getUsername() }}" + "/" + commodityId;
+        }
+     </script>
 {% endblock %}
