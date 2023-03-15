@@ -19,6 +19,7 @@ public class OnlineShopApplication {
         app.get(Path.Web.COMMODITY, CommodityHandler.getCommodityById);
         app.get(Path.Web.COMMODITIES_IN_PRICE_RANGE, CommodityHandler.getAllCommoditiesInPriceRange);
         app.get(Path.Web.COMMODITIES_IN_CATEGORY, CommodityHandler.getAllCommoditiesInCategory);
+        app.post(Path.Web.RATE_COMMODITY, CommodityHandler.rateCommodity);
         app.get(Path.Web.PROVIDER, ProviderHandler.getProvider);
         app.get(Path.Web.USER, UserHandler.getUser);
         app.get(Path.Web.ADD_CREDIT, UserHandler.addCredit);

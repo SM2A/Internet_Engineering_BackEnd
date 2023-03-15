@@ -3,6 +3,7 @@ package ir.ut.ece.ie.javalinhandlers;
 import io.javalin.http.Handler;
 import ir.ut.ece.ie.controller.commodity.CommentController;
 import ir.ut.ece.ie.controller.commodity.CommodityController;
+import ir.ut.ece.ie.domain.commodity.Score;
 import ir.ut.ece.ie.util.Factory;
 import ir.ut.ece.ie.util.Path;
 
@@ -32,4 +33,16 @@ public class CommodityHandler {
     public static Handler getAllCommoditiesInCategory = ctx ->
             ctx.render(Path.Template.COMMODITIES, Collections.singletonMap("commodities",
                     commodityController.getCommoditiesByCategory(ctx.pathParam("category"))));
+
+    public static Handler rateCommodity = ctx -> {
+        try {
+            String username = ctx.pathParam("username");
+            String commodityId = ctx.pathParam("commodityId");
+            String rate = ctx.pathParam("rate");
+            commodityController.rateCommodity(new Score(username, Long.valueOf(commodityId), Integer.valueOf(rate)));
+            ctx.render(Path.Template.SUCCESS);
+        } catch (Exception e) {
+            ctx.result(e.getMessage());
+        }
+    };
 }
