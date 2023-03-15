@@ -2,12 +2,20 @@ package ir.ut.ece.ie.util;
 
 public class Path {
     public static class Web {
+        // Commodity
         public static final String COMMODITIES = "/commodities";
         public static final String COMMODITY = "/commodities/{commodity_id}";
         public static final String COMMODITIES_IN_PRICE_RANGE = "/commodities/search/{start_price}/{end_price}";
         public static final String COMMODITIES_IN_CATEGORY = "/commodities/search/{category}";
+
+        // Provider
         public static final String PROVIDER = "/providers/{provider_id}";
+
+        // User
         public static final String USER = "/users/{user_id}";
+        public static final String ADD_CREDIT = "/addCredit/{user_id}/{credit}";
+
+        // Buy List
         public static final String ADD_TO_BUYLIST = "/addToBuyList/{username}/{commodityId}";
         public static final String REMOVE_FROM_BUYLIST = "/removeFromBuyList/{username}/{commodityId}";
     }

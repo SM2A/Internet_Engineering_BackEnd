@@ -21,6 +21,7 @@ public class OnlineShopApplication {
         app.get(Path.Web.COMMODITIES_IN_CATEGORY, CommodityHandler.getAllCommoditiesInCategory);
         app.get(Path.Web.PROVIDER, ProviderHandler.getProvider);
         app.get(Path.Web.USER, UserHandler.getUser);
+        app.get(Path.Web.ADD_CREDIT, UserHandler.addCredit);
         app.post(Path.Web.ADD_TO_BUYLIST, BuyListHandler.addToBuyList);
         app.post(Path.Web.REMOVE_FROM_BUYLIST, BuyListHandler.removeFromBuyList);
     }
