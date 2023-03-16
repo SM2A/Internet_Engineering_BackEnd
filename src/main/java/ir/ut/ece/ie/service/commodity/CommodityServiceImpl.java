@@ -53,6 +53,10 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public List<Commodity> getCommoditiesInPriceRange(Long from, Long to) {
+        if (from > to)
+            throw new IllegalArgumentException("Invalid price range. From must be less than to");
+        if (from < 0)
+            throw new IllegalArgumentException("Invalid price range. From and to must be positive");
         return (List<Commodity>) commodityRepository.findAllByPriceInRange(from, to);
     }
 
