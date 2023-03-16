@@ -27,10 +27,12 @@ public class VoteRepositoryImpl implements VoteRepository {
 
     @Override
     public Optional<Vote> findSpecific(String username, long commentId) {
-        Vote vote = votes.get(commentId).stream()
-                .filter(v -> v.getUsername().equals(username))
-                .findFirst().orElse(null);
-        if (vote != null) return Optional.of(vote);
+        if (votes.containsKey(commentId)) {
+            Vote vote = votes.get(commentId).stream()
+                    .filter(v -> v.getUsername().equals(username))
+                    .findFirst().orElse(null);
+            if (vote != null) return Optional.of(vote);
+        }
         return Optional.empty();
     }
 }
