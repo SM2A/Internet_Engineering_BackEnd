@@ -3,7 +3,10 @@ package ir.ut.ece.ie.javalinhandlers;
 import io.javalin.http.Handler;
 import ir.ut.ece.ie.controller.commodity.CommentController;
 import ir.ut.ece.ie.controller.commodity.CommodityController;
+import ir.ut.ece.ie.controller.commodity.VoteController;
 import ir.ut.ece.ie.domain.commodity.Score;
+import ir.ut.ece.ie.domain.commodity.Vote;
+import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.util.Factory;
 import ir.ut.ece.ie.util.Path;
 
@@ -13,6 +16,8 @@ import java.util.Map;
 public class CommodityHandler {
     private static final CommodityController commodityController = Factory.getCommodityController();
     private static final CommentController commentController = Factory.getCommentController();
+    private static final VoteController voteController = Factory.getVoteController();
+
     public static Handler getAllCommodities = ctx ->
             ctx.render(
                     Path.Template.COMMODITIES,
@@ -40,6 +45,21 @@ public class CommodityHandler {
             String commodityId = ctx.pathParam("commodityId");
             String rate = ctx.pathParam("rate");
             commodityController.rateCommodity(new Score(username, Long.valueOf(commodityId), Integer.valueOf(rate)));
+            ctx.render(Path.Template.SUCCESS);
+        } catch (Exception e) {
+            ctx.result(e.getMessage());
+        }
+    };
+
+    public static Handler voteComment = ctx -> {
+        try {
+            String username = ctx.pathParam("username");
+            String commodityId = ctx.pathParam("commodityId");
+            int vote = Integer.parseInt(ctx.pathParam("vote"));
+            User user = Factory.getUserController().getUser(username);
+            if (user == null)
+                throw new Exception("User not found");
+            voteController.addVote(new Vote(username, Long.parseLong(commodityId), vote));
             ctx.render(Path.Template.SUCCESS);
         } catch (Exception e) {
             ctx.result(e.getMessage());

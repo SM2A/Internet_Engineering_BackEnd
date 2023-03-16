@@ -15,14 +15,23 @@ public class OnlineShopApplication {
         DataInitializer.loadData("http://5.253.25.110:5000");
 
         Javalin app = Javalin.create().start(8000);
+
+        // Commodity
         app.get(Path.Web.COMMODITIES, CommodityHandler.getAllCommodities);
         app.get(Path.Web.COMMODITY, CommodityHandler.getCommodityById);
         app.get(Path.Web.COMMODITIES_IN_PRICE_RANGE, CommodityHandler.getAllCommoditiesInPriceRange);
         app.get(Path.Web.COMMODITIES_IN_CATEGORY, CommodityHandler.getAllCommoditiesInCategory);
         app.post(Path.Web.RATE_COMMODITY, CommodityHandler.rateCommodity);
+        app.post(Path.Web.VOTE_COMMENT, CommodityHandler.voteComment);
+
+        // Provider
         app.get(Path.Web.PROVIDER, ProviderHandler.getProvider);
+
+        // User
         app.get(Path.Web.USER, UserHandler.getUser);
         app.get(Path.Web.ADD_CREDIT, UserHandler.addCredit);
+
+        // Buy List
         app.post(Path.Web.ADD_TO_BUYLIST, BuyListHandler.addToBuyList);
         app.post(Path.Web.REMOVE_FROM_BUYLIST, BuyListHandler.removeFromBuyList);
     }

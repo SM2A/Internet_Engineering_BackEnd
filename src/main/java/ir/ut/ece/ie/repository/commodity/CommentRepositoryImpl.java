@@ -24,7 +24,7 @@ public class CommentRepositoryImpl implements CommentRepository {
     }
 
     @Override
-    public Iterable<Comment> findAllByCommodityId(Long commodityId) {
+    public Iterable<Comment> findAllByCommodityId(long commodityId) {
         return comments.values().stream()
                 .filter(comment -> comment.getCommodityId() == commodityId)
                 .toList();
