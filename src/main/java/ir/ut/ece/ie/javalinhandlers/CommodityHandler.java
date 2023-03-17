@@ -59,7 +59,7 @@ public class CommodityHandler {
             User user = Factory.getUserController().getUser(username);
             if (user == null)
                 throw new Exception("User not found");
-            voteController.addVote(new Vote(username, Long.parseLong(commodityId), vote));
+            voteController.addVote(new Vote(username, Long.parseLong(commodityId), Vote.Status.enumOf(vote)));
             ctx.render(Path.Template.SUCCESS);
         } catch (Exception e) {
             ctx.result(e.getMessage());

@@ -25,12 +25,12 @@ public class VoteServiceImpl implements VoteService{
 
     @Override
     public int likesOfComment(long commentId) {
-        return getVotesOfComment(commentId).stream().filter(vote -> vote.getVote() == 1).toList().size();
+        return getVotesOfComment(commentId).stream().filter(vote -> vote.getVote() == Vote.Status.LIKE).toList().size();
     }
 
     @Override
     public int dislikesOfComment(long commentId) {
-        return getVotesOfComment(commentId).stream().filter(vote -> vote.getVote() == -1).toList().size();
+        return getVotesOfComment(commentId).stream().filter(vote -> vote.getVote() == Vote.Status.DISLIKE).toList().size();
     }
 
     @Override

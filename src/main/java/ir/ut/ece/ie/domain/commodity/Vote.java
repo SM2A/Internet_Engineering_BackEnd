@@ -8,14 +8,14 @@ import java.util.Objects;
 public class Vote {
     private String username;
     private long commentId;
-    private int vote;
+    private Status vote;
 
     public Vote(String username, long commentId) {
         this.username = username;
         this.commentId = commentId;
     }
 
-    public Vote(String username, long commentId, int vote) {
+    public Vote(String username, long commentId, Status vote) {
         this.username = username;
         this.commentId = commentId;
         this.vote = vote;
@@ -28,4 +28,19 @@ public class Vote {
         Vote vote = (Vote) o;
         return commentId == vote.commentId && Objects.equals(username, vote.username);
     }
+
+    public enum Status {
+        LIKE(1), DISLIKE(-1);
+
+        public final int value;
+
+        Status(int value) {
+            this.value = value;
+        }
+
+        public static Status enumOf(int value) {
+            return value == 1 ? LIKE : DISLIKE;
+        }
+    }
+
 }
