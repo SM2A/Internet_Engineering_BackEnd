@@ -1,8 +1,10 @@
 package ir.ut.ece.ie.controller.buylist;
 
+import ir.ut.ece.ie.domain.buylist.BuyList;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.service.buylist.BuyListService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuyListController {
@@ -17,7 +19,8 @@ public class BuyListController {
     }
 
     public List<Commodity> getBuyList(String username) {
-        return buyListService.getBuyList(username).getCommodities();
+        BuyList buyList = buyListService.getBuyList(username).orElse(new BuyList(username, new ArrayList<>()));
+        return buyList.getCommodities();
     }
 
     public void removeFromBuyList(String username, Long commodityId) {

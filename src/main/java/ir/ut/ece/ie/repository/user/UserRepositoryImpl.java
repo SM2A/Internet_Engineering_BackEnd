@@ -16,6 +16,12 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Iterable<User> saveAll(Iterable<User> users) {
+        users.forEach(user -> this.users.put(user.getUsername(), user));
+        return users;
+    }
+
+    @Override
     public Optional<User> findById(String username) {
         return Optional.ofNullable(users.getOrDefault(username, null));
     }

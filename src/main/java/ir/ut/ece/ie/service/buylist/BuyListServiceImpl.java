@@ -7,7 +7,6 @@ import ir.ut.ece.ie.repository.buylist.BuyListRepository;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class BuyListServiceImpl implements BuyListService {
@@ -37,9 +36,8 @@ public class BuyListServiceImpl implements BuyListService {
     }
 
     @Override
-    public BuyList getBuyList(String username) {
-        return buyListRepository.findByUsername(username)
-                .orElse(new BuyList(username, new ArrayList<>()));
+    public Optional<BuyList> getBuyList(String username) {
+        return buyListRepository.findByUsername(username);
     }
 
     @Override

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BuyListTest {
 
@@ -54,13 +55,13 @@ public class BuyListTest {
 
     @Test
     public void empty_buy_list() {
-        assertEquals(buyListService.getBuyList("123").getCommodities().size(), 0);
+        assertTrue(buyListService.getBuyList("123").isEmpty());
     }
 
     @Test
     public void one_item_buy_list() {
         buyListService.addToBuyList("123", 2L);
-        assertEquals(buyListService.getBuyList("123").getCommodities().size(), 1);
+        assertEquals(buyListService.getBuyList("123").get().getCommodities().size(), 1);
     }
 
     @Test
@@ -68,6 +69,6 @@ public class BuyListTest {
         buyListService.addToBuyList("123", 2L);
         buyListService.addToBuyList("123", 4L);
         buyListService.addToBuyList("123", 7L);
-        assertEquals(buyListService.getBuyList("123").getCommodities().size(), 3);
+        assertEquals(buyListService.getBuyList("123").get().getCommodities().size(), 3);
     }
 }

@@ -7,5 +7,7 @@ import java.util.Optional;
 public interface ProviderRepository {
     Provider save(Provider provider);
 
+    Iterable<Provider> saveAll(Iterable<Provider> providers);
+
     Optional<Provider> findById(Integer id);
 }

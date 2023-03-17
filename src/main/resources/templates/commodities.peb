@@ -1,0 +1,35 @@
+    {% extends "./base.peb" %}
+        {% block title %} Commodities {% endblock %}
+        {% block style %}
+           table{
+                width: 100%;
+                text-align: center;
+            }
+        {% endblock style %}
+
+    {% block content %}
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Provider Id</th>
+                <th>Price</th>
+                <th>Categories</th>
+                <th>Rating</th>
+                <th>In Stock</th>
+                <th>Links</th>
+            </tr>
+            {% for commodity in commodities %}
+                <tr>
+                    <td>{{ commodity.getId() }}</td>
+                    <td>{{ commodity.getName() }}</td>
+                    <td>{{ commodity.getProviderId() }}</td>
+                    <td>{{ commodity.getPrice() }}</td>
+                    <td>{{ commodity.getCategories() }}</td>
+                    <td>{{ commodity.getRating() }}</td>
+                    <td>{{ commodity.getInStock() }}</td>
+                    <td><a href="/commodities/{{ commodity.getId() }}">Link</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endblock %}

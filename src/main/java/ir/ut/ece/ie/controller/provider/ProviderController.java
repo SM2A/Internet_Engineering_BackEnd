@@ -1,6 +1,7 @@
 package ir.ut.ece.ie.controller.provider;
 
 import ir.ut.ece.ie.domain.provider.Provider;
+import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.service.provider.ProviderService;
 
 public class ProviderController {
@@ -12,5 +13,9 @@ public class ProviderController {
 
     public Provider addProvider(Provider provider) {
         return providerService.addProvider(provider);
+    }
+
+    public Provider getProviderById(Integer id) {
+        return providerService.getProvider(id).orElseThrow(() -> new OnlineShopException("Provider not found!"));
     }
 }

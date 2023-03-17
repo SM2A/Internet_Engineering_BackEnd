@@ -1,34 +1,38 @@
 package ir.ut.ece.ie;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import ir.ut.ece.ie.util.Dispatcher;
-import ir.ut.ece.ie.util.ResponseModel;
+import io.javalin.Javalin;
+import ir.ut.ece.ie.javalinhandlers.BuyListHandler;
+import ir.ut.ece.ie.javalinhandlers.CommodityHandler;
+import ir.ut.ece.ie.javalinhandlers.ProviderHandler;
+import ir.ut.ece.ie.javalinhandlers.UserHandler;
+import ir.ut.ece.ie.util.DataInitializer;
+import ir.ut.ece.ie.util.Path;
 
-import java.util.Scanner;
+import java.io.IOException;
 
 public class OnlineShopApplication {
-    public static void main(String[] args) {
-        run();
-    }
+    public static void main(String[] args) throws IOException, InterruptedException {
+        DataInitializer.loadData("http://5.253.25.110:5000");
 
-    public static void run() {
-        Dispatcher dispatcher = new Dispatcher();
-        Scanner scanner = new Scanner(System.in);
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
+        Javalin app = Javalin.create().start(8000);
 
-        ResponseModel responseModel = new ResponseModel();
-        while (scanner.hasNextLine()) {
-            String request = scanner.nextLine();
-            try {
-                responseModel.setData(dispatcher.dispatch(request));
-                responseModel.setSuccess(true);
-            } catch (Exception e) {
-                responseModel.setData(e.getMessage());
-                responseModel.setSuccess(false);
-            }
-            System.out.println(gson.toJson(responseModel));
-        }
+        // Commodity
+        app.get(Path.Web.COMMODITIES, CommodityHandler.getAllCommodities);
+        app.get(Path.Web.COMMODITY, CommodityHandler.getCommodityById);
+        app.get(Path.Web.COMMODITIES_IN_PRICE_RANGE, CommodityHandler.getAllCommoditiesInPriceRange);
+        app.get(Path.Web.COMMODITIES_IN_CATEGORY, CommodityHandler.getAllCommoditiesInCategory);
+        app.post(Path.Web.RATE_COMMODITY, CommodityHandler.rateCommodity);
+        app.post(Path.Web.VOTE_COMMENT, CommodityHandler.voteComment);
+
+        // Provider
+        app.get(Path.Web.PROVIDER, ProviderHandler.getProvider);
+
+        // User
+        app.get(Path.Web.USER, UserHandler.getUser);
+        app.get(Path.Web.ADD_CREDIT, UserHandler.addCredit);
+
+        // Buy List
+        app.post(Path.Web.ADD_TO_BUYLIST, BuyListHandler.addToBuyList);
+        app.post(Path.Web.REMOVE_FROM_BUYLIST, BuyListHandler.removeFromBuyList);
     }
 }

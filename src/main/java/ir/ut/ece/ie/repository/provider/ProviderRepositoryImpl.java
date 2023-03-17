@@ -16,6 +16,12 @@ public class ProviderRepositoryImpl implements ProviderRepository {
     }
 
     @Override
+    public Iterable<Provider> saveAll(Iterable<Provider> providers) {
+        providers.forEach(provider -> this.providers.put(provider.getId(), provider));
+        return providers;
+    }
+
+    @Override
     public Optional<Provider> findById(Integer id) {
         return Optional.ofNullable(providers.getOrDefault(id, null));
     }
