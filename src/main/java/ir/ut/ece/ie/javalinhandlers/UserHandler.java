@@ -23,4 +23,12 @@ public class UserHandler {
             ctx.result(e.getMessage());
         }
     };
+    public static Handler addCredit = ctx -> {
+        try {
+            userController.addCredit(ctx.pathParam("user_id"), Long.parseLong(ctx.pathParam("credit")));
+            ctx.render(Path.Template.SUCCESS);
+        } catch (Exception e) {
+            ctx.result(e.getMessage());
+        }
+    };
 }

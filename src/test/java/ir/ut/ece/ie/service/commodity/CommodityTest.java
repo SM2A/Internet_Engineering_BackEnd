@@ -5,6 +5,8 @@ import ir.ut.ece.ie.domain.commodity.Score;
 import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.exception.OnlineShopException;
+import ir.ut.ece.ie.repository.commodity.CommodityRepositoryImpl;
+import ir.ut.ece.ie.repository.commodity.ScoreRepositoryImpl;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
 import ir.ut.ece.ie.util.Factory;
@@ -34,8 +36,8 @@ public class CommodityTest {
         userRepository.save(new User("012", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
 
         commodityService = new CommodityServiceImpl(
-                Factory.getCommodityRepository(),
-                Factory.getScoreRepository(),
+                new CommodityRepositoryImpl(),
+                new ScoreRepositoryImpl(),
                 providerRepository,
                 userRepository);
     }
@@ -117,6 +119,47 @@ public class CommodityTest {
         commodityService.rateCommodity(new Score("123", 1L, 10));
         assertThrows(OnlineShopException.class,
                 () -> commodityService.rateCommodity(new Score("123", 1L, 15)));
+    }
+
+    @Test
+    public void rage_search_no_item_found_below_range() {
+        addCommodity(5, List.of("AA"));
+        assertEquals(commodityService.getCommoditiesInPriceRange(5L, 15L).size(), 0);
+    }
+
+    @Test
+    public void rage_search_no_item_found_above_range() {
+        addCommodity(5, List.of("AA"));
+        assertEquals(commodityService.getCommoditiesInPriceRange(5000L, 15000L).size(), 0);
+    }
+
+    @Test
+    public void rage_search_invalid_boundaries_negative() {
+        assertThrows(OnlineShopException.class,
+                () -> commodityService.getCommoditiesInPriceRange(-300L, -100L));
+    }
+
+    @Test
+    public void rage_search_invalid_boundaries_from_greater_than_to() {
+        assertThrows(OnlineShopException.class,
+                () -> commodityService.getCommoditiesInPriceRange(3000L, 1000L));
+    }
+
+    @Test
+    public void rage_search_one_item_found() {
+        commodityService.addCommodity(new Commodity(id++, "abc" + id, 1, 1000L, List.of("category"), 5.0D, 10));
+        commodityService.addCommodity(new Commodity(id++, "abc" + id, 1, 2000L, List.of("category"), 5.0D, 10));
+        commodityService.addCommodity(new Commodity(id++, "abc" + id, 1, 3000L, List.of("category"), 5.0D, 10));
+        assertEquals(commodityService.getCommoditiesInPriceRange(500L, 1500L).size(), 1);
+    }
+
+    @Test
+    public void rage_search_multiple_item_found() {
+        commodityService.addCommodity(new Commodity(id++, "abc" + id, 1, 100L, List.of("category"), 5.0D, 10));
+        commodityService.addCommodity(new Commodity(id++, "abc" + id, 1, 1000L, List.of("category"), 5.0D, 10));
+        commodityService.addCommodity(new Commodity(id++, "abc" + id, 1, 700L, List.of("category"), 5.0D, 10));
+        commodityService.addCommodity(new Commodity(id++, "abc" + id, 1, 1500L, List.of("category"), 5.0D, 10));
+        assertEquals(commodityService.getCommoditiesInPriceRange(500L, 1500L).size(), 3);
     }
 
     private void addCommodity(int count, List<String> category) {
