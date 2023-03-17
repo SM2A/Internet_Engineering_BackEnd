@@ -32,9 +32,9 @@ public class Vote {
     public enum Status {
         LIKE(1), DISLIKE(-1);
 
-        public final int value;
+        public final Integer value;
 
-        Status(int value) {
+        Status(Integer value) {
             this.value = value;
         }
 

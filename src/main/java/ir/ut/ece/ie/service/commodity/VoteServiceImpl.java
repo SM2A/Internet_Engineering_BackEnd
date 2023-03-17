@@ -20,7 +20,7 @@ public class VoteServiceImpl implements VoteService{
 
     @Override
     public List<Vote> getVotesOfComment(Long commentId) {
-        return (List<Vote>) voteRepository.findAllByComment(commentId);
+        return (List<Vote>) voteRepository.findAllByCommentId(commentId);
     }
 
     @Override

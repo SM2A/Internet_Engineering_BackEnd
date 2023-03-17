@@ -18,4 +18,10 @@ public class UserController {
     public User getUser(String username) {
         return userService.getUser(username).orElseThrow(() -> new OnlineShopException("User not found!"));
     }
+
+    public void addCredit(String username, Long credit) {
+        User user = getUser(username);
+        if (credit <= 0) throw new OnlineShopException("Invalid credit");
+        user.setCredit(user.getCredit() + credit);
+    }
 }

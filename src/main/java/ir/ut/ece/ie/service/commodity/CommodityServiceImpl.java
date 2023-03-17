@@ -53,10 +53,8 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public List<Commodity> getCommoditiesInPriceRange(Long from, Long to) {
-        if (from > to)
-            throw new IllegalArgumentException("Invalid price range. From must be less than to");
-        if (from < 0)
-            throw new IllegalArgumentException("Invalid price range. From and to must be positive");
+        if (from > to) throw new OnlineShopException("Invalid price range. From must be less than to");
+        if (from < 0) throw new OnlineShopException("Invalid price range. From and to must be positive");
         return (List<Commodity>) commodityRepository.findAllByPriceInRange(from, to);
     }
 
@@ -67,15 +65,11 @@ public class CommodityServiceImpl implements CommodityService {
         Commodity commodity = getCommodityById(score.getCommodityId())
                 .orElseThrow(() -> new OnlineShopException("Commodity not found"));
         userRepository.findById(score.getUsername()).orElseThrow(() -> new OnlineShopException("User not found"));
-        int numOfRatings = ((List<Score>) scoreRepository.findAllByCommodityId(score.getCommodityId())).size();
-
-        // TODO check how can we replace user rating
-        /*if (scoreRepository.findUserRatingCommodity(score.getCommodityId(), score.getUsername()).isPresent()) {
-            scoreRepository.deleteUserRating(score.getCommodityId(), score.getUsername());
-        }*/
-
         Score newScore = scoreRepository.save(score);
-        commodity.setRating((commodity.getRating() * numOfRatings + newScore.getScore()) / (numOfRatings + 1));
+        List<Score> scoreList = (List<Score>) scoreRepository.findAllByCommodityId(score.getCommodityId());
+        int numOfRatings = scoreList.size();
+        double sumOfScores = scoreList.stream().mapToInt(Score::getScore).sum();
+        commodity.setRating(sumOfScores / numOfRatings);
         commodityRepository.save(commodity);
         return commodity;
     }

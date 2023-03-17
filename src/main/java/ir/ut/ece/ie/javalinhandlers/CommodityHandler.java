@@ -56,9 +56,6 @@ public class CommodityHandler {
             String username = ctx.pathParam("username");
             String commodityId = ctx.pathParam("commodityId");
             int vote = Integer.parseInt(ctx.pathParam("vote"));
-            User user = Factory.getUserController().getUser(username);
-            if (user == null)
-                throw new Exception("User not found");
             voteController.addVote(new Vote(username, Long.parseLong(commodityId), Vote.Status.enumOf(vote)));
             ctx.render(Path.Template.SUCCESS);
         } catch (Exception e) {

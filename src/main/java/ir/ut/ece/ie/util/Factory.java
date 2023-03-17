@@ -25,7 +25,6 @@ public class Factory {
     private static final CommodityRepository commodityRepository = new CommodityRepositoryImpl();
     private static final CommentRepository commentRepository = new CommentRepositoryImpl();
     private static final VoteRepository voteRepository = new VoteRepositoryImpl();
-    private static final VoteService voteService = new VoteServiceImpl(voteRepository);
     private static final ScoreRepository scoreRepository = new ScoreRepositoryImpl();
     private static final ProviderRepository providerRepository = new ProviderRepositoryImpl();
     private static final UserRepository userRepository = new UserRepositoryImpl();
@@ -34,10 +33,12 @@ public class Factory {
             new CommodityServiceImpl(commodityRepository, scoreRepository, providerRepository, userRepository));
     private static final BuyListController buyListController = new BuyListController(
             new BuyListServiceImpl(userRepository, commodityRepository, buyListRepository));
-    private static final CommentController commentController = new CommentController(new CommentServiceImpl(commentRepository), voteService);
+    private static final CommentController commentController = new CommentController(new CommentServiceImpl(commentRepository),
+            new VoteServiceImpl(voteRepository));
     private static final ProviderController providerController = new ProviderController(new ProviderServiceImpl(providerRepository));
     private static final UserController userController = new UserController(new UserServiceImpl(userRepository));
-    private static final VoteController voteController = new VoteController(voteService);
+    private static final VoteController voteController = new VoteController(new VoteServiceImpl(voteRepository),
+            new UserServiceImpl(userRepository));
 
     public static CommodityRepository getCommodityRepository() {
         return commodityRepository;

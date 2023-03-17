@@ -20,7 +20,7 @@ public class VoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
-    public Iterable<Vote> findAllByComment(Long commentId) {
+    public Iterable<Vote> findAllByCommentId(Long commentId) {
         if (votes.containsKey(commentId)) return votes.get(commentId).stream().toList();
         else return new ArrayList<>();
     }

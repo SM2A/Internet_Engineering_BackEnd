@@ -25,10 +25,7 @@ public class UserHandler {
     };
     public static Handler addCredit = ctx -> {
         try {
-            User user = userController.getUser(ctx.pathParam("user_id"));
-            long credit = Long.parseLong(ctx.pathParam("credit"));
-            if (credit <= 0) throw new IllegalArgumentException("Invalid credit");
-            user.setCredit(user.getCredit() + credit);
+            userController.addCredit(ctx.pathParam("user_id"), Long.parseLong(ctx.pathParam("credit")));
             ctx.render(Path.Template.SUCCESS);
         } catch (Exception e) {
             ctx.result(e.getMessage());

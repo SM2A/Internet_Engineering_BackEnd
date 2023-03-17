@@ -10,7 +10,7 @@ public interface VoteRepository {
 
     void deleteByUsernameAndCommentId(String username, Long commentId);
 
-    Iterable<Vote> findAllByComment(Long commentId);
+    Iterable<Vote> findAllByCommentId(Long commentId);
 
     Optional<Vote> findByUsernameAndCommentId(String username, Long commentId);
 }

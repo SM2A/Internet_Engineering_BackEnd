@@ -21,19 +21,4 @@ public class ScoreRepositoryImpl implements ScoreRepository {
                 .filter(score -> Objects.equals(score.getCommodityId(), commodityId))
                 .toList();
     }
-
-    @Override
-    public Optional<Score> findUserRatingCommodity(Long commodityId, String username) {
-        Score score = scores.values().stream().filter(s -> Objects.equals(s.getCommodityId(), commodityId)
-                && Objects.equals(s.getUsername(), username)).findFirst().orElse(null);
-        if (score != null) return Optional.of(score);
-        else return Optional.empty();
-    }
-
-    @Override
-    public void deleteUserRating(Long commodityId, String username) {
-        AbstractMap.SimpleEntry<String, Long> entryKey =
-                new AbstractMap.SimpleEntry<>(username, commodityId);
-        scores.remove(entryKey);
-    }
 }

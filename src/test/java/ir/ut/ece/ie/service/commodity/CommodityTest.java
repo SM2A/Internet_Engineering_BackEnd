@@ -135,13 +135,13 @@ public class CommodityTest {
 
     @Test
     public void rage_search_invalid_boundaries_negative() {
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(OnlineShopException.class,
                 () -> commodityService.getCommoditiesInPriceRange(-300L, -100L));
     }
 
     @Test
     public void rage_search_invalid_boundaries_from_greater_than_to() {
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(OnlineShopException.class,
                 () -> commodityService.getCommoditiesInPriceRange(3000L, 1000L));
     }
 
