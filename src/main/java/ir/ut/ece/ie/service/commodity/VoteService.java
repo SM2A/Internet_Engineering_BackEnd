@@ -8,13 +8,13 @@ import java.util.Optional;
 public interface VoteService {
     Vote save(Vote vote);
 
-    List<Vote> getVotesOfComment(long commentId);
+    List<Vote> getVotesOfComment(Long commentId);
 
-    int likesOfComment(long commentId);
+    int getNumberOfLikesOfComment(Long commentId);
 
-    int dislikesOfComment(long commentId);
+    int getNumberOfDislikesOfComment(Long commentId);
 
-    Optional<Vote> findSpecific(String username, long commentId);
+    Optional<Vote> findByUsernameAndCommentId(String username, Long commentId);
 
-    void delete(String username, long commentId);
+    void deleteByUsernameAndCommentId(String username, Long commentId);
 }

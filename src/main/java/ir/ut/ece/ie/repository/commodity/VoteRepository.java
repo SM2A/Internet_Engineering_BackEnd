@@ -8,9 +8,9 @@ public interface VoteRepository {
 
     Vote save(Vote vote);
 
-    void delete(String username, long commentId);
+    void deleteByUsernameAndCommentId(String username, Long commentId);
 
-    Iterable<Vote> findAllByComment(long commentId);
+    Iterable<Vote> findAllByComment(Long commentId);
 
-    Optional<Vote> findSpecific(String username, long commentId);
+    Optional<Vote> findByUsernameAndCommentId(String username, Long commentId);
 }

@@ -15,18 +15,18 @@ public class VoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
-    public void delete(String username, long commentId) {
+    public void deleteByUsernameAndCommentId(String username, Long commentId) {
         votes.get(commentId).remove(new Vote(username, commentId));
     }
 
     @Override
-    public Iterable<Vote> findAllByComment(long commentId) {
+    public Iterable<Vote> findAllByComment(Long commentId) {
         if (votes.containsKey(commentId)) return votes.get(commentId).stream().toList();
         else return new ArrayList<>();
     }
 
     @Override
-    public Optional<Vote> findSpecific(String username, long commentId) {
+    public Optional<Vote> findByUsernameAndCommentId(String username, Long commentId) {
         if (votes.containsKey(commentId)) {
             return votes.get(commentId).stream()
                     .filter(v -> v.getUsername().equals(username))

@@ -7,15 +7,15 @@ import java.util.Objects;
 @Data
 public class Vote {
     private String username;
-    private long commentId;
+    private Long commentId;
     private Status vote;
 
-    public Vote(String username, long commentId) {
+    public Vote(String username, Long commentId) {
         this.username = username;
         this.commentId = commentId;
     }
 
-    public Vote(String username, long commentId, Status vote) {
+    public Vote(String username, Long commentId, Status vote) {
         this.username = username;
         this.commentId = commentId;
         this.vote = vote;
@@ -26,7 +26,7 @@ public class Vote {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vote vote = (Vote) o;
-        return commentId == vote.commentId && Objects.equals(username, vote.username);
+        return commentId.equals(vote.commentId) && Objects.equals(username, vote.username);
     }
 
     public enum Status {

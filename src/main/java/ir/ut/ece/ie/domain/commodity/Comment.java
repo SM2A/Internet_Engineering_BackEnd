@@ -9,6 +9,6 @@ public class Comment {
     private String userEmail;
     private String text;
     private String date;
-    private int likes;
-    private int dislikes;
+    private Integer likes;
+    private Integer dislikes;
 }

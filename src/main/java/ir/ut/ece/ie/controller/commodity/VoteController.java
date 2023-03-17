@@ -11,8 +11,8 @@ public class VoteController {
     }
 
     public Vote addVote(Vote vote) {
-        if (voteService.findSpecific(vote.getUsername(), vote.getCommentId()).isPresent())
-            voteService.delete(vote.getUsername(), vote.getCommentId());
+        if (voteService.findByUsernameAndCommentId(vote.getUsername(), vote.getCommentId()).isPresent())
+            voteService.deleteByUsernameAndCommentId(vote.getUsername(), vote.getCommentId());
         return voteService.save(vote);
     }
 }

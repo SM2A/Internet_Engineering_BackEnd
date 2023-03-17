@@ -19,27 +19,27 @@ public class VoteServiceImpl implements VoteService{
     }
 
     @Override
-    public List<Vote> getVotesOfComment(long commentId) {
+    public List<Vote> getVotesOfComment(Long commentId) {
         return (List<Vote>) voteRepository.findAllByComment(commentId);
     }
 
     @Override
-    public int likesOfComment(long commentId) {
+    public int getNumberOfLikesOfComment(Long commentId) {
         return getVotesOfComment(commentId).stream().filter(vote -> vote.getVote() == Vote.Status.LIKE).toList().size();
     }
 
     @Override
-    public int dislikesOfComment(long commentId) {
+    public int getNumberOfDislikesOfComment(Long commentId) {
         return getVotesOfComment(commentId).stream().filter(vote -> vote.getVote() == Vote.Status.DISLIKE).toList().size();
     }
 
     @Override
-    public Optional<Vote> findSpecific(String username, long commentId) {
-        return voteRepository.findSpecific(username, commentId);
+    public Optional<Vote> findByUsernameAndCommentId(String username, Long commentId) {
+        return voteRepository.findByUsernameAndCommentId(username, commentId);
     }
 
     @Override
-    public void delete(String username, long commentId) {
-        voteRepository.delete(username, commentId);
+    public void deleteByUsernameAndCommentId(String username, Long commentId) {
+        voteRepository.deleteByUsernameAndCommentId(username, commentId);
     }
 }

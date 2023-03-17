@@ -7,5 +7,5 @@ public interface CommentRepository {
 
     Iterable<Comment> saveAll(Iterable<Comment> comments);
 
-    Iterable<Comment> findAllByCommodityId(long commodityId);
+    Iterable<Comment> findAllByCommodityId(Long commodityId);
 }

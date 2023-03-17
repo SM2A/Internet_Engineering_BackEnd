@@ -17,8 +17,8 @@ public class CommentController {
 
     public List<Comment> getCommentsOfCommodity(Long commodityId) {
         return commentService.getCommentsOfCommodity(commodityId).stream().map(comment -> {
-            comment.setLikes(voteService.likesOfComment(comment.getId()));
-            comment.setDislikes(voteService.dislikesOfComment(comment.getId()));
+            comment.setLikes(voteService.getNumberOfLikesOfComment(comment.getId()));
+            comment.setDislikes(voteService.getNumberOfDislikesOfComment(comment.getId()));
             return comment;
         }).toList();
     }
