@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "CommoditiesServlet", value = Path.Web.COMMODITIES)
 public class CommoditiesServlet extends HttpServlet {
@@ -33,9 +34,10 @@ public class CommoditiesServlet extends HttpServlet {
                 case "search_by_name" ->
                         req.setAttribute("commodities", commodityController.getCommoditiesByNameContains(searchValue));
             }
-        }
-        else if (!StringUtils.isBlank(action) && action.equals("clear")) {
+        } else if (!StringUtils.isBlank(action) && action.equals("clear")) {
             req.setAttribute("commodities", commodityController.getCommodities());
+        } else {
+            req.setAttribute("commodities", List.of());
         }
         req.getRequestDispatcher(Path.JSP.COMMODITIES).forward(req, resp);
     }
