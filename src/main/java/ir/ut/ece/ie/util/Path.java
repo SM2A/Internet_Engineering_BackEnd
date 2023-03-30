@@ -2,31 +2,14 @@ package ir.ut.ece.ie.util;
 
 public class Path {
     public static class Web {
-        // Commodity
-        public static final String COMMODITIES = "/commodities";
-        public static final String COMMODITY = "/commodities/{commodity_id}";
-        public static final String COMMODITIES_IN_PRICE_RANGE = "/commodities/search/{start_price}/{end_price}";
-        public static final String COMMODITIES_IN_CATEGORY = "/commodities/search/{category}";
-        public static final String RATE_COMMODITY = "/rateCommodity/{username}/{commodityId}/{rate}";
-        public static final String VOTE_COMMENT = "/voteComment/{username}/{commodityId}/{vote}";
-
-        // Provider
-        public static final String PROVIDER = "/providers/{provider_id}";
-
-        // User
-        public static final String USER = "/users/{user_id}";
-        public static final String ADD_CREDIT = "/addCredit/{user_id}/{credit}";
-
-        // Buy List
-        public static final String ADD_TO_BUYLIST = "/addToBuyList/{username}/{commodityId}";
-        public static final String REMOVE_FROM_BUYLIST = "/removeFromBuyList/{username}/{commodityId}";
+        public static final String HOME = "/";
+        public static final String LOGIN = "/login";
+        public static final String LOGOUT = "/logout";
     }
 
-    public static class Template {
-        public static final String COMMODITIES = "templates/commodities.peb";
-        public static final String ONE_COMMODITY = "templates/commodity.peb";
-        public static final String ONE_PROVIDER = "templates/provider.peb";
-        public static final String USER = "templates/user.peb";
-        public static final String SUCCESS = "templates/200.peb";
+    public static class JSP {
+        public static final String HOME = "/jsp/home.jsp";
+        public static final String LOGIN = "/jsp/login.jsp";
+        public static final String ERROR = "/jsp/error.jsp";
     }
 }
