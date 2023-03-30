@@ -20,7 +20,7 @@
 <p id="username">username: <%=Factory.getUserController().getLoggedInUser().getUsername()%>
 </p>
 <br><br>
-<form action=<%=Path.Web.COMMODITIES%> method="POST">
+<form method="post" action=<%=Path.Web.COMMODITIES%>>
     <label>Search:</label>
     <input type="text" name="search" value="">
     <button type="submit" name="action" value="search_by_category">Search By Cagtegory</button>
@@ -28,9 +28,10 @@
     <button type="submit" name="action" value="clear">Clear Search</button>
 </form>
 <br><br>
-<form action="" method="POST">
+<form method="post" action=<%=Path.Web.COMMODITIES%>>
     <label>Sort By:</label>
     <button type="submit" name="action" value="sort_by_rate">Rate</button>
+    <button type="submit" name="action" value="sort_by_price">Price</button>
 </form>
 <br><br>
 <table>
@@ -44,17 +45,24 @@
         <th>In Stock</th>
         <th>Links</th>
     </tr>
-    <% for (Commodity commodity : (List<Commodity>)request.getAttribute("commodities")) { %>
-        <tr>
-            <td><%=commodity.getId()%></td>
-            <td><%=commodity.getName()%></td>
-            <td><%=commodity.getProviderId()%></td>
-            <td><%=commodity.getPrice()%></td>
-            <td><%=commodity.getCategories()%></td>
-            <td><%=commodity.getRating()%></td>
-            <td><%=commodity.getInStock()%></td>
-            <td><a href="/commodities/<%=commodity.getId()%>">Link</a></td>
-        </tr>
+    <% for (Commodity commodity : (List<Commodity>) request.getAttribute("commodities")) { %>
+    <tr>
+        <td><%=commodity.getId()%>
+        </td>
+        <td><%=commodity.getName()%>
+        </td>
+        <td><%=commodity.getProviderId()%>
+        </td>
+        <td><%=commodity.getPrice()%>
+        </td>
+        <td><%=commodity.getCategories()%>
+        </td>
+        <td><%=commodity.getRating()%>
+        </td>
+        <td><%=commodity.getInStock()%>
+        </td>
+        <td><a href="/commodities/<%=commodity.getId()%>">Link</a></td>
+    </tr>
     <%}%>
 </table>
 </body>
