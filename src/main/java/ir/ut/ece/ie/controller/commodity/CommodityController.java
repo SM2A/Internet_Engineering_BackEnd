@@ -34,6 +34,10 @@ public class CommodityController {
         return commodityService.getCommoditiesByCategory(category);
     }
 
+    public List<Commodity> getCommoditiesByNameContains(String searchStr) {
+        return commodityService.getCommoditiesByNameContains(searchStr);
+    }
+
     public List<Commodity> getCommoditiesInPriceRange(Long from, Long to) {
         return commodityService.getCommoditiesInPriceRange(from, to);
     }

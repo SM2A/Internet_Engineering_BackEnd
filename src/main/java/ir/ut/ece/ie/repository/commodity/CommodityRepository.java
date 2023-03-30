@@ -17,5 +17,7 @@ public interface CommodityRepository {
 
     Iterable<Commodity> findAllByCategory(String category);
 
+    Iterable<Commodity> findAllByNameContains(String searchStr);
+
     Iterable<Commodity> findAllByPriceInRange(Long from, Long to);
 }

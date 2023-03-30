@@ -31,7 +31,7 @@ public class CommoditiesServlet extends HttpServlet {
                 case "search_by_category" ->
                         req.setAttribute("commodities", commodityController.getCommoditiesByCategory(searchValue));
                 case "search_by_name" ->
-                        req.setAttribute("commodities", commodityController.getCommoditiesContainsName(searchValue));
+                        req.setAttribute("commodities", commodityController.getCommoditiesByNameContains(searchValue));
             }
         }
         else if (!StringUtils.isBlank(action) && action.equals("clear")) {

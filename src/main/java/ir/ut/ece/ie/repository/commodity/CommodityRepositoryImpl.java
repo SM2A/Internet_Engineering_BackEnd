@@ -1,6 +1,7 @@
 package ir.ut.ece.ie.repository.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Commodity;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
@@ -43,6 +44,13 @@ public class CommodityRepositoryImpl implements CommodityRepository {
                     List<String> categories = commodity.getCategories().stream().map(String::toLowerCase).toList();
                     return categories.contains(category.toLowerCase());
                 }).toList();
+    }
+
+    @Override
+    public Iterable<Commodity> findAllByNameContains(String searchStr) {
+        return commodities.values().stream()
+                .filter(commodity -> StringUtils.containsIgnoreCase(commodity.getName(), searchStr))
+                .toList();
     }
 
     @Override

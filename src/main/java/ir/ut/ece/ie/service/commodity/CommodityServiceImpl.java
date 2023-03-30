@@ -52,6 +52,11 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
+    public List<Commodity> getCommoditiesByNameContains(String searchStr) {
+        return (List<Commodity>) commodityRepository.findAllByNameContains(searchStr);
+    }
+
+    @Override
     public List<Commodity> getCommoditiesInPriceRange(Long from, Long to) {
         if (from > to) throw new OnlineShopException("Invalid price range. From must be less than to");
         if (from < 0) throw new OnlineShopException("Invalid price range. From and to must be positive");
