@@ -36,7 +36,8 @@ public class UserController {
 
     public void addCredit(String username, Long credit) {
         User user = getUser(username);
-        if (credit <= 0) throw new OnlineShopException("Invalid credit");
+        if (credit <= 0)
+            throw new OnlineShopException("Credit must be positive value!");
         user.setCredit(user.getCredit() + credit);
     }
 }
