@@ -87,7 +87,7 @@ public class CommodityServiceImpl implements CommodityService {
     public int compareScore(Commodity c1, Commodity c2, Commodity base) {
         Double s1 = scoreCalc(c1, base);
         Double s2 = scoreCalc(c2, base);
-        return s1.compareTo(s2);
+        return s2.compareTo(s1);
     }
 
     @Override
