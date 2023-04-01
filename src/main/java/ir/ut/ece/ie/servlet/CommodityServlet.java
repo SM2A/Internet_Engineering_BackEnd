@@ -23,6 +23,7 @@ public class CommodityServlet extends HttpServlet {
         long id = Long.parseLong(req.getPathInfo().replace("/", ""));
         req.setAttribute("commodity", commodityController.getCommodityById(id));
         req.setAttribute("comments", commentController.getCommentsOfCommodity(id));
+        req.setAttribute("suggestedCommodities", commodityController.getSuggestedCommodities(id));
         req.getRequestDispatcher(Path.JSP.COMMODITY).forward(req, resp);
     }
 }

@@ -8,8 +8,7 @@ import ir.ut.ece.ie.repository.commodity.ScoreRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class CommodityServiceImpl implements CommodityService {
     private final CommodityRepository commodityRepository;
@@ -77,5 +76,26 @@ public class CommodityServiceImpl implements CommodityService {
         commodity.setRating(sumOfScores / numOfRatings);
         commodityRepository.save(commodity);
         return commodity;
+    }
+
+    public double scoreCalc(Commodity commodity, Commodity base) {
+        double score = commodity.getRating();
+        score += commodity.getCategories().retainAll(base.getCategories()) ? 1 : 0;
+        return score;
+    }
+
+    public int compareScore(Commodity c1, Commodity c2, Commodity base) {
+        Double s1 = scoreCalc(c1, base);
+        Double s2 = scoreCalc(c2, base);
+        return s1.compareTo(s2);
+    }
+
+    @Override
+    public List<Commodity> getSuggestedCommodities(Long id) {
+        Commodity baseCommodity = getCommodityById(id).get();
+        List<Commodity> commodityList = new ArrayList<>(getCommodities());
+        commodityList.sort((c1, c2) -> compareScore(c1, c2, baseCommodity));
+        commodityList = commodityList.stream().filter(commodity -> !commodity.getId().equals(id)).limit(5).toList();
+        return commodityList;
     }
 }

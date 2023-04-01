@@ -64,6 +64,7 @@
         <button type="submit">Add to BuyList</button>
     </form>
     <br/>
+    <h3>Comments</h3>
     <table>
         <tr>
             <th>username</th>
@@ -106,6 +107,39 @@
                     <button type="submit">dislike</button>
                 </form>
             </td>
+        </tr>
+        <%}%>
+    </table>
+
+    <h3>Suggested Commodities</h3>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Provider Name</th>
+            <th>Price</th>
+            <th>Categories</th>
+            <th>Rating</th>
+            <th>In Stock</th>
+            <th>Links</th>
+        </tr>
+        <% for (Commodity c : (List<Commodity>) request.getAttribute("suggestedCommodities")) { %>
+        <tr>
+            <td><%=c.getId()%>
+            </td>
+            <td><%=c.getName()%>
+            </td>
+            <td><%=c.getProviderId()%>
+            </td>
+            <td><%=c.getPrice()%>
+            </td>
+            <td><%=c.getCategories()%>
+            </td>
+            <td><%=c.getRating()%>
+            </td>
+            <td><%=c.getInStock()%>
+            </td>
+            <td><a href="/commodities/<%=c.getId()%>">Link</a></td>
         </tr>
         <%}%>
     </table>

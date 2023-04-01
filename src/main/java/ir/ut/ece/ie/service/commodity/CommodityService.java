@@ -22,4 +22,6 @@ public interface CommodityService {
     List<Commodity> getCommoditiesInPriceRange(Long from, Long to);
 
     Commodity rateCommodity(Score score);
+
+    List<Commodity> getSuggestedCommodities(Long id);
 }
