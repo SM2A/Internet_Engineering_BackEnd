@@ -21,7 +21,7 @@ public class LogoutServlet extends HttpServlet {
             userController.logout();
             resp.sendRedirect(Path.Web.HOME);
         } else {
-            req.setAttribute("errorMsg", "There is currently logged in user");
+            req.setAttribute("errorMsg", "There is currently no logged in user");
             req.getRequestDispatcher(Path.JSP.ERROR).forward(req, resp);
         }
     }
