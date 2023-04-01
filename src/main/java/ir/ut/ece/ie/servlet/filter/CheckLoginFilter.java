@@ -8,7 +8,7 @@ import jakarta.servlet.annotation.WebFilter;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "CheckLoginFilter", value = {Path.Web.HOME, Path.Web.CREDIT, Path.Web.COMMODITIES})
+@WebFilter(filterName = "CheckLoginFilter", value = {Path.Web.HOME, Path.Web.CREDIT, Path.Web.COMMODITIES, Path.Web.BUYLIST})
 public class CheckLoginFilter implements Filter {
     private final UserController userController = Factory.getUserController();
 
