@@ -6,6 +6,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <% Commodity commodity = (Commodity) request.getAttribute("commodity"); %>
+<% String username = Factory.getUserController().getLoggedInUser().getUsername(); %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,19 +26,34 @@
     </style>
 </head>
 <body>
+<a href=<%=Path.Web.HOME%>>Home</a>
+<p id="username">username: <%=username%>
+</p>
+<br><br>
 <div id="content">
     <ul>
-        <li id="id">Id: <%=commodity.getId()%></li>
-        <li id="name">Name: <%=commodity.getName()%></li>
-        <li id="providerId">Provider Id: <%=commodity.getProviderId()%></li>
-        <li id="price">Price: <%=commodity.getPrice()%></li>
-        <li id="categories">Categories: <%=commodity.getCategories()%></li>
-        <li id="rating">Rating: <%=commodity.getRating()%></li>
-        <li id="inStock">In Stock: <%=commodity.getInStock()%></li>
+        <li id="id">Id: <%=commodity.getId()%>
+        </li>
+        <li id="name">Name: <%=commodity.getName()%>
+        </li>
+        <li id="providerId">Provider Id: <%=commodity.getProviderId()%>
+        </li>
+        <li id="price">Price: <%=commodity.getPrice()%>
+        </li>
+        <li id="categories">Categories: <%=commodity.getCategories()%>
+        </li>
+        <li id="rating">Rating: <%=commodity.getRating()%>
+        </li>
+        <li id="inStock">In Stock: <%=commodity.getInStock()%>
+        </li>
     </ul>
-    <label>Your ID:</label>
-    <input type="text" id="user_id" value=""/>
-    <br><br>
+    <form id="commentForm" action="" method="POST" onsubmit="commentCommodity()">
+        <label>Add your comment:</label>
+        <br/>
+        <input type="text" id="commentMsg" name="content">
+        <button type="submit">Submit</button>
+    </form>
+    <br/>
     <form id="rateCommodityForm" action="" method="POST" onsubmit="rateCommodity()">
         <label>Rate(between 1 and 10):</label>
         <input type="number" id="quantity" name="quantity" min="1" max="10">
@@ -58,12 +74,16 @@
         </tr>
         <% for (Comment comment : (List<Comment>) request.getAttribute("comments")) { %>
         <tr>
-            <td><%=comment.getUserEmail()%></td>
-            <td><%=comment.getText()%></td>
-            <td><%=comment.getDate()%></td>
+            <td><%=comment.getUserEmail()%>
+            </td>
+            <td><%=comment.getText()%>
+            </td>
+            <td><%=comment.getDate()%>
+            </td>
             <td>
                 <form id="likeForm" action="" method="POST" onsubmit="like()">
-                    <label for=""><%=comment.getLikes()%></label>
+                    <label for=""><%=comment.getLikes()%>
+                    </label>
                     <input
                             id="form_comment_id"
                             type="hidden"
@@ -75,7 +95,8 @@
             </td>
             <td>
                 <form id="dislikeForm" action="" method="POST" onsubmit="dislike()">
-                    <label for=""><%=comment.getDislikes()%></label>
+                    <label for=""><%=comment.getDislikes()%>
+                    </label>
                     <input
                             id="form_comment_id"
                             type="hidden"
@@ -92,23 +113,23 @@
 
 <script>
     function addToBuyList() {
-        var username = document.getElementById("user_id").value;
-        document.getElementById("buyListForm").action = "/addToBuyList/" + username + "/" + <%=commodity.getId()%>;
+        document.getElementById("buyListForm").action = "/addToBuyList/" + <%=username%> + "/" + <%=commodity.getId()%>;
     }
 
     function rateCommodity() {
-        var username = document.getElementById("user_id").value;
-        document.getElementById("rateCommodityForm").action = "/rateCommodity/" + username + "/" + <%=commodity.getId()%> +"/" + document.getElementById("quantity").value;
+        document.getElementById("rateCommodityForm").action = "/rateCommodity/" + <%=username%> + "/" + <%=commodity.getId()%> +"/" + document.getElementById("quantity").value;
     }
 
     function like() {
-        var username = document.getElementById("user_id").value;
-        document.getElementById("likeForm").action = "/voteComment/" + username + "/" + document.getElementById('form_comment_id').value + "/1";
+        document.getElementById("likeForm").action = "/voteComment/" + <%=username%> + "/" + document.getElementById('form_comment_id').value + "/1";
     }
 
     function dislike() {
-        var username = document.getElementById("user_id").value;
-        document.getElementById("dislikeForm").action = "/voteComment/" + username + "/" + document.getElementById('form_comment_id').value + "/-1";
+        document.getElementById("dislikeForm").action = "/voteComment/" + <%=username%> + "/" + document.getElementById('form_comment_id').value + "/-1";
+    }
+
+    function commentCommodity() {
+        document.getElementById("commentForm").action = "/addComment/" + <%=username%> + "/" + document.getElementById('commentMsg').value;
     }
 </script>
 
