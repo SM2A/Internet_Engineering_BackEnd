@@ -1,7 +1,6 @@
 package ir.ut.ece.ie.servlet;
 
 import ir.ut.ece.ie.util.DataInitializer;
-import ir.ut.ece.ie.util.Factory;
 import ir.ut.ece.ie.util.Path;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,9 +22,6 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (Factory.getUserController().getLoggedInUser() == null)
-            resp.sendRedirect(Path.Web.LOGIN);
-        else
-            req.getRequestDispatcher(Path.JSP.HOME).forward(req, resp);
+        req.getRequestDispatcher(Path.JSP.HOME).forward(req, resp);
     }
 }

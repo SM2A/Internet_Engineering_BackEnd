@@ -17,11 +17,7 @@ public class CreditServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (userController.getLoggedInUser() == null) {
-            req.getRequestDispatcher(Path.JSP.LOGIN).forward(req, resp);
-        } else {
-            req.getRequestDispatcher(Path.JSP.CREDIT).forward(req, resp);
-        }
+        req.getRequestDispatcher(Path.JSP.CREDIT).forward(req, resp);
     }
 
     @Override
