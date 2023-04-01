@@ -70,6 +70,7 @@ public class CommodityServiceImpl implements CommodityService {
         Commodity commodity = getCommodityById(score.getCommodityId())
                 .orElseThrow(() -> new OnlineShopException("Commodity not found"));
         userRepository.findById(score.getUsername()).orElseThrow(() -> new OnlineShopException("User not found"));
+        scoreRepository.save(score);
         List<Score> scoreList = (List<Score>) scoreRepository.findAllByCommodityId(score.getCommodityId());
         int numOfRatings = scoreList.size();
         double sumOfScores = scoreList.stream().mapToInt(Score::getScore).sum();
