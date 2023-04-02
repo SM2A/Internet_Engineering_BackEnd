@@ -80,7 +80,14 @@ public class CommodityServiceImpl implements CommodityService {
 
     public double scoreCalc(Commodity commodity, Commodity base) {
         double score = commodity.getRating();
-        score += commodity.getCategories().retainAll(base.getCategories()) ? 1 : 0;
+        boolean haveIntersect = false;
+        for (String c: commodity.getCategories()) {
+            if (base.getCategories().contains(c)) {
+                haveIntersect = true;
+                break;
+            }
+        }
+        score += haveIntersect ? 11 : 0;
         return score;
     }
 
