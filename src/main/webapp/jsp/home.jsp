@@ -8,18 +8,19 @@
 </head>
 <body>
 <ul>
-    <li id="username">username: <%= Factory.getUserController().getLoggedInUser().getUsername() %></li>
+    <li id="username">username: <%= Factory.getUserController().getLoggedInUser().getUsername() %>
+    </li>
     <li>
         <a href=<%=Path.Web.COMMODITIES%>>Commodities</a>
     </li>
     <li>
-        <a href="/buyList">Buy List</a>
+        <a href=<%=Path.Web.BUYLIST%>>Buy List</a>
     </li>
     <li>
-        <a href="/credit">Add Credit</a>
+        <a href=<%=Path.Web.CREDIT%>>Add Credit</a>
     </li>
     <li>
-        <a href="/logout">Log Out</a>
+        <a href=<%=Path.Web.LOGOUT%>>Log Out</a>
     </li>
 </ul>
 

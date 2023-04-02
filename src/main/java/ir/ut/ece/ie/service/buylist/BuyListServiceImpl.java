@@ -7,6 +7,7 @@ import ir.ut.ece.ie.repository.buylist.BuyListRepository;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public class BuyListServiceImpl implements BuyListService {
@@ -38,6 +39,11 @@ public class BuyListServiceImpl implements BuyListService {
     @Override
     public Optional<BuyList> getBuyList(String username) {
         return buyListRepository.findByUsername(username);
+    }
+
+    @Override
+    public Long calculateBuyListPrice(List<Commodity> commodities) {
+        return commodities.stream().mapToLong(Commodity::getPrice).sum();
     }
 
     @Override

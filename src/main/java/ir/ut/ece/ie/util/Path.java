@@ -8,6 +8,7 @@ public class Path {
         public static final String COMMODITIES = "/commodities";
         public static final String COMMODITY = "/commodities/*";
         public static final String CREDIT = "/credit";
+        public static final String BUYLIST = "/buyList";
     }
 
     public static class JSP {
@@ -18,5 +19,6 @@ public class Path {
         public static final String COMMODITY = "/jsp/commodity.jsp";
         public static final String CREDIT = "/jsp/credit.jsp";
         public static final String SUCCESS = "/jsp/200.jsp";
+        public static final String BUYLIST = "/jsp/buyList.jsp";
     }
 }
