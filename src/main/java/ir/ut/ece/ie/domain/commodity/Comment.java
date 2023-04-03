@@ -11,4 +11,10 @@ public class Comment {
     private String date;
     private Integer likes;
     private Integer dislikes;
+
+    public Comment(Long commodityId, String userEmail, String text) {
+        this.commodityId = commodityId;
+        this.userEmail = userEmail;
+        this.text = text;
+    }
 }

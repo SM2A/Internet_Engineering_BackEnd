@@ -7,6 +7,7 @@
 
 <% Commodity commodity = (Commodity) request.getAttribute("commodity"); %>
 <% String username = Factory.getUserController().getLoggedInUser().getUsername(); %>
+<% String pagePath = "/commodities/"+commodity.getId(); %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,21 +48,21 @@
         <li id="inStock">In Stock: <%=commodity.getInStock()%>
         </li>
     </ul>
-    <form id="commentForm" action="" method="POST" onsubmit="commentCommodity()">
+    <form action="<%=pagePath%>" method="POST">
         <label>Add your comment:</label>
         <br/>
-        <input type="text" id="commentMsg" name="content">
-        <button type="submit">Submit</button>
+        <input type="text" name="content">
+        <button type="submit" name="action" value="comment">Submit</button>
     </form>
     <br/>
-    <form id="rateCommodityForm" action="" method="POST" onsubmit="rateCommodity()">
+    <form action="<%=pagePath%>" method="POST">
         <label>Rate(between 1 and 10):</label>
-        <input type="number" id="quantity" name="quantity" min="1" max="10">
-        <button type="submit">Rate</button>
+        <input type="number" name="content" min="1" max="10">
+        <button type="submit" name="action" value="rate">Rate</button>
     </form>
     <br>
-    <form id="buyListForm" action="" method="POST" onsubmit="addToBuyList()">
-        <button type="submit">Add to BuyList</button>
+    <form action="<%=pagePath%>" method="POST">
+        <button type="submit" name="action" value="add">Add to BuyList</button>
     </form>
     <br/>
     <h3>Comments</h3>
@@ -82,29 +83,17 @@
             <td><%=comment.getDate()%>
             </td>
             <td>
-                <form id="likeForm" action="" method="POST" onsubmit="like()">
-                    <label for=""><%=comment.getLikes()%>
-                    </label>
-                    <input
-                            id="form_comment_id"
-                            type="hidden"
-                            name="comment_id"
-                            value="<%=comment.getId()%>"
-                    />
-                    <button type="submit">like</button>
+                <form action="<%=pagePath%>" method="POST">
+                    <label><%=comment.getLikes()%></label>
+                    <input type="hidden" name="comment_id" value="<%=comment.getId()%>"/>
+                    <button type="submit" name="action" value="like">like</button>
                 </form>
             </td>
             <td>
-                <form id="dislikeForm" action="" method="POST" onsubmit="dislike()">
-                    <label for=""><%=comment.getDislikes()%>
-                    </label>
-                    <input
-                            id="form_comment_id"
-                            type="hidden"
-                            name="comment_id"
-                            value="<%=comment.getId()%>"
-                    />
-                    <button type="submit">dislike</button>
+                <form action="<%=pagePath%>" method="POST">
+                    <label><%=comment.getDislikes()%></label>
+                    <input type="hidden" name="comment_id" value="<%=comment.getId()%>"/>
+                    <button type="submit" name="action" value="dislike">dislike</button>
                 </form>
             </td>
         </tr>
@@ -144,28 +133,5 @@
         <%}%>
     </table>
 </div>
-
-<script>
-    function addToBuyList() {
-        document.getElementById("buyListForm").action = "/addToBuyList/" + <%=username%> + "/" + <%=commodity.getId()%>;
-    }
-
-    function rateCommodity() {
-        document.getElementById("rateCommodityForm").action = "/rateCommodity/" + <%=username%> + "/" + <%=commodity.getId()%> +"/" + document.getElementById("quantity").value;
-    }
-
-    function like() {
-        document.getElementById("likeForm").action = "/voteComment/" + <%=username%> + "/" + document.getElementById('form_comment_id').value + "/1";
-    }
-
-    function dislike() {
-        document.getElementById("dislikeForm").action = "/voteComment/" + <%=username%> + "/" + document.getElementById('form_comment_id').value + "/-1";
-    }
-
-    function commentCommodity() {
-        document.getElementById("commentForm").action = "/addComment/" + <%=username%> + "/" + document.getElementById('commentMsg').value;
-    }
-</script>
-
 </body>
 </html>
