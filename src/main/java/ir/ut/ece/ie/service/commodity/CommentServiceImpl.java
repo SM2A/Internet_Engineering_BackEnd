@@ -13,6 +13,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public Comment addComment(Comment comment) {
+        return commentRepository.save(comment);
+    }
+
+    @Override
     public List<Comment> getCommentsOfCommodity(Long commodityId) {
         return (List<Comment>) commentRepository.findAllByCommodityId(commodityId);
     }

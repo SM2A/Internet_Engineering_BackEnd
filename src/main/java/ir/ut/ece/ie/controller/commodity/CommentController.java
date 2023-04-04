@@ -15,6 +15,10 @@ public class CommentController {
         this.voteService = voteService;
     }
 
+    public Comment addComment(Comment comment) {
+        return commentService.addComment(comment);
+    }
+
     public List<Comment> getCommentsOfCommodity(Long commodityId) {
         return commentService.getCommentsOfCommodity(commodityId).stream().map(comment -> {
             comment.setLikes(voteService.getNumberOfLikesOfComment(comment.getId()));
@@ -22,4 +26,5 @@ public class CommentController {
             return comment;
         }).toList();
     }
+
 }

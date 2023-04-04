@@ -45,4 +45,8 @@ public class CommodityController {
     public Commodity rateCommodity(Score score) {
         return commodityService.rateCommodity(score);
     }
+
+    public List<Commodity> getSuggestedCommodities(Long id) {
+        return commodityService.getSuggestedCommodities(id);
+    }
 }

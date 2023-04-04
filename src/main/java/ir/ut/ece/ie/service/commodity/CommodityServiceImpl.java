@@ -8,6 +8,7 @@ import ir.ut.ece.ie.repository.commodity.ScoreRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,11 +71,40 @@ public class CommodityServiceImpl implements CommodityService {
         Commodity commodity = getCommodityById(score.getCommodityId())
                 .orElseThrow(() -> new OnlineShopException("Commodity not found"));
         userRepository.findById(score.getUsername()).orElseThrow(() -> new OnlineShopException("User not found"));
+        scoreRepository.save(score);
         List<Score> scoreList = (List<Score>) scoreRepository.findAllByCommodityId(score.getCommodityId());
         int numOfRatings = scoreList.size();
         double sumOfScores = scoreList.stream().mapToInt(Score::getScore).sum();
         commodity.setRating(sumOfScores / numOfRatings);
         commodityRepository.save(commodity);
         return commodity;
+    }
+
+    @Override
+    public List<Commodity> getSuggestedCommodities(Long id) {
+        Commodity baseCommodity = getCommodityById(id).orElseThrow(() -> new OnlineShopException("Commodity not found"));
+        List<Commodity> commodityList = new ArrayList<>(getCommodities());
+        commodityList.sort((c1, c2) -> compareScore(c1, c2, baseCommodity));
+        commodityList = commodityList.stream().filter(commodity -> !commodity.getId().equals(id)).limit(5).toList();
+        return commodityList;
+    }
+
+    private double calculateScore(Commodity commodity, Commodity base) {
+        double score = commodity.getRating();
+        boolean haveIntersect = false;
+        for (String c : commodity.getCategories()) {
+            if (base.getCategories().contains(c)) {
+                haveIntersect = true;
+                break;
+            }
+        }
+        score += haveIntersect ? 11 : 0;
+        return score;
+    }
+
+    private int compareScore(Commodity c1, Commodity c2, Commodity base) {
+        Double s1 = calculateScore(c1, base);
+        Double s2 = calculateScore(c2, base);
+        return s2.compareTo(s1);
     }
 }
