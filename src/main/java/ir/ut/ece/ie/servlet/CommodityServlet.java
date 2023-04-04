@@ -28,7 +28,7 @@ public class CommodityServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long id = Long.parseLong(req.getPathInfo().replace("/", ""));
-        getRequestDispatcher(req, resp, id);
+        getRequestDispatcher(req, resp, "", id);
     }
 
     @Override
@@ -38,34 +38,42 @@ public class CommodityServlet extends HttpServlet {
         String username = Factory.getUserController().getLoggedInUser().getUsername();
 
         String action = req.getParameter("action");
-
-        switch (action) {
-            case "add" -> buyListController.addToBuyList(username, id);
-            case "like" -> {
-                String commentId = req.getParameter("comment_id");
-                voteController.addVote(new Vote(username, Long.parseLong(commentId), Vote.Status.LIKE));
+        try {
+            switch (action) {
+                case "add" -> buyListController.addToBuyList(username, id);
+                case "like" -> {
+                    String commentId = req.getParameter("comment_id");
+                    voteController.addVote(new Vote(username, Long.parseLong(commentId), Vote.Status.LIKE));
+                }
+                case "dislike" -> {
+                    String commentId = req.getParameter("comment_id");
+                    voteController.addVote(new Vote(username, Long.parseLong(commentId), Vote.Status.DISLIKE));
+                }
+                case "rate" -> {
+                    String rate = req.getParameter("content");
+                    commodityController.rateCommodity(new Score(username, id, Integer.valueOf(rate)));
+                }
+                case "comment" -> {
+                    String content = req.getParameter("content");
+                    commentController.addComment(new Comment(id, Factory.getUserController().getLoggedInUser().getEmail(), content));
+                }
             }
-            case "dislike" -> {
-                String commentId = req.getParameter("comment_id");
-                voteController.addVote(new Vote(username, Long.parseLong(commentId), Vote.Status.DISLIKE));
-            }
-            case "rate" -> {
-                String rate = req.getParameter("content");
-                commodityController.rateCommodity(new Score(username, id, Integer.valueOf(rate)));
-            }
-            case "comment" -> {
-                String content = req.getParameter("content");
-                commentController.addComment(new Comment(id, Factory.getUserController().getLoggedInUser().getEmail(), content));
-            }
+        } catch (Exception e) {
+            req.setAttribute("errorMsg", e.getMessage());
+            req.getRequestDispatcher(Path.JSP.ERROR).forward(req, resp);
         }
-
-        getRequestDispatcher(req, resp, id);
+        getRequestDispatcher(req, resp, action, id);
     }
 
-    private void getRequestDispatcher(HttpServletRequest req, HttpServletResponse resp, long id) throws ServletException, IOException {
+    private void getRequestDispatcher(HttpServletRequest req, HttpServletResponse resp, String action, Long id)
+            throws ServletException, IOException {
         req.setAttribute("commodity", commodityController.getCommodityById(id));
         req.setAttribute("comments", commentController.getCommentsOfCommodity(id));
         req.setAttribute("suggestedCommodities", commodityController.getSuggestedCommodities(id));
-        req.getRequestDispatcher(Path.JSP.COMMODITY).forward(req, resp);
+        if (action.equals("add")) {
+            req.getRequestDispatcher(Path.JSP.SUCCESS).forward(req, resp);
+        } else {
+            req.getRequestDispatcher(Path.JSP.COMMODITY).forward(req, resp);
+        }
     }
 }

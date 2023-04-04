@@ -8,7 +8,9 @@ import ir.ut.ece.ie.repository.commodity.ScoreRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class CommodityServiceImpl implements CommodityService {
     private final CommodityRepository commodityRepository;
@@ -78,10 +80,19 @@ public class CommodityServiceImpl implements CommodityService {
         return commodity;
     }
 
-    public double scoreCalc(Commodity commodity, Commodity base) {
+    @Override
+    public List<Commodity> getSuggestedCommodities(Long id) {
+        Commodity baseCommodity = getCommodityById(id).orElseThrow(() -> new OnlineShopException("Commodity not found"));
+        List<Commodity> commodityList = new ArrayList<>(getCommodities());
+        commodityList.sort((c1, c2) -> compareScore(c1, c2, baseCommodity));
+        commodityList = commodityList.stream().filter(commodity -> !commodity.getId().equals(id)).limit(5).toList();
+        return commodityList;
+    }
+
+    private double calculateScore(Commodity commodity, Commodity base) {
         double score = commodity.getRating();
         boolean haveIntersect = false;
-        for (String c: commodity.getCategories()) {
+        for (String c : commodity.getCategories()) {
             if (base.getCategories().contains(c)) {
                 haveIntersect = true;
                 break;
@@ -91,18 +102,9 @@ public class CommodityServiceImpl implements CommodityService {
         return score;
     }
 
-    public int compareScore(Commodity c1, Commodity c2, Commodity base) {
-        Double s1 = scoreCalc(c1, base);
-        Double s2 = scoreCalc(c2, base);
+    private int compareScore(Commodity c1, Commodity c2, Commodity base) {
+        Double s1 = calculateScore(c1, base);
+        Double s2 = calculateScore(c2, base);
         return s2.compareTo(s1);
-    }
-
-    @Override
-    public List<Commodity> getSuggestedCommodities(Long id) {
-        Commodity baseCommodity = getCommodityById(id).get();
-        List<Commodity> commodityList = new ArrayList<>(getCommodities());
-        commodityList.sort((c1, c2) -> compareScore(c1, c2, baseCommodity));
-        commodityList = commodityList.stream().filter(commodity -> !commodity.getId().equals(id)).limit(5).toList();
-        return commodityList;
     }
 }
