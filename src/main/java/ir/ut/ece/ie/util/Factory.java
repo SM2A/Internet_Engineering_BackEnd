@@ -11,12 +11,13 @@ import ir.ut.ece.ie.repository.buylist.BuyListRepositoryImpl;
 import ir.ut.ece.ie.repository.commodity.*;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepositoryImpl;
+import ir.ut.ece.ie.repository.user.DiscountRepository;
+import ir.ut.ece.ie.repository.user.DiscountRepositoryImpl;
 import ir.ut.ece.ie.repository.user.UserRepository;
 import ir.ut.ece.ie.repository.user.UserRepositoryImpl;
 import ir.ut.ece.ie.service.buylist.BuyListServiceImpl;
 import ir.ut.ece.ie.service.commodity.CommentServiceImpl;
 import ir.ut.ece.ie.service.commodity.CommodityServiceImpl;
-import ir.ut.ece.ie.service.commodity.VoteService;
 import ir.ut.ece.ie.service.commodity.VoteServiceImpl;
 import ir.ut.ece.ie.service.provider.ProviderServiceImpl;
 import ir.ut.ece.ie.service.user.UserServiceImpl;
@@ -29,6 +30,7 @@ public class Factory {
     private static final ProviderRepository providerRepository = new ProviderRepositoryImpl();
     private static final UserRepository userRepository = new UserRepositoryImpl();
     private static final BuyListRepository buyListRepository = new BuyListRepositoryImpl();
+    private static final DiscountRepository discountRepository = new DiscountRepositoryImpl();
     private static final CommodityController commodityController = new CommodityController(
             new CommodityServiceImpl(commodityRepository, scoreRepository, providerRepository, userRepository));
     private static final BuyListController buyListController = new BuyListController(
@@ -62,6 +64,10 @@ public class Factory {
 
     public static BuyListRepository getBuyListRepository() {
         return buyListRepository;
+    }
+
+    public static DiscountRepository getDiscountRepository() {
+        return discountRepository;
     }
 
     public static CommodityController getCommodityController() {
