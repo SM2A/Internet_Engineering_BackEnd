@@ -34,10 +34,17 @@
         <a href=<%=Path.Web.CREDIT%>>Add Credit</a>
     </li>
     <li>
-        <form action="" method="POST">
+        <form action="<%=Path.Web.BUYLIST%>" method="POST">
+            <label>Discount Code</label>
+            <input type="text" name="discountCode">
+            <button type="submit" name="action" value="discount">Submit</button>
+        </form>
+    </li>
+    <li>
+        <form action="<%=Path.Web.BUYLIST%>" method="POST">
             <label>Submit & Pay</label>
-            <input id="form_payment" type="hidden" name="userId" value=<%=user.getUsername()%>>
-            <button type="submit">Payment</button>
+            <input type="hidden" name="username" value=<%=user.getUsername()%>>
+            <button type="submit" name="action" value="payment">Payment</button>
         </form>
     </li>
 </ul>
@@ -76,20 +83,14 @@
         </td>
         <td><a href="/commodities/<%=commodity.getId()%>">Link</a></td>
         <td>
-            <form id="removeBuyItem" action="" method="POST" onsubmit="removeFromBuyList()">
-                <input id="form_commodity_id" type="hidden" name="commodityId" value=<%=commodity.getId()%>>
-                <button type="submit">Remove</button>
+            <form action="<%=Path.Web.BUYLIST%>" method="POST">
+                <input type="hidden" name="commodityId" value=<%=commodity.getId()%>>
+                <button type="submit" name="action" value="remove">Remove</button>
             </form>
         </td>
     </tr>
     <%}%>
     </tbody>
 </table>
-<script>
-    function removeFromBuyList() {
-        const commodityId = document.getElementById("form_commodity_id").value;
-        document.getElementById("removeBuyItem").action = "/removeFromBuyList/" + <%=user.getUsername()%> + "/" + commodityId;
-    }
-</script>
 </body>
 </html>
