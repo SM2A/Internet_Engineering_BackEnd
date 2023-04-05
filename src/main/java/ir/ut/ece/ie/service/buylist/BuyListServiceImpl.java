@@ -5,21 +5,23 @@ import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.repository.buylist.BuyListRepository;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
+import ir.ut.ece.ie.repository.user.DiscountRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 public class BuyListServiceImpl implements BuyListService {
     private final UserRepository userRepository;
     private final CommodityRepository commodityRepository;
     private final BuyListRepository buyListRepository;
+    private final DiscountRepository discountRepository;
 
     public BuyListServiceImpl(UserRepository userRepository, CommodityRepository commodityRepository,
-                              BuyListRepository buyListRepository) {
+                              BuyListRepository buyListRepository, DiscountRepository discountRepository) {
         this.userRepository = userRepository;
         this.commodityRepository = commodityRepository;
         this.buyListRepository = buyListRepository;
+        this.discountRepository = discountRepository;
     }
 
     @Override
@@ -39,11 +41,6 @@ public class BuyListServiceImpl implements BuyListService {
     @Override
     public Optional<BuyList> getBuyList(String username) {
         return buyListRepository.findByUsername(username);
-    }
-
-    @Override
-    public Long calculateBuyListPrice(List<Commodity> commodities) {
-        return commodities.stream().mapToLong(Commodity::getPrice).sum();
     }
 
     @Override
