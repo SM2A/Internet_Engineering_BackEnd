@@ -17,9 +17,11 @@ import ir.ut.ece.ie.repository.user.UserRepository;
 import ir.ut.ece.ie.repository.user.UserRepositoryImpl;
 import ir.ut.ece.ie.service.buylist.BuyListServiceImpl;
 import ir.ut.ece.ie.service.commodity.CommentServiceImpl;
+import ir.ut.ece.ie.service.commodity.CommodityService;
 import ir.ut.ece.ie.service.commodity.CommodityServiceImpl;
 import ir.ut.ece.ie.service.commodity.VoteServiceImpl;
 import ir.ut.ece.ie.service.provider.ProviderServiceImpl;
+import ir.ut.ece.ie.service.user.UserService;
 import ir.ut.ece.ie.service.user.UserServiceImpl;
 
 public class Factory {
@@ -31,10 +33,12 @@ public class Factory {
     private static final UserRepository userRepository = new UserRepositoryImpl();
     private static final BuyListRepository buyListRepository = new BuyListRepositoryImpl();
     private static final DiscountRepository discountRepository = new DiscountRepositoryImpl();
-    private static final CommodityController commodityController = new CommodityController(
-            new CommodityServiceImpl(commodityRepository, scoreRepository, providerRepository, userRepository));
+    private static final UserService userService = new UserServiceImpl(userRepository);
+    private static final CommodityService commodityService = new CommodityServiceImpl(commodityRepository, scoreRepository,
+            providerRepository, userRepository);
+    private static final CommodityController commodityController = new CommodityController(commodityService);
     private static final BuyListController buyListController = new BuyListController(
-            new BuyListServiceImpl(userRepository, commodityRepository, buyListRepository));
+            new BuyListServiceImpl(userService, commodityService, buyListRepository, discountRepository));
     private static final CommentController commentController = new CommentController(new CommentServiceImpl(commentRepository),
             new VoteServiceImpl(voteRepository));
     private static final ProviderController providerController = new ProviderController(new ProviderServiceImpl(providerRepository));
