@@ -62,4 +62,16 @@ public class BuyListServiceImpl implements BuyListService {
             throw new OnlineShopException("The discount code has expired");
         buyList.setDiscount(discount);
     }
+
+    @Override
+    public void pay(BuyList buyList) {
+        User user = userRepository.findById(buyList.getUsername()).orElseThrow(() -> new OnlineShopException("User not found"));
+        long price = buyList.getPrice();
+        if (user.getCredit() - price < 0)
+            throw new OnlineShopException("Insufficient credit");
+        user.setCredit(user.getCredit() - price);
+        user.getUsedDiscounts().add(buyList.getDiscount());
+        buyList.setDiscount(null);
+        buyList.getCommodities().forEach(commodity -> commodity.setInStock(commodity.getInStock() - 1));
+    }
 }

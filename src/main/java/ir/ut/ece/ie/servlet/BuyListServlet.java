@@ -43,6 +43,7 @@ public class BuyListServlet extends HttpServlet {
                     String discountCode = req.getParameter("discountCode");
                     buyListController.applyDiscount(user.getUsername(), discountCode);
                 }
+                case "payment" -> buyListController.pay(buyListController.getBuyList(user.getUsername()));
             }
         } catch (Exception e) {
             req.setAttribute("errorMsg", e.getMessage());

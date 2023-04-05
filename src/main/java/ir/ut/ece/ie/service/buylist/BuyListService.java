@@ -13,4 +13,6 @@ public interface BuyListService {
     void removeFromBuyList(String username, Long commodityId);
 
     void applyDiscount(BuyList buyList, String code);
+
+    void pay(BuyList buyList);
 }
