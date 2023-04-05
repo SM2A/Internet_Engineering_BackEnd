@@ -1,7 +1,9 @@
 package ir.ut.ece.ie.service.buylist;
 
 import ir.ut.ece.ie.domain.buylist.BuyList;
+import ir.ut.ece.ie.domain.buylist.Discount;
 import ir.ut.ece.ie.domain.commodity.Commodity;
+import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.repository.buylist.BuyListRepository;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
@@ -49,5 +51,15 @@ public class BuyListServiceImpl implements BuyListService {
         Commodity commodity = commodityRepository.findById(commodityId)
                 .orElseThrow(() -> new OnlineShopException("Commodity not found"));
         buyListRepository.removeCommodity(username, commodity);
+    }
+
+    @Override
+    public void applyDiscount(BuyList buyList, String code) {
+        User user = userRepository.findById(buyList.getUsername()).orElseThrow(() -> new OnlineShopException("User not found"));
+        Discount discount = discountRepository.findByCode(code)
+                .orElseThrow(() -> new OnlineShopException("Discount not found"));
+        if (user.getUsedDiscounts().contains(discount))
+            throw new OnlineShopException("The discount code has expired");
+        buyList.setDiscount(discount);
     }
 }

@@ -24,4 +24,7 @@ public class BuyListController {
     public void removeFromBuyList(String username, Long commodityId) {
         buyListService.removeFromBuyList(username, commodityId);
     }
+    public void applyDiscount(String username, String code) {
+        buyListService.applyDiscount(getBuyList(username), code);
+    }
 }

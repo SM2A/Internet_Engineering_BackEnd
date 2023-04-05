@@ -1,10 +1,10 @@
 package ir.ut.ece.ie.util;
 
 import com.google.gson.GsonBuilder;
+import ir.ut.ece.ie.domain.buylist.Discount;
 import ir.ut.ece.ie.domain.commodity.Comment;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.provider.Provider;
-import ir.ut.ece.ie.domain.buylist.Discount;
 import ir.ut.ece.ie.domain.user.User;
 
 import java.io.IOException;
@@ -13,6 +13,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class DataInitializer {
@@ -34,6 +35,7 @@ public class DataInitializer {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         List<User> users = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), User[].class)).toList();
+        users.forEach(user -> user.setUsedDiscounts(new HashSet<>()));
         Factory.getUserRepository().saveAll(users);
     }
 

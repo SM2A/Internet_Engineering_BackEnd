@@ -39,6 +39,10 @@ public class BuyListServlet extends HttpServlet {
                     long commodityId = Long.parseLong(req.getParameter("commodityId"));
                     buyListController.removeFromBuyList(user.getUsername(), commodityId);
                 }
+                case "discount" -> {
+                    String discountCode = req.getParameter("discountCode");
+                    buyListController.applyDiscount(user.getUsername(), discountCode);
+                }
             }
         } catch (Exception e) {
             req.setAttribute("errorMsg", e.getMessage());
