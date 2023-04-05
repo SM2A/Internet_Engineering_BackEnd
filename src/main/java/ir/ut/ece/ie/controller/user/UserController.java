@@ -34,7 +34,7 @@ public class UserController {
         return userService.getUser(username).orElseThrow(() -> new OnlineShopException("User not found!"));
     }
 
-    public void addCredit(String username, Long credit) {
+    public void incrementCredit(String username, Long credit) {
         User user = getUser(username);
         if (credit <= 0)
             throw new OnlineShopException("Credit must be positive value!");
