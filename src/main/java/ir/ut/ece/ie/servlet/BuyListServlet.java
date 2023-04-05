@@ -28,4 +28,22 @@ public class BuyListServlet extends HttpServlet {
         req.setAttribute("buyListPrice", buyList.getPrice());
         req.getRequestDispatcher(Path.JSP.BUYLIST).forward(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User user = userController.getLoggedInUser();
+        String action = req.getParameter("action");
+        try {
+            switch (action) {
+                case "remove" -> {
+                    long commodityId = Long.parseLong(req.getParameter("commodityId"));
+                    buyListController.removeFromBuyList(user.getUsername(), commodityId);
+                }
+            }
+        } catch (Exception e) {
+            req.setAttribute("errorMsg", e.getMessage());
+            req.getRequestDispatcher(Path.JSP.ERROR).forward(req, resp);
+        }
+        doGet(req, resp);
+    }
 }
