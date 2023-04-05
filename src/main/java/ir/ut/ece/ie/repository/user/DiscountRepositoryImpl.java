@@ -1,6 +1,6 @@
 package ir.ut.ece.ie.repository.user;
 
-import ir.ut.ece.ie.domain.user.Discount;
+import ir.ut.ece.ie.domain.buylist.Discount;
 
 import java.util.HashMap;
 import java.util.Map;

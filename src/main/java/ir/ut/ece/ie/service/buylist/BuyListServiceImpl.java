@@ -51,7 +51,6 @@ public class BuyListServiceImpl implements BuyListService {
         userRepository.findById(username).orElseThrow(() -> new OnlineShopException("User not found"));
         Commodity commodity = commodityRepository.findById(commodityId)
                 .orElseThrow(() -> new OnlineShopException("Commodity not found"));
-
         buyListRepository.removeCommodity(username, commodity);
     }
 }

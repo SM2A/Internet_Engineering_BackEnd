@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder;
 import ir.ut.ece.ie.domain.commodity.Comment;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.provider.Provider;
-import ir.ut.ece.ie.domain.user.Discount;
+import ir.ut.ece.ie.domain.buylist.Discount;
 import ir.ut.ece.ie.domain.user.User;
 
 import java.io.IOException;
