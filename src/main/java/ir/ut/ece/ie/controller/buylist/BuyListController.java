@@ -5,7 +5,6 @@ import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.service.buylist.BuyListService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BuyListController {
     private final BuyListService buyListService;
@@ -18,12 +17,19 @@ public class BuyListController {
         return buyListService.addToBuyList(username, commodityId);
     }
 
-    public List<Commodity> getBuyList(String username) {
-        BuyList buyList = buyListService.getBuyList(username).orElse(new BuyList(username, new ArrayList<>()));
-        return buyList.getCommodities();
+    public BuyList getBuyList(String username) {
+        return buyListService.getBuyList(username).orElse(new BuyList(username, new ArrayList<>()));
     }
 
     public void removeFromBuyList(String username, Long commodityId) {
         buyListService.removeFromBuyList(username, commodityId);
+    }
+
+    public void applyDiscount(String username, String code) {
+        buyListService.applyDiscount(getBuyList(username), code);
+    }
+
+    public void pay(BuyList buyList) {
+        buyListService.pay(buyList);
     }
 }

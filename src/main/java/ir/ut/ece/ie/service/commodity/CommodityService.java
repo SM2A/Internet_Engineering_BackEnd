@@ -17,7 +17,11 @@ public interface CommodityService {
 
     List<Commodity> getCommoditiesByCategory(String category);
 
+    List<Commodity> getCommoditiesByNameContains(String searchStr);
+
     List<Commodity> getCommoditiesInPriceRange(Long from, Long to);
 
     Commodity rateCommodity(Score score);
+
+    List<Commodity> getSuggestedCommodities(Long id);
 }
