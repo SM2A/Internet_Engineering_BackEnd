@@ -73,5 +73,6 @@ public class BuyListServiceImpl implements BuyListService {
         user.getUsedDiscounts().add(buyList.getDiscount());
         buyList.setDiscount(null);
         buyList.getCommodities().forEach(commodity -> commodity.setInStock(commodity.getInStock() - 1));
+        buyList.getCommodities().clear();
     }
 }
