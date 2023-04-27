@@ -2,16 +2,16 @@ package ir.ut.ece.ie.service.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Vote;
 import ir.ut.ece.ie.repository.commodity.VoteRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class VoteServiceImpl implements VoteService{
+@Service
+@RequiredArgsConstructor
+public class VoteServiceImpl implements VoteService {
     private final VoteRepository voteRepository;
-
-    public VoteServiceImpl(VoteRepository voteRepository) {
-        this.voteRepository = voteRepository;
-    }
 
     @Override
     public Vote save(Vote vote) {

@@ -2,9 +2,11 @@ package ir.ut.ece.ie.repository.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
 public class CommodityRepositoryImpl implements CommodityRepository {
     private final Map<Long, Commodity> commodities = new HashMap<>();
 

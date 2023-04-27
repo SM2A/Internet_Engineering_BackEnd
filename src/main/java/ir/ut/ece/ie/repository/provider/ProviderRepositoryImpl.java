@@ -1,11 +1,13 @@
 package ir.ut.ece.ie.repository.provider;
 
 import ir.ut.ece.ie.domain.provider.Provider;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Repository
 public class ProviderRepositoryImpl implements ProviderRepository {
     private final Map<Integer, Provider> providers = new HashMap<>();
 

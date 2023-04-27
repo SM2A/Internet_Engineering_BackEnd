@@ -1,11 +1,13 @@
 package ir.ut.ece.ie.repository.user;
 
 import ir.ut.ece.ie.domain.user.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Repository
 public class UserRepositoryImpl implements UserRepository {
     private final Map<String, User> users = new HashMap<>();
 

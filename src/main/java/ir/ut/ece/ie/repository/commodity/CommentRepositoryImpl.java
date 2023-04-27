@@ -2,12 +2,14 @@ package ir.ut.ece.ie.repository.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Comment;
 import ir.ut.ece.ie.util.SequenceGenerator;
+import org.springframework.stereotype.Repository;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+@Repository
 public class CommentRepositoryImpl implements CommentRepository {
     private final Map<Long, Comment> comments = new HashMap<>();
 

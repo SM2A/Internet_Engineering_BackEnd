@@ -1,9 +1,14 @@
 package ir.ut.ece.ie.repository.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Score;
+import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
+@Repository
 public class ScoreRepositoryImpl implements ScoreRepository {
     private final Map<AbstractMap.SimpleEntry<String, Long>, Score> scores = new HashMap<>();
 

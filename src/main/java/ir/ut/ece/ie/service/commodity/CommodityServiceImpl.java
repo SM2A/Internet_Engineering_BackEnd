@@ -7,24 +7,20 @@ import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.commodity.ScoreRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
+@RequiredArgsConstructor
 public class CommodityServiceImpl implements CommodityService {
     private final CommodityRepository commodityRepository;
     private final ScoreRepository scoreRepository;
     private final ProviderRepository providerRepository;
     private final UserRepository userRepository;
-
-    public CommodityServiceImpl(CommodityRepository commodityRepository, ScoreRepository scoreRepository,
-                                ProviderRepository providerRepository, UserRepository userRepository) {
-        this.commodityRepository = commodityRepository;
-        this.scoreRepository = scoreRepository;
-        this.providerRepository = providerRepository;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public Commodity addCommodity(Commodity commodity) {
