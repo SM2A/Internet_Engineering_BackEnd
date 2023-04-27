@@ -1,5 +1,0 @@
-    {% extends "./base.peb" %}
-        {% block title %} 200 Success {% endblock %}
-    {% block content %}
-    <h1>200<br>Function done successfully!</h1>
-{% endblock %}
