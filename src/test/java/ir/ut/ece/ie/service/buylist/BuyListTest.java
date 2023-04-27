@@ -6,20 +6,25 @@ import ir.ut.ece.ie.repository.buylist.BuyListRepository;
 import ir.ut.ece.ie.repository.buylist.BuyListRepositoryImpl;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.commodity.CommodityRepositoryImpl;
+import ir.ut.ece.ie.repository.user.DiscountRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
 import ir.ut.ece.ie.repository.user.UserRepositoryImpl;
-import ir.ut.ece.ie.util.Factory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ExtendWith(MockitoExtension.class)
 public class BuyListTest {
-
+    @Mock
+    private DiscountRepository discountRepository;
     private BuyListService buyListService;
 
     @BeforeEach
@@ -45,7 +50,7 @@ public class BuyListTest {
         userRepository.save(new User("321", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
 
         BuyListRepository buyListRepository = new BuyListRepositoryImpl();
-        buyListService = new BuyListServiceImpl(userRepository, commodityRepository, buyListRepository, Factory.getDiscountRepository());
+        buyListService = new BuyListServiceImpl(userRepository, commodityRepository, buyListRepository, discountRepository);
     }
 
     @AfterEach

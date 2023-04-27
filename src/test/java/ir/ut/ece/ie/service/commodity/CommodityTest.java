@@ -8,8 +8,9 @@ import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.repository.commodity.CommodityRepositoryImpl;
 import ir.ut.ece.ie.repository.commodity.ScoreRepositoryImpl;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
+import ir.ut.ece.ie.repository.provider.ProviderRepositoryImpl;
 import ir.ut.ece.ie.repository.user.UserRepository;
-import ir.ut.ece.ie.util.Factory;
+import ir.ut.ece.ie.repository.user.UserRepositoryImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,17 +20,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CommodityTest {
-
     private long id;
     private CommodityService commodityService;
 
     @BeforeEach
     public void initialization() {
         id = 1;
-        ProviderRepository providerRepository = Factory.getProviderRepository();
+        ProviderRepository providerRepository = new ProviderRepositoryImpl();
         providerRepository.save(new Provider(1, "a", "2023-09-15"));
 
-        UserRepository userRepository = Factory.getUserRepository();
+        UserRepository userRepository = new UserRepositoryImpl();
         userRepository.save(new User("123", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
         userRepository.save(new User("456", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
         userRepository.save(new User("789", "asd", "a@a.com", "1977-09-15", "Tehran", 10000L));
