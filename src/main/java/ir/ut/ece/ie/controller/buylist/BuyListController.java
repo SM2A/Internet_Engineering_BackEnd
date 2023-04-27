@@ -3,33 +3,38 @@ package ir.ut.ece.ie.controller.buylist;
 import ir.ut.ece.ie.domain.buylist.BuyList;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.service.buylist.BuyListService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
+@RestController
+@RequiredArgsConstructor
 public class BuyListController {
     private final BuyListService buyListService;
 
-    public BuyListController(BuyListService buyListService) {
-        this.buyListService = buyListService;
-    }
-
-    public Commodity addToBuyList(String username, Long commodityId) {
+    @PutMapping("/{username}/buyList")
+    public Commodity addToBuyList(@PathVariable String username, @RequestParam Long commodityId) {
         return buyListService.addToBuyList(username, commodityId);
     }
 
-    public BuyList getBuyList(String username) {
+    @GetMapping("/{username}/buyList")
+    public BuyList getBuyList(@PathVariable String username) {
         return buyListService.getBuyList(username).orElse(new BuyList(username, new ArrayList<>()));
     }
 
-    public void removeFromBuyList(String username, Long commodityId) {
+    @DeleteMapping("/{username}/buyList")
+    public void removeFromBuyList(@PathVariable String username, @RequestParam Long commodityId) {
         buyListService.removeFromBuyList(username, commodityId);
     }
 
-    public void applyDiscount(String username, String code) {
+    @PutMapping("{username}/buyList/discount")
+    public void applyDiscount(@PathVariable String username, @RequestParam String code) {
         buyListService.applyDiscount(getBuyList(username), code);
     }
 
-    public void pay(BuyList buyList) {
+    @PostMapping("/buyList/pay")
+    public void pay(@RequestBody BuyList buyList) {
         buyListService.pay(buyList);
     }
 }

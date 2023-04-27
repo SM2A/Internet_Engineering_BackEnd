@@ -9,22 +9,18 @@ import ir.ut.ece.ie.repository.buylist.BuyListRepository;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.user.DiscountRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
+@RequiredArgsConstructor
 public class BuyListServiceImpl implements BuyListService {
     private final UserRepository userRepository;
     private final CommodityRepository commodityRepository;
     private final BuyListRepository buyListRepository;
     private final DiscountRepository discountRepository;
-
-    public BuyListServiceImpl(UserRepository userRepository, CommodityRepository commodityRepository,
-                              BuyListRepository buyListRepository, DiscountRepository discountRepository) {
-        this.userRepository = userRepository;
-        this.commodityRepository = commodityRepository;
-        this.buyListRepository = buyListRepository;
-        this.discountRepository = discountRepository;
-    }
 
     @Override
     public Commodity addToBuyList(String username, Long commodityId) {

@@ -5,19 +5,23 @@ import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.service.commodity.VoteService;
 import ir.ut.ece.ie.service.user.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/votes")
 public class VoteController {
     private final VoteService voteService;
     private final UserService userService;
 
-    public VoteController(VoteService voteService, UserService userService) {
-        this.voteService = voteService;
-        this.userService = userService;
-    }
-
-    public Vote addVote(Vote vote) {
+    @PostMapping
+    public Vote addVote(@RequestBody Vote vote) {
         Optional<User> user = userService.getUser(vote.getUsername());
         if (user.isEmpty())
             throw new OnlineShopException("User not found");
