@@ -24,6 +24,7 @@ public class UserController {
         loggedInUser = null;
     }
 
+    @GetMapping("/loggedInUser")
     public User getLoggedInUser() {
         return loggedInUser;
     }
