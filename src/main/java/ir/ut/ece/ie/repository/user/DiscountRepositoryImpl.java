@@ -1,11 +1,13 @@
 package ir.ut.ece.ie.repository.user;
 
 import ir.ut.ece.ie.domain.buylist.Discount;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Repository
 public class DiscountRepositoryImpl implements DiscountRepository {
     private final Map<String, Discount> discounts = new HashMap<>();
 

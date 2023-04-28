@@ -1,9 +1,14 @@
 package ir.ut.ece.ie.repository.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Vote;
+import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
+@Repository
 public class VoteRepositoryImpl implements VoteRepository {
     private final Map<Long, ArrayList<Vote>> votes = new HashMap<>();
 

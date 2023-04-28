@@ -6,6 +6,15 @@ import ir.ut.ece.ie.domain.commodity.Comment;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.domain.user.User;
+import ir.ut.ece.ie.repository.commodity.CommentRepository;
+import ir.ut.ece.ie.repository.commodity.CommodityRepository;
+import ir.ut.ece.ie.repository.provider.ProviderRepository;
+import ir.ut.ece.ie.repository.user.DiscountRepository;
+import ir.ut.ece.ie.repository.user.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,58 +25,74 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-public class DataInitializer {
+@Component
+@RequiredArgsConstructor
+public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
+    private final UserRepository userRepository;
+    private final CommodityRepository commodityRepository;
+    private final ProviderRepository providerRepository;
+    private final CommentRepository commentRepository;
+    private final DiscountRepository discountRepository;
     private static final String USERS_ENDPOINT = "/api/users";
-    private static final String COMMODITIES_ENDPOINT = "/api/commodities";
+    private static final String COMMODITIES_ENDPOINT = "/api/v2/commodities";
     private static final String PROVIDERS_ENDPOINT = "/api/providers";
     private static final String COMMENTS_ENDPOINT = "/api/comments";
     private static final String DISCOUNTS_ENDPOINT = "/api/discount";
 
-    public static void loadData(String url) throws IOException, InterruptedException {
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        try {
+            loadData("http://5.253.25.110:5000");
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadData(String url) throws IOException, InterruptedException {
         readUsersData(url + USERS_ENDPOINT);
         readCommoditiesData(url + COMMODITIES_ENDPOINT);
         readProvidersData(url + PROVIDERS_ENDPOINT);
         readCommentsData(url + COMMENTS_ENDPOINT);
-        readDiscountsData(url + DISCOUNTS_ENDPOINT);
+//        readDiscountsData(url + DISCOUNTS_ENDPOINT);
     }
 
-    private static void readUsersData(String uri) throws IOException, InterruptedException {
+    private void readUsersData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         List<User> users = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), User[].class)).toList();
         users.forEach(user -> user.setUsedDiscounts(new HashSet<>()));
-        Factory.getUserRepository().saveAll(users);
+        userRepository.saveAll(users);
     }
 
-    private static void readCommoditiesData(String uri) throws IOException, InterruptedException {
+    private void readCommoditiesData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         List<Commodity> commodities = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), Commodity[].class)).toList();
-        Factory.getCommodityRepository().saveAll(commodities);
+        commodityRepository.saveAll(commodities);
     }
 
-    private static void readProvidersData(String uri) throws IOException, InterruptedException {
+    private void readProvidersData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         List<Provider> providers = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), Provider[].class)).toList();
-        Factory.getProviderRepository().saveAll(providers);
+        providerRepository.saveAll(providers);
     }
 
-    private static void readCommentsData(String uri) throws IOException, InterruptedException {
+    private void readCommentsData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         List<Comment> comments = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), Comment[].class)).toList();
-        Factory.getCommentRepository().saveAll(comments);
+        commentRepository.saveAll(comments);
     }
 
-    private static void readDiscountsData(String uri) throws IOException, InterruptedException {
+    private void readDiscountsData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         List<Discount> discounts = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), Discount[].class)).toList();
-        Factory.getDiscountRepository().saveAll(discounts);
+        discountRepository.saveAll(discounts);
     }
 
-    private static HttpRequest createGetRequest(String uri) {
+    private HttpRequest createGetRequest(String uri) {
         return HttpRequest.newBuilder()
                 .GET()
                 .uri(URI.create(uri))

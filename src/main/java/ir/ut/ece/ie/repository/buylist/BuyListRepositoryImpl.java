@@ -2,9 +2,11 @@ package ir.ut.ece.ie.repository.buylist;
 
 import ir.ut.ece.ie.domain.buylist.BuyList;
 import ir.ut.ece.ie.domain.commodity.Commodity;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
 public class BuyListRepositoryImpl implements BuyListRepository {
     private final Map<String, BuyList> usersBuyList = new HashMap<>();
 
