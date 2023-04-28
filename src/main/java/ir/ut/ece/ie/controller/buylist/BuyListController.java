@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class BuyListController {
     private final BuyListService buyListService;
 
