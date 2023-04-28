@@ -4,18 +4,29 @@ import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.service.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     private final UserService userService;
     private User loggedInUser;
 
     @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
     public User login(@RequestBody User user) {
-        loggedInUser = user;
+        Optional<User> newUser = userService.getUser(user.getUsername());
+        if (newUser.isPresent()) {
+            if (!newUser.get().getPassword().equals(user.getPassword())) {
+                throw new OnlineShopException("Username or password is incorrect");
+            }
+            loggedInUser = newUser.get();
+        }
         return loggedInUser;
     }
 
