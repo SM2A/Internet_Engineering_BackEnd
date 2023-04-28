@@ -13,6 +13,7 @@ public class Commodity {
     private List<String> categories;
     private Double rating;
     private Integer inStock;
+    private String imageUrl;
 
     public Commodity(Long id, String name, Integer providerId, Long price, List<String> categories, Double rating, Integer inStock) {
         this.id = id;
