@@ -1,6 +1,5 @@
 package ir.ut.ece.ie.domain.buylist;
 
-import ir.ut.ece.ie.domain.commodity.Commodity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -10,17 +9,19 @@ import java.util.List;
 @AllArgsConstructor
 public class BuyList {
     private String username;
-    private List<Commodity> commodities;
+    private List<BuyItem> buyItems;
     private Discount discount;
     private Boolean isPaid;
 
-    public BuyList(String username, List<Commodity> commodities) {
+    public BuyList(String username, List<BuyItem> buyItems) {
         this.username = username;
-        this.commodities = commodities;
+        this.buyItems = buyItems;
     }
 
     public Long getPrice() {
-        long totalPrice = commodities.stream().mapToLong(Commodity::getPrice).sum();
+        long totalPrice = buyItems.stream()
+                .mapToLong(BuyItem::getPrice)
+                .sum();
         if (discount != null)
             return (long) (totalPrice * (1 - discount.getAmount() / 100.0));
         return totalPrice;

@@ -1,5 +1,6 @@
 package ir.ut.ece.ie.service.buylist;
 
+import ir.ut.ece.ie.controller.buylist.dto.BuyItemReq;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.repository.buylist.BuyListRepository;
@@ -65,15 +66,15 @@ public class BuyListTest {
 
     @Test
     public void one_item_buy_list() {
-        buyListService.addToBuyList("123", 2L);
-        assertEquals(buyListService.getBuyList("123").get().getCommodities().size(), 1);
+        buyListService.addToBuyList("123", new BuyItemReq(2L, 1));
+        assertEquals(buyListService.getBuyList("123").get().getBuyItems().size(), 1);
     }
 
     @Test
     public void multiple_item_buy_list() {
-        buyListService.addToBuyList("123", 2L);
-        buyListService.addToBuyList("123", 4L);
-        buyListService.addToBuyList("123", 7L);
-        assertEquals(buyListService.getBuyList("123").get().getCommodities().size(), 3);
+        buyListService.addToBuyList("123", new BuyItemReq(2L, 1));
+        buyListService.addToBuyList("123", new BuyItemReq(4L, 1));
+        buyListService.addToBuyList("123", new BuyItemReq(7L, 1));
+        assertEquals(buyListService.getBuyList("123").get().getBuyItems().size(), 3);
     }
 }
