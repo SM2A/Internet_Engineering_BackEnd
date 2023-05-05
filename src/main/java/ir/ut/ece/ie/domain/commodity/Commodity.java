@@ -14,7 +14,7 @@ public class Commodity {
     private Double rating;
     private Integer rateCount;
     private Integer inStock;
-    private String imageUrl;
+    private String image;
 
     public Commodity(Long id, String name, Integer providerId, Long price, List<String> categories, Double rating, Integer inStock) {
         this.id = id;
