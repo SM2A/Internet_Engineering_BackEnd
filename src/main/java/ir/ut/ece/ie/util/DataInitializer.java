@@ -35,7 +35,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     private final DiscountRepository discountRepository;
     private static final String USERS_ENDPOINT = "/api/users";
     private static final String COMMODITIES_ENDPOINT = "/api/v2/commodities";
-    private static final String PROVIDERS_ENDPOINT = "/api/providers";
+    private static final String PROVIDERS_ENDPOINT = "/api/v2/providers";
     private static final String COMMENTS_ENDPOINT = "/api/comments";
     private static final String DISCOUNTS_ENDPOINT = "/api/discount";
 

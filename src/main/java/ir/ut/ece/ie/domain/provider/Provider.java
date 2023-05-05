@@ -7,6 +7,7 @@ public class Provider {
     private Integer id;
     private String name;
     private String registryDate;
+    private String image;
 
     public Provider(Integer id, String name, String registryDate) {
         this.id = id;
