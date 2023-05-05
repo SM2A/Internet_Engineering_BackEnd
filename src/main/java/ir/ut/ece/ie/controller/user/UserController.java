@@ -40,7 +40,7 @@ public class UserController {
         return loggedInUser;
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     public User addUser(@RequestBody User user) {
         return userService.addUser(user);
     }

@@ -72,6 +72,7 @@ public class CommodityServiceImpl implements CommodityService {
         int numOfRatings = scoreList.size();
         double sumOfScores = scoreList.stream().mapToInt(Score::getScore).sum();
         commodity.setRating(sumOfScores / numOfRatings);
+        commodity.setRateCount(numOfRatings);
         commodityRepository.save(commodity);
         return commodity;
     }
