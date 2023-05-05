@@ -41,6 +41,8 @@ public class BuyListRepositoryImpl implements BuyListRepository {
 
     @Override
     public List<BuyItem> getPurchasedItems(String username) {
+        if (!purchasedList.containsKey(username))
+            return List.of();
         return purchasedList.get(username).getBuyItems();
     }
 
