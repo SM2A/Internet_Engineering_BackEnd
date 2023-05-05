@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @PutMapping("{username}/credit")
-    public void incrementCredit(@RequestParam String username, @RequestParam Long credit) {
+    public void incrementCredit(@PathVariable String username, @RequestParam Long credit) {
         User user = getUser(username);
         if (credit <= 0)
             throw new OnlineShopException("Credit must be positive value!");
