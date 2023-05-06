@@ -6,16 +6,14 @@ import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.service.commodity.VoteService;
 import ir.ut.ece.ie.service.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/votes")
+@CrossOrigin(origins = "http://localhost:3000")
 public class VoteController {
     private final VoteService voteService;
     private final UserService userService;
