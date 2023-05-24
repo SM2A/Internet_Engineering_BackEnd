@@ -1,6 +1,6 @@
 package ir.ut.ece.ie.repository.user;
 
-import ir.ut.ece.ie.domain.buylist.Discount;
+import ir.ut.ece.ie.domain.user.Discount;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

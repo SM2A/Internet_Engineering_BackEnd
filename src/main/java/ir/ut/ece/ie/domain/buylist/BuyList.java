@@ -1,5 +1,6 @@
 package ir.ut.ece.ie.domain.buylist;
 
+import ir.ut.ece.ie.domain.user.Discount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

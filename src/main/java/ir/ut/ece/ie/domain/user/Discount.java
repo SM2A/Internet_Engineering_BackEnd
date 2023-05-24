@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.domain.buylist;
+package ir.ut.ece.ie.domain.user;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;

@@ -3,7 +3,7 @@ package ir.ut.ece.ie.service.buylist;
 import ir.ut.ece.ie.controller.buylist.dto.BuyItemReq;
 import ir.ut.ece.ie.domain.buylist.BuyItem;
 import ir.ut.ece.ie.domain.buylist.BuyList;
-import ir.ut.ece.ie.domain.buylist.Discount;
+import ir.ut.ece.ie.domain.user.Discount;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.exception.OnlineShopException;
