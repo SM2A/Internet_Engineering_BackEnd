@@ -11,6 +11,8 @@ import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.user.DiscountRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
+import ir.ut.ece.ie.util.dto.CommodityDTO;
+import ir.ut.ece.ie.util.mapper.CommodityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -32,6 +34,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     private final ProviderRepository providerRepository;
     private final CommentRepository commentRepository;
     private final DiscountRepository discountRepository;
+    private final CommodityMapper commodityMapper;
     private static final String USERS_ENDPOINT = "/api/users";
     private static final String COMMODITIES_ENDPOINT = "/api/v2/commodities";
     private static final String PROVIDERS_ENDPOINT = "/api/v2/providers";
@@ -49,8 +52,8 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
 
     private void loadData(String url) throws IOException, InterruptedException {
         readUsersData(url + USERS_ENDPOINT);
-        readCommoditiesData(url + COMMODITIES_ENDPOINT);
         readProvidersData(url + PROVIDERS_ENDPOINT);
+        readCommoditiesData(url + COMMODITIES_ENDPOINT);
         readCommentsData(url + COMMENTS_ENDPOINT);
         readDiscountsData(url + DISCOUNTS_ENDPOINT);
     }
@@ -65,7 +68,10 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     private void readCommoditiesData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        List<Commodity> commodities = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), Commodity[].class)).toList();
+        List<Commodity> commodities = Arrays.stream(
+                        new GsonBuilder().create().fromJson(response.body(), CommodityDTO[].class))
+                .map(commodityMapper::toModel)
+                .toList();
         commodityRepository.saveAll(commodities);
     }
 
