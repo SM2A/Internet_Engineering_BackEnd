@@ -1,10 +1,10 @@
 package ir.ut.ece.ie.util;
 
 import com.google.gson.GsonBuilder;
-import ir.ut.ece.ie.domain.user.Discount;
 import ir.ut.ece.ie.domain.commodity.Comment;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.provider.Provider;
+import ir.ut.ece.ie.domain.user.Discount;
 import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.repository.commodity.CommentRepository;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
@@ -22,7 +22,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 @Component
@@ -53,14 +52,13 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         readCommoditiesData(url + COMMODITIES_ENDPOINT);
         readProvidersData(url + PROVIDERS_ENDPOINT);
         readCommentsData(url + COMMENTS_ENDPOINT);
-//        readDiscountsData(url + DISCOUNTS_ENDPOINT);
+        readDiscountsData(url + DISCOUNTS_ENDPOINT);
     }
 
     private void readUsersData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         List<User> users = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), User[].class)).toList();
-        users.forEach(user -> user.setUsedDiscounts(new HashSet<>()));
         userRepository.saveAll(users);
     }
 
@@ -88,6 +86,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     private void readDiscountsData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+
         List<Discount> discounts = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), Discount[].class)).toList();
         discountRepository.saveAll(discounts);
     }

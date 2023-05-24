@@ -3,8 +3,8 @@ package ir.ut.ece.ie.service.buylist;
 import ir.ut.ece.ie.controller.buylist.dto.BuyItemReq;
 import ir.ut.ece.ie.domain.buylist.BuyItem;
 import ir.ut.ece.ie.domain.buylist.BuyList;
-import ir.ut.ece.ie.domain.user.Discount;
 import ir.ut.ece.ie.domain.commodity.Commodity;
+import ir.ut.ece.ie.domain.user.Discount;
 import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.repository.buylist.BuyListRepository;
@@ -55,7 +55,7 @@ public class BuyListServiceImpl implements BuyListService {
     @Override
     public void applyDiscount(BuyList buyList, String code) {
         User user = userRepository.findById(buyList.getUsername()).orElseThrow(() -> new OnlineShopException("User not found"));
-        Discount discount = discountRepository.findByCode(code)
+        Discount discount = discountRepository.findDiscountByCode(code)
                 .orElseThrow(() -> new OnlineShopException("Discount not found"));
         if (user.getUsedDiscounts().contains(discount))
             throw new OnlineShopException("The discount code has expired");

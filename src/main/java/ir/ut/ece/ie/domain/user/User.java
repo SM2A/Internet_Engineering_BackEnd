@@ -1,26 +1,39 @@
 package ir.ut.ece.ie.domain.user;
 
-import ir.ut.ece.ie.domain.buylist.Discount;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
+@Entity
+@Table(name = "Users")
 public class User {
+    @Id
     private String username;
-    private String password;
-    private String email;
-    private String birthDate;
-    private String address;
-    private Long credit;
-    private Set<Discount> usedDiscounts;
 
-    public User(String username, String password, String email, String birthDate, String address, Long credit) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.birthDate = birthDate;
-        this.address = address;
-        this.credit = credit;
-    }
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column
+    private String birthDate;
+
+    @Column
+    private String address;
+
+    @Column
+    private Long credit;
+
+    @OneToMany
+    private List<Discount> usedDiscounts = new ArrayList<>();
 }
+
+
