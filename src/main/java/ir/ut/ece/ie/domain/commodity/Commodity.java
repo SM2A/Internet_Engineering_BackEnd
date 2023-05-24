@@ -1,28 +1,47 @@
 package ir.ut.ece.ie.domain.commodity;
 
+import ir.ut.ece.ie.domain.provider.Provider;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
+@Entity
 public class Commodity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    private Integer providerId;
-    private Long price;
-    private List<String> categories;
-    private Double rating;
-    private Integer rateCount;
-    private Integer inStock;
-    private String image;
 
-    public Commodity(Long id, String name, Integer providerId, Long price, List<String> categories, Double rating, Integer inStock) {
-        this.id = id;
-        this.name = name;
-        this.providerId = providerId;
-        this.price = price;
-        this.categories = categories;
-        this.rating = rating;
-        this.inStock = inStock;
-    }
+    @Column
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "provider_id", nullable = false)
+    private Provider provider;
+
+    @Column
+    private Long price;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "categories", joinColumns = @JoinColumn(name = "commodity_id"))
+    @Column(name = "category")
+    private List<String> categories = new ArrayList<>();
+
+    @Column
+    private Double rating;
+
+    @Column
+    private Integer rateCount;
+
+    @Column
+    private Integer inStock;
+
+    @Column(length = 512)
+    private String image;
 }

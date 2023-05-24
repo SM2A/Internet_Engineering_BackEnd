@@ -24,7 +24,7 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public Commodity addCommodity(Commodity commodity) {
-        providerRepository.findById(commodity.getProviderId()).orElseThrow(() -> new OnlineShopException("provider not found"));
+//        providerRepository.findById(commodity.getProviderId()).orElseThrow(() -> new OnlineShopException("provider not found"));
         return commodityRepository.save(commodity);
     }
 
@@ -35,7 +35,7 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public List<Commodity> getCommodities() {
-        return (List<Commodity>) commodityRepository.findAll();
+        return commodityRepository.findAll();
     }
 
     @Override
@@ -45,19 +45,19 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public List<Commodity> getCommoditiesByCategory(String category) {
-        return (List<Commodity>) commodityRepository.findAllByCategory(category);
+        return (List<Commodity>) commodityRepository.findAllByCategoriesContainsIgnoreCase(category);
     }
 
     @Override
     public List<Commodity> getCommoditiesByNameContains(String searchStr) {
-        return (List<Commodity>) commodityRepository.findAllByNameContains(searchStr);
+        return (List<Commodity>) commodityRepository.findAllByNameIsContainingIgnoreCase(searchStr);
     }
 
     @Override
     public List<Commodity> getCommoditiesInPriceRange(Long from, Long to) {
         if (from > to) throw new OnlineShopException("Invalid price range. From must be less than to");
         if (from < 0) throw new OnlineShopException("Invalid price range. From and to must be positive");
-        return (List<Commodity>) commodityRepository.findAllByPriceInRange(from, to);
+        return (List<Commodity>) commodityRepository.findAllByPriceIsBetween(from, to);
     }
 
     @Override
