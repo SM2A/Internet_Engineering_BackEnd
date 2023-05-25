@@ -1,5 +1,6 @@
 package ir.ut.ece.ie.service.commodity;
 
+import ir.ut.ece.ie.api.dto.CommodityDTO;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.commodity.Score;
 
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CommodityService {
-    Commodity addCommodity(Commodity commodity);
+    Commodity addCommodity(CommodityDTO commodityDTO);
 
     Optional<Commodity> getCommodityById(Long id);
 

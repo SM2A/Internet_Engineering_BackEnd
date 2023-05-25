@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.util.dto;
+package ir.ut.ece.ie.api.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 public class CommodityDTO {
-    private Long id;
     private String name;
     private Integer providerId;
     private Long price;

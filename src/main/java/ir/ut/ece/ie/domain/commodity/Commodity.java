@@ -21,7 +21,7 @@ public class Commodity {
     @Column
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "provider_id", nullable = false)
     private Provider provider;
 

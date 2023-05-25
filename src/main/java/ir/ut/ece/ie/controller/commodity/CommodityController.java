@@ -1,5 +1,6 @@
 package ir.ut.ece.ie.controller.commodity;
 
+import ir.ut.ece.ie.api.dto.CommodityDTO;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.commodity.Score;
 import ir.ut.ece.ie.exception.OnlineShopException;
@@ -17,8 +18,8 @@ public class CommodityController {
     private final CommodityService commodityService;
 
     @PostMapping
-    public Commodity addCommodity(@RequestBody Commodity commodity) {
-        return commodityService.addCommodity(commodity);
+    public Commodity addCommodity(@RequestBody CommodityDTO commodityDTO) {
+        return commodityService.addCommodity(commodityDTO);
     }
 
     @GetMapping("/{id}")

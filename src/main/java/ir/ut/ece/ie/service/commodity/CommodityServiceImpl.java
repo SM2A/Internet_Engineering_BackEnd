@@ -1,11 +1,12 @@
 package ir.ut.ece.ie.service.commodity;
 
+import ir.ut.ece.ie.api.dto.CommodityDTO;
+import ir.ut.ece.ie.api.mapper.CommodityMapper;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.commodity.Score;
 import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.commodity.ScoreRepository;
-import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,18 @@ import java.util.Optional;
 public class CommodityServiceImpl implements CommodityService {
     private final CommodityRepository commodityRepository;
     private final ScoreRepository scoreRepository;
-    private final ProviderRepository providerRepository;
     private final UserRepository userRepository;
+    private final CommodityMapper mapper;
 
     @Override
-    public Commodity addCommodity(Commodity commodity) {
-//        providerRepository.findById(commodity.getProviderId()).orElseThrow(() -> new OnlineShopException("provider not found"));
-        return commodityRepository.save(commodity);
+    public Commodity addCommodity(CommodityDTO commodityDTO) {
+        Commodity commodity = mapper.toModel(commodityDTO);
+        try {
+            commodity = commodityRepository.save(commodity);
+        } catch (Exception e) {
+            throw new OnlineShopException(e.getMessage());
+        }
+        return commodity;
     }
 
     @Override
@@ -79,6 +85,7 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public List<Commodity> getSuggestedCommodities(Long id) {
+        //todo: can we write query directly to database?
         Commodity baseCommodity = getCommodityById(id).orElseThrow(() -> new OnlineShopException("Commodity not found"));
         List<Commodity> commodityList = new ArrayList<>(getCommodities());
         commodityList.sort((c1, c2) -> compareScore(c1, c2, baseCommodity));
