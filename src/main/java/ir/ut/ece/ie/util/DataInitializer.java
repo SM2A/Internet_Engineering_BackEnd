@@ -10,7 +10,7 @@ import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.domain.user.Discount;
 import ir.ut.ece.ie.domain.user.User;
-import ir.ut.ece.ie.repository.commodity.CommentRepository;
+import ir.ut.ece.ie.repository.comment.CommentRepository;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.user.DiscountRepository;

@@ -1,7 +1,6 @@
 package ir.ut.ece.ie.domain.comment;
 
 import ir.ut.ece.ie.domain.commodity.Commodity;
-import ir.ut.ece.ie.domain.commodity.Vote;
 import ir.ut.ece.ie.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Data;

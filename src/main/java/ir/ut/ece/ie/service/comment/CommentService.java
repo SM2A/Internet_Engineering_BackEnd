@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.service.commodity;
+package ir.ut.ece.ie.service.comment;
 
 import ir.ut.ece.ie.api.dto.CommentDTO;
 

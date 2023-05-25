@@ -1,7 +1,7 @@
-package ir.ut.ece.ie.repository.commodity;
+package ir.ut.ece.ie.repository.comment;
 
-import ir.ut.ece.ie.domain.commodity.Vote;
-import ir.ut.ece.ie.domain.commodity.VoteId;
+import ir.ut.ece.ie.domain.comment.Vote;
+import ir.ut.ece.ie.domain.comment.VoteId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

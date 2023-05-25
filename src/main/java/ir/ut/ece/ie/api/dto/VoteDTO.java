@@ -1,6 +1,6 @@
 package ir.ut.ece.ie.api.dto;
 
-import ir.ut.ece.ie.domain.commodity.Vote;
+import ir.ut.ece.ie.domain.comment.Vote;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.domain.commodity;
+package ir.ut.ece.ie.domain.comment;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;

@@ -1,6 +1,5 @@
-package ir.ut.ece.ie.domain.commodity;
+package ir.ut.ece.ie.domain.comment;
 
-import ir.ut.ece.ie.domain.comment.Comment;
 import ir.ut.ece.ie.domain.user.User;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;

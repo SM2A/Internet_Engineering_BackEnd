@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.repository.commodity;
+package ir.ut.ece.ie.repository.comment;
 
 import ir.ut.ece.ie.domain.comment.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;

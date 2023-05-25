@@ -1,11 +1,11 @@
-package ir.ut.ece.ie.service.commodity;
+package ir.ut.ece.ie.service.comment;
 
 import ir.ut.ece.ie.api.dto.VoteDTO;
 import ir.ut.ece.ie.api.mapper.VoteMapper;
-import ir.ut.ece.ie.domain.commodity.Vote;
+import ir.ut.ece.ie.domain.comment.Vote;
 import ir.ut.ece.ie.exception.OnlineShopException;
-import ir.ut.ece.ie.repository.commodity.CommentRepository;
-import ir.ut.ece.ie.repository.commodity.VoteRepository;
+import ir.ut.ece.ie.repository.comment.CommentRepository;
+import ir.ut.ece.ie.repository.comment.VoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
