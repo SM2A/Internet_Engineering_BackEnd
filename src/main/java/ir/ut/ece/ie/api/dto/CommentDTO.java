@@ -12,4 +12,6 @@ public class CommentDTO {
     private Long commodityId;
     private String text;
     private String date;
+    private Integer likes;
+    private Integer dislikes;
 }
