@@ -1,0 +1,14 @@
+version: '3.4'
+services:
+  db:
+    image: mysql
+    restart: always
+    volumes:
+      - ./baloot-db:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=baloot
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - "3306:3306"
