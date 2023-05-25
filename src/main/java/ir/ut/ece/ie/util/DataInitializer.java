@@ -1,7 +1,11 @@
 package ir.ut.ece.ie.util;
 
 import com.google.gson.GsonBuilder;
-import ir.ut.ece.ie.domain.commodity.Comment;
+import ir.ut.ece.ie.api.dto.CommentDTO;
+import ir.ut.ece.ie.api.dto.CommodityDTO;
+import ir.ut.ece.ie.api.mapper.CommentMapper;
+import ir.ut.ece.ie.api.mapper.CommodityMapper;
+import ir.ut.ece.ie.domain.comment.Comment;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.provider.Provider;
 import ir.ut.ece.ie.domain.user.Discount;
@@ -11,8 +15,6 @@ import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.user.DiscountRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
-import ir.ut.ece.ie.api.dto.CommodityDTO;
-import ir.ut.ece.ie.api.mapper.CommodityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -35,6 +37,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     private final CommentRepository commentRepository;
     private final DiscountRepository discountRepository;
     private final CommodityMapper commodityMapper;
+    private final CommentMapper commentMapper;
     private static final String USERS_ENDPOINT = "/api/users";
     private static final String COMMODITIES_ENDPOINT = "/api/v2/commodities";
     private static final String PROVIDERS_ENDPOINT = "/api/v2/providers";
@@ -54,7 +57,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         readUsersData(url + USERS_ENDPOINT);
         readProvidersData(url + PROVIDERS_ENDPOINT);
         readCommoditiesData(url + COMMODITIES_ENDPOINT);
-        readCommentsData(url + COMMENTS_ENDPOINT);
+//        readCommentsData(url + COMMENTS_ENDPOINT);
         readDiscountsData(url + DISCOUNTS_ENDPOINT);
     }
 
@@ -85,7 +88,10 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     private void readCommentsData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        List<Comment> comments = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), Comment[].class)).toList();
+        List<Comment> comments = Arrays.stream(
+                        new GsonBuilder().create().fromJson(response.body(), CommentDTO[].class))
+                .map(commentMapper::toModel)
+                .toList();
         commentRepository.saveAll(comments);
     }
 

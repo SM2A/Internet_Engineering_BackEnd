@@ -1,11 +1,10 @@
 package ir.ut.ece.ie.repository.commodity;
 
-import ir.ut.ece.ie.domain.commodity.Comment;
+import ir.ut.ece.ie.domain.comment.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CommentRepository {
-    Comment save(Comment comment);
-
-    Iterable<Comment> saveAll(Iterable<Comment> comments);
-
+@Repository
+public interface CommentRepository extends JpaRepository<Comment, Long> {
     Iterable<Comment> findAllByCommodityId(Long commodityId);
 }

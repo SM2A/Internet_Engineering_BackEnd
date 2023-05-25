@@ -1,12 +1,12 @@
 package ir.ut.ece.ie.service.commodity;
 
-import ir.ut.ece.ie.domain.commodity.Comment;
+import ir.ut.ece.ie.api.dto.CommentDTO;
 
 import java.util.List;
 
 public interface CommentService {
 
-    Comment addComment(Comment comment);
+    CommentDTO addComment(CommentDTO commentDTO);
 
-    List<Comment> getCommentsOfCommodity(Long commodityId);
+    List<CommentDTO> getCommentsOfCommodity(Long commodityId);
 }

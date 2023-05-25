@@ -21,10 +21,6 @@ public class Commodity {
     @Column
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "provider_id", nullable = false)
-    private Provider provider;
-
     @Column
     private Long price;
 
@@ -44,4 +40,8 @@ public class Commodity {
 
     @Column(length = 512)
     private String image;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provider_id", nullable = false)
+    private Provider provider;
 }
