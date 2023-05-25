@@ -32,7 +32,11 @@ public class User {
     @Column
     private Long credit;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "used_discounts",
+            joinColumns = @JoinColumn(name = "username"),
+            inverseJoinColumns = @JoinColumn(name = "code"))
     private List<Discount> usedDiscounts = new ArrayList<>();
 }
 

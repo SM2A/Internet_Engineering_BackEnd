@@ -55,7 +55,7 @@ public class BuyListServiceImpl implements BuyListService {
     @Override
     public void applyDiscount(BuyList buyList, String code) {
         User user = userRepository.findById(buyList.getUsername()).orElseThrow(() -> new OnlineShopException("User not found"));
-        Discount discount = discountRepository.findDiscountByCode(code)
+        Discount discount = discountRepository.findById(code)
                 .orElseThrow(() -> new OnlineShopException("Discount not found"));
         if (user.getUsedDiscounts().contains(discount))
             throw new OnlineShopException("The discount code has expired");

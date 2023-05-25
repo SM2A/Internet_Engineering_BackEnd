@@ -6,20 +6,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
 public class Discount {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
     @SerializedName(value = "code", alternate = "discountCode")
-    @Column(nullable = false, unique = true)
     private String code;
 
     @SerializedName(value = "amount", alternate = "discount")
     @Column(nullable = false)
     private Integer amount;
+
+    @ManyToMany(mappedBy = "usedDiscounts")
+    private List<User> users = new ArrayList<>();
 }
