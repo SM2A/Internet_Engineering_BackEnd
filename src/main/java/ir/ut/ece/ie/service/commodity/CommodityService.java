@@ -1,28 +1,26 @@
 package ir.ut.ece.ie.service.commodity;
 
 import ir.ut.ece.ie.api.dto.CommodityDTO;
-import ir.ut.ece.ie.domain.commodity.Commodity;
-import ir.ut.ece.ie.domain.commodity.Score;
+import ir.ut.ece.ie.api.dto.ScoreDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CommodityService {
-    Commodity addCommodity(CommodityDTO commodityDTO);
+    CommodityDTO addCommodity(CommodityDTO commodityDTO);
 
-    Optional<Commodity> getCommodityById(Long id);
+    CommodityDTO getCommodityById(Long id);
 
-    List<Commodity> getCommodities();
+    List<CommodityDTO> getCommodities();
 
-    List<Commodity> getCommoditiesByProviderId(Integer id);
+    List<CommodityDTO> getCommoditiesByProviderId(Integer id);
 
-    List<Commodity> getCommoditiesByCategory(String category);
+    List<CommodityDTO> getCommoditiesByCategory(String category);
 
-    List<Commodity> getCommoditiesByNameContains(String searchStr);
+    List<CommodityDTO> getCommoditiesByNameContains(String searchStr);
 
-    List<Commodity> getCommoditiesInPriceRange(Long from, Long to);
+    List<CommodityDTO> getCommoditiesInPriceRange(Long from, Long to);
 
-    Commodity rateCommodity(Score score);
+    CommodityDTO rateCommodity(ScoreDTO scoreDTO);
 
-    List<Commodity> getSuggestedCommodities(Long id);
+    List<CommodityDTO> getSuggestedCommodities(Long id);
 }

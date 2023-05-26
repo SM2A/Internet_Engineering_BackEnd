@@ -33,9 +33,6 @@ public class Commodity {
     private Double rating;
 
     @Column
-    private Integer rateCount;
-
-    @Column
     private Integer inStock;
 
     @Column(length = 512)
@@ -44,4 +41,7 @@ public class Commodity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provider_id", nullable = false)
     private Provider provider;
+
+    @OneToMany(mappedBy = "scoreId.commodity")
+    private List<Score> scores = new ArrayList<>();
 }

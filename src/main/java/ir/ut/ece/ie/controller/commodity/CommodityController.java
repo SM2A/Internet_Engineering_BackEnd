@@ -1,9 +1,7 @@
 package ir.ut.ece.ie.controller.commodity;
 
 import ir.ut.ece.ie.api.dto.CommodityDTO;
-import ir.ut.ece.ie.domain.commodity.Commodity;
-import ir.ut.ece.ie.domain.commodity.Score;
-import ir.ut.ece.ie.exception.OnlineShopException;
+import ir.ut.ece.ie.api.dto.ScoreDTO;
 import ir.ut.ece.ie.service.commodity.CommodityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,47 +16,47 @@ public class CommodityController {
     private final CommodityService commodityService;
 
     @PostMapping
-    public Commodity addCommodity(@RequestBody CommodityDTO commodityDTO) {
+    public CommodityDTO addCommodity(@RequestBody CommodityDTO commodityDTO) {
         return commodityService.addCommodity(commodityDTO);
     }
 
     @GetMapping("/{id}")
-    public Commodity getCommodityById(@PathVariable Long id) {
-        return commodityService.getCommodityById(id).orElseThrow(() -> new OnlineShopException("commodity not found"));
+    public CommodityDTO getCommodityById(@PathVariable Long id) {
+        return commodityService.getCommodityById(id);
     }
 
     @GetMapping
-    public List<Commodity> getCommodities() {
+    public List<CommodityDTO> getCommodities() {
         return commodityService.getCommodities();
     }
 
     @PutMapping("/rate")
-    public Commodity rateCommodity(@RequestBody Score score) {
+    public CommodityDTO rateCommodity(@RequestBody ScoreDTO score) {
         return commodityService.rateCommodity(score);
     }
 
     @GetMapping("/suggestions/{id}")
-    public List<Commodity> getSuggestedCommodities(@PathVariable Long id) {
+    public List<CommodityDTO> getSuggestedCommodities(@PathVariable Long id) {
         return commodityService.getSuggestedCommodities(id);
     }
 
     @GetMapping("/provider")
-    public List<Commodity> getCommoditiesByProviderId(@RequestParam Integer id) {
+    public List<CommodityDTO> getCommoditiesByProviderId(@RequestParam Integer id) {
         return commodityService.getCommoditiesByProviderId(id);
     }
 
     @GetMapping("/category")
-    public List<Commodity> getCommoditiesByCategory(@RequestParam String category) {
+    public List<CommodityDTO> getCommoditiesByCategory(@RequestParam String category) {
         return commodityService.getCommoditiesByCategory(category);
     }
 
     @GetMapping("/name")
-    public List<Commodity> getCommoditiesByNameContains(@RequestParam String searchStr) {
+    public List<CommodityDTO> getCommoditiesByNameContains(@RequestParam String searchStr) {
         return commodityService.getCommoditiesByNameContains(searchStr);
     }
 
     @GetMapping("/price")
-    public List<Commodity> getCommoditiesInPriceRange(@RequestParam Long from, @RequestParam Long to) {
+    public List<CommodityDTO> getCommoditiesInPriceRange(@RequestParam Long from, @RequestParam Long to) {
         return commodityService.getCommoditiesInPriceRange(from, to);
     }
 }
