@@ -32,6 +32,9 @@ public class User {
     @Column
     private Long credit;
 
+    @Column
+    private String currentDiscountCode;
+
     @ManyToMany
     @JoinTable(
             name = "used_discounts",
