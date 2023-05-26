@@ -12,8 +12,8 @@ public interface BuyListService {
     void removeFromBuyList(String username, Long commodityId);
 
     void applyDiscount(String username, String discountCode);
-//
-//    void pay(BuyList buyList);
+
+    void pay(String username);
 //
 //    List<BuyItem> getPurchasedItems(String username);
 }

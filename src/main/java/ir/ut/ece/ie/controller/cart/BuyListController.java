@@ -32,13 +32,11 @@ public class BuyListController {
     public void applyDiscount(@PathVariable String username, @RequestParam String code) {
         buyListService.applyDiscount(username, code);
     }
-//
-//    @PostMapping("/buyList/pay")
-//    public void pay(@RequestParam String username) {
-//        BuyList buyList = buyListService.getBuyList(username).orElseThrow(() ->
-//                new OnlineShopException("User doesn't have any buy list"));
-//        buyListService.pay(buyList);
-//    }
+
+    @PostMapping("/buyList/{username}/pay")
+    public void pay(@PathVariable String username) {
+        buyListService.pay(username);
+    }
 //    @GetMapping("/purchased")
 //    public List<BuyItem> getPurchasedCommodities(@RequestParam String username) {
 //        return buyListService.getPurchasedItems(username);

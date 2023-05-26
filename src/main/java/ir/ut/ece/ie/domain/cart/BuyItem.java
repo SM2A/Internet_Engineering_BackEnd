@@ -15,4 +15,9 @@ public class BuyItem {
 
     @Column(nullable = false)
     private Integer quantity;
+
+    public Long getPrice() {
+        return id.getCommodity().getPrice() * quantity;
+    }
+
 }
