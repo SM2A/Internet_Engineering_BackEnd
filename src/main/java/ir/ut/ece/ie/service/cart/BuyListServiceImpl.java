@@ -1,96 +1,89 @@
 package ir.ut.ece.ie.service.cart;
 
-import ir.ut.ece.ie.controller.cart.dto.BuyItemReq;
+import ir.ut.ece.ie.api.dto.BuyItemDTO;
+import ir.ut.ece.ie.api.mapper.BuyItemMapper;
 import ir.ut.ece.ie.domain.cart.BuyItem;
-import ir.ut.ece.ie.domain.cart.BuyList;
-import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.user.Discount;
 import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.exception.OnlineShopException;
-import ir.ut.ece.ie.repository.cart.BuyListRepository;
-import ir.ut.ece.ie.repository.commodity.CommodityRepository;
+import ir.ut.ece.ie.repository.cart.cartRepository;
 import ir.ut.ece.ie.repository.user.DiscountRepository;
 import ir.ut.ece.ie.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class BuyListServiceImpl implements BuyListService {
     private final UserRepository userRepository;
-    private final CommodityRepository commodityRepository;
-    private final BuyListRepository buyListRepository;
     private final DiscountRepository discountRepository;
+    private final cartRepository cartRepository;
+    private final BuyItemMapper buyItemMapper;
 
     @Override
-    public Commodity addToBuyList(String username, BuyItemReq buyItemreq) {
-        userRepository.findById(username).orElseThrow(() -> new OnlineShopException("User not found"));
-        Commodity commodity = commodityRepository.findById(buyItemreq.getCommodityId())
-                .orElseThrow(() -> new OnlineShopException("Commodity doesn't exist"));
-        if (commodity.getInStock() <= buyItemreq.getQuantity())
-            throw new OnlineShopException("Not enough commodity in stock");
-
-        if (isAlreadyExistInBuyList(username, commodity))
-            throw new OnlineShopException("Commodity already exist in buy list");
-        buyListRepository.saveBuyItemToList(username, new BuyItem(commodity, buyItemreq.getQuantity()));
-        return commodity;
+    public BuyItemDTO addToBuyList(BuyItemDTO buyItemDTO) {
+        BuyItem buyItem = buyItemMapper.toModel(buyItemDTO);
+        buyItem = cartRepository.save(buyItem);
+        return buyItemMapper.toDto(buyItem);
     }
 
     @Override
-    public Optional<BuyList> getBuyList(String username) {
-        return buyListRepository.findByUsername(username);
+    public List<BuyItemDTO> getBuyList(String username) {
+        List<BuyItem> buyList = cartRepository.findAllById_User_Username(username);
+        return buyList.stream().map(buyItemMapper::toDto).toList();
     }
 
     @Override
-    public void removeFromBuyList(String username, BuyItemReq buyItemReq) {
-        userRepository.findById(username).orElseThrow(() -> new OnlineShopException("User not found"));
-        Commodity commodity = commodityRepository.findById(buyItemReq.getCommodityId())
-                .orElseThrow(() -> new OnlineShopException("Commodity not found"));
-        buyListRepository.removeBuyItem(username, new BuyItem(commodity, buyItemReq.getQuantity()));
+    public void removeFromBuyList(String username, Long commodityId) {
+        BuyItemDTO buyItemDTO = new BuyItemDTO();
+        buyItemDTO.setUsername(username);
+        buyItemDTO.setCommodityId(commodityId);
+        cartRepository.delete(buyItemMapper.toModel(buyItemDTO));
     }
 
     @Override
-    public void applyDiscount(BuyList buyList, String code) {
-        User user = userRepository.findById(buyList.getUsername()).orElseThrow(() -> new OnlineShopException("User not found"));
-        Discount discount = discountRepository.findById(code)
+    public void applyDiscount(String username, String discountCode) {
+        Discount discount = discountRepository.findById(discountCode)
                 .orElseThrow(() -> new OnlineShopException("Discount not found"));
-        if (user.getUsedDiscounts().contains(discount))
+        User user = userRepository.findById(username).orElseThrow(() -> new OnlineShopException("User not found"));
+        if (user.getUsedDiscounts().stream().anyMatch(d -> d.equals(discount))) {
             throw new OnlineShopException("The discount code has expired");
-        buyList.setDiscount(discount);
-    }
-
-    @Override
-    public void pay(BuyList buyList) {
-        User user = userRepository.findById(buyList.getUsername()).orElseThrow(() -> new OnlineShopException("User not found"));
-        long price = buyList.getPrice();
-        if (user.getCredit() - price < 0)
-            throw new OnlineShopException("Insufficient credit");
-        user.setCredit(user.getCredit() - price);
-        user.getUsedDiscounts().add(buyList.getDiscount());
-        buyList.setDiscount(null);
-        buyList.getBuyItems().forEach(
-                item -> item.getCommodity().setInStock(item.getCommodity().getInStock() - item.getQuantity()));
-        buyListRepository.saveToPurchasedList(buyList.getUsername(), buyList.getBuyItems());
-        buyList.getBuyItems().clear();
-    }
-
-    @Override
-    public List<BuyItem> getPurchasedItems(String username) {
-        return buyListRepository.getPurchasedItems(username);
-    }
-
-
-    private boolean isAlreadyExistInBuyList(String username, Commodity commodity) {
-        Optional<BuyList> userBuyList = buyListRepository.findByUsername(username);
-        if (userBuyList.isEmpty())
-            return false;
-        for (BuyItem buyItem : userBuyList.get().getBuyItems()) {
-            if (buyItem.getCommodity().equals(commodity))
-                return true;
         }
-        return false;
+        user.setCurrentDiscountCode(discountCode);
+        userRepository.save(user);
     }
+//
+//    @Override
+//    public void pay(BuyList buyList) {
+//        User user = userRepository.findById(buyList.getUsername()).orElseThrow(() -> new OnlineShopException("User not found"));
+//        long price = buyList.getPrice();
+//        if (user.getCredit() - price < 0)
+//            throw new OnlineShopException("Insufficient credit");
+//        user.setCredit(user.getCredit() - price);
+//        user.getUsedDiscounts().add(buyList.getDiscount());
+//        buyList.setDiscount(null);
+//        buyList.getBuyItems().forEach(
+//                item -> item.getCommodity().setInStock(item.getCommodity().getInStock() - item.getQuantity()));
+//        buyListRepository.saveToPurchasedList(buyList.getUsername(), buyList.getBuyItems());
+//        buyList.getBuyItems().clear();
+//    }
+//
+//    @Override
+//    public List<BuyItem> getPurchasedItems(String username) {
+//        return buyListRepository.getPurchasedItems(username);
+//    }
+//
+//
+//    private boolean isAlreadyExistInBuyList(String username, Commodity commodity) {
+//        Optional<BuyList> userBuyList = buyListRepository.findByUsername(username);
+//        if (userBuyList.isEmpty())
+//            return false;
+//        for (BuyItem buyItem : userBuyList.get().getBuyItems()) {
+//            if (buyItem.getCommodity().equals(commodity))
+//                return true;
+//        }
+//        return false;
+//    }
 }
