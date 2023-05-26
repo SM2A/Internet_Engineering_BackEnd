@@ -9,4 +9,6 @@ public interface UserService {
 
     Optional<User> getUser(String username);
 
+    void increaseCredit(String username, Long credit);
+
 }
