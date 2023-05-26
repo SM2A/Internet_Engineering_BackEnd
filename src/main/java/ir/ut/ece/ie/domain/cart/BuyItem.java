@@ -1,16 +1,18 @@
 package ir.ut.ece.ie.domain.cart;
 
-import ir.ut.ece.ie.domain.commodity.Commodity;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data
-@AllArgsConstructor
+@Entity
 public class BuyItem {
-    private Commodity commodity;
-    private Integer quantity;
+    @EmbeddedId
+    private BuyItemId id;
 
-    public Long getPrice() {
-        return commodity.getPrice() * quantity;
-    }
+    @Column(nullable = false)
+    private Integer quantity;
 }
