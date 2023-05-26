@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.domain.buylist;
+package ir.ut.ece.ie.domain.cart;
 
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import lombok.AllArgsConstructor;

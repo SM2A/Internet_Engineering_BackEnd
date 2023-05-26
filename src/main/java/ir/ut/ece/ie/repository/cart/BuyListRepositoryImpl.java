@@ -1,7 +1,7 @@
-package ir.ut.ece.ie.repository.buylist;
+package ir.ut.ece.ie.repository.cart;
 
-import ir.ut.ece.ie.domain.buylist.BuyItem;
-import ir.ut.ece.ie.domain.buylist.BuyList;
+import ir.ut.ece.ie.domain.cart.BuyItem;
+import ir.ut.ece.ie.domain.cart.BuyList;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;

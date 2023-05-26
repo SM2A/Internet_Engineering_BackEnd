@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.controller.buylist.dto;
+package ir.ut.ece.ie.controller.cart.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
