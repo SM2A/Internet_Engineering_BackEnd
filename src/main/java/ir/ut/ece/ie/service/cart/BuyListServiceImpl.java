@@ -3,10 +3,13 @@ package ir.ut.ece.ie.service.cart;
 import ir.ut.ece.ie.api.dto.BuyItemDTO;
 import ir.ut.ece.ie.api.mapper.BuyItemMapper;
 import ir.ut.ece.ie.domain.cart.BuyItem;
+import ir.ut.ece.ie.domain.cart.CartHistory;
+import ir.ut.ece.ie.domain.cart.Item;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.user.Discount;
 import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.exception.OnlineShopException;
+import ir.ut.ece.ie.repository.cart.CartHistoryRepository;
 import ir.ut.ece.ie.repository.cart.cartRepository;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.user.DiscountRepository;
@@ -22,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BuyListServiceImpl implements BuyListService {
     private final cartRepository cartRepository;
+    private final CartHistoryRepository cartHistoryRepository;
     private final UserRepository userRepository;
     private final CommodityRepository commodityRepository;
     private final DiscountRepository discountRepository;
@@ -49,6 +53,7 @@ public class BuyListServiceImpl implements BuyListService {
     }
 
     @Override
+    @Transactional
     public void applyDiscount(String username, String discountCode) {
         Discount discount = discountRepository.findById(discountCode)
                 .orElseThrow(() -> new OnlineShopException("Discount not found"));
@@ -80,8 +85,11 @@ public class BuyListServiceImpl implements BuyListService {
             user.getUsedDiscounts().add(getDiscount(user.getCurrentDiscountCode()));
             user.setCurrentDiscountCode(null);
         }
-        updateCommoditiesStocks(buyList);
-        //todo: save buyList to another repository then delete them
+        List<Item> items = updateCommoditiesStocksAndExtractItems(buyList);
+        CartHistory cartHistory = new CartHistory();
+        cartHistory.setUser(user);
+        cartHistory.setItems(items);
+        cartHistoryRepository.save(cartHistory);
         cartRepository.deleteAll(buyList);
     }
 
@@ -91,15 +99,18 @@ public class BuyListServiceImpl implements BuyListService {
 //        return buyListRepository.getPurchasedItems(username);
 //    }
 
-    private void updateCommoditiesStocks(List<BuyItem> buyList) {
+    private List<Item> updateCommoditiesStocksAndExtractItems(List<BuyItem> buyList) {
+        List<Item> items = new ArrayList<>();
         List<Commodity> commodities = new ArrayList<>();
         buyList.forEach(
                 item -> {
                     Commodity commodity = item.getId().getCommodity();
                     commodity.setInStock(commodity.getInStock() - item.getQuantity());
                     commodities.add(commodity);
+                    items.add(new Item(commodity, item.getQuantity()));
                 });
         commodityRepository.saveAll(commodities);
+        return items;
     }
 
     private Long calculatePriceBasedOnDiscount(Long buyListPrice, String code) {
