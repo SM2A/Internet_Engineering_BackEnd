@@ -1,6 +1,7 @@
 package ir.ut.ece.ie.controller.cart;
 
 import ir.ut.ece.ie.api.dto.BuyItemDTO;
+import ir.ut.ece.ie.api.dto.CartHistoryDTO;
 import ir.ut.ece.ie.service.cart.BuyListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +38,9 @@ public class BuyListController {
     public void pay(@PathVariable String username) {
         buyListService.pay(username);
     }
-//    @GetMapping("/purchased")
-//    public List<BuyItem> getPurchasedCommodities(@RequestParam String username) {
-//        return buyListService.getPurchasedItems(username);
-//    }
+
+    @GetMapping("/purchased")
+    public List<CartHistoryDTO> getPurchasedCommodities(@RequestParam String username) {
+        return buyListService.getPurchasedItems(username);
+    }
 }

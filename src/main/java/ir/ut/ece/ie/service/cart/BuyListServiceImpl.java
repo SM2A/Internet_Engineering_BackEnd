@@ -1,7 +1,9 @@
 package ir.ut.ece.ie.service.cart;
 
 import ir.ut.ece.ie.api.dto.BuyItemDTO;
+import ir.ut.ece.ie.api.dto.CartHistoryDTO;
 import ir.ut.ece.ie.api.mapper.BuyItemMapper;
+import ir.ut.ece.ie.api.mapper.CartHistoryMapper;
 import ir.ut.ece.ie.domain.cart.BuyItem;
 import ir.ut.ece.ie.domain.cart.CartHistory;
 import ir.ut.ece.ie.domain.cart.Item;
@@ -30,6 +32,7 @@ public class BuyListServiceImpl implements BuyListService {
     private final CommodityRepository commodityRepository;
     private final DiscountRepository discountRepository;
     private final BuyItemMapper buyItemMapper;
+    private final CartHistoryMapper cartHistoryMapper;
 
     @Override
     public BuyItemDTO addToBuyList(BuyItemDTO buyItemDTO) {
@@ -93,11 +96,11 @@ public class BuyListServiceImpl implements BuyListService {
         cartRepository.deleteAll(buyList);
     }
 
-//
-//    @Override
-//    public List<BuyItem> getPurchasedItems(String username) {
-//        return buyListRepository.getPurchasedItems(username);
-//    }
+    @Override
+    public List<CartHistoryDTO> getPurchasedItems(String username) {
+        List<CartHistory> cartHistories = cartHistoryRepository.findCartHistoriesByUser_Username(username);
+        return cartHistories.stream().map(cartHistoryMapper::toDto).toList();
+    }
 
     private List<Item> updateCommoditiesStocksAndExtractItems(List<BuyItem> buyList) {
         List<Item> items = new ArrayList<>();
