@@ -1,16 +1,18 @@
 package ir.ut.ece.ie.domain.commodity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
 import lombok.Data;
 
 @Data
+@Entity
 public class Score {
-    private String username;
-    private Long commodityId;
+
+    @EmbeddedId
+    private ScoreId scoreId;
+
+    @Column(nullable = false)
     private Integer score;
 
-    public Score(String username, Long commodityId, Integer score) {
-        this.username = username;
-        this.commodityId = commodityId;
-        this.score = score;
-    }
 }
