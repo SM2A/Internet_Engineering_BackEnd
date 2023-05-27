@@ -1,92 +1,107 @@
 package ir.ut.ece.ie.service.commodity;
 
+import ir.ut.ece.ie.api.dto.CommodityDTO;
+import ir.ut.ece.ie.api.dto.ScoreDTO;
+import ir.ut.ece.ie.api.mapper.CommodityMapper;
+import ir.ut.ece.ie.api.mapper.ScoreMapper;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.commodity.Score;
 import ir.ut.ece.ie.exception.OnlineShopException;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.commodity.ScoreRepository;
-import ir.ut.ece.ie.repository.provider.ProviderRepository;
-import ir.ut.ece.ie.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CommodityServiceImpl implements CommodityService {
     private final CommodityRepository commodityRepository;
     private final ScoreRepository scoreRepository;
-    private final ProviderRepository providerRepository;
-    private final UserRepository userRepository;
+    private final CommodityMapper commodityMapper;
+    private final ScoreMapper scoreMapper;
 
     @Override
-    public Commodity addCommodity(Commodity commodity) {
-        providerRepository.findById(commodity.getProviderId()).orElseThrow(() -> new OnlineShopException("provider not found"));
-        return commodityRepository.save(commodity);
+    public CommodityDTO addCommodity(CommodityDTO commodityDTO) {
+        Commodity commodity = commodityMapper.toModel(commodityDTO);
+        try {
+            commodity = commodityRepository.save(commodity);
+        } catch (Exception e) {
+            throw new OnlineShopException(e.getMessage());
+        }
+        return commodityMapper.toDto(commodity);
     }
 
     @Override
-    public Optional<Commodity> getCommodityById(Long id) {
-        return commodityRepository.findById(id);
+    public CommodityDTO getCommodityById(Long id) {
+        Commodity commodity = commodityRepository.findById(id)
+                .orElseThrow(() -> new OnlineShopException("Commodity not found!"));
+        return commodityMapper.toDto(commodity);
     }
 
     @Override
-    public List<Commodity> getCommodities() {
-        return (List<Commodity>) commodityRepository.findAll();
+    public List<CommodityDTO> getCommodities() {
+        return commodityRepository.findAll().stream().map(commodityMapper::toDto).toList();
     }
 
     @Override
-    public List<Commodity> getCommoditiesByProviderId(Integer id) {
-        return (List<Commodity>) commodityRepository.findAllByProviderId(id);
+    public List<CommodityDTO> getCommoditiesByProviderId(Integer id) {
+        List<Commodity> commodities = (List<Commodity>) commodityRepository.findAllByProviderId(id);
+        return commodities.stream().map(commodityMapper::toDto).toList();
     }
 
     @Override
-    public List<Commodity> getCommoditiesByCategory(String category) {
-        return (List<Commodity>) commodityRepository.findAllByCategory(category);
+    public List<CommodityDTO> getCommoditiesByCategory(String category) {
+        List<Commodity> commodities = (List<Commodity>) commodityRepository.findAllByCategoriesContainsIgnoreCase(category);
+        return commodities.stream().map(commodityMapper::toDto).toList();
     }
 
     @Override
-    public List<Commodity> getCommoditiesByNameContains(String searchStr) {
-        return (List<Commodity>) commodityRepository.findAllByNameContains(searchStr);
+    public List<CommodityDTO> getCommoditiesByNameContains(String searchStr) {
+        List<Commodity> commodities = (List<Commodity>) commodityRepository.findAllByNameIsContainingIgnoreCase(searchStr);
+        return commodities.stream().map(commodityMapper::toDto).toList();
     }
 
     @Override
-    public List<Commodity> getCommoditiesInPriceRange(Long from, Long to) {
-        if (from > to) throw new OnlineShopException("Invalid price range. From must be less than to");
-        if (from < 0) throw new OnlineShopException("Invalid price range. From and to must be positive");
-        return (List<Commodity>) commodityRepository.findAllByPriceInRange(from, to);
+    public List<CommodityDTO> getCommoditiesInPriceRange(Long from, Long to) {
+        if (from > to) {
+            throw new OnlineShopException("Invalid price range. From must be less than to");
+        } else if (from < 0) {
+            throw new OnlineShopException("Invalid price range. From and to must be positive");
+        }
+        List<Commodity> commodities = (List<Commodity>) commodityRepository.findAllByPriceIsBetween(from, to);
+        return commodities.stream().map(commodityMapper::toDto).toList();
     }
 
     @Override
-    public Commodity rateCommodity(Score score) {
-        if (score.getScore() < 1 || score.getScore() > 10)
+    public CommodityDTO rateCommodity(ScoreDTO scoreDTO) {
+        if (scoreDTO.getScore() < 1 || scoreDTO.getScore() > 10)
             throw new OnlineShopException("Invalid score.It must be between 1 and 10");
-        Commodity commodity = getCommodityById(score.getCommodityId())
-                .orElseThrow(() -> new OnlineShopException("Commodity not found"));
-        userRepository.findById(score.getUsername()).orElseThrow(() -> new OnlineShopException("User not found"));
-        scoreRepository.save(score);
-        List<Score> scoreList = (List<Score>) scoreRepository.findAllByCommodityId(score.getCommodityId());
-        int numOfRatings = scoreList.size();
-        double sumOfScores = scoreList.stream().mapToInt(Score::getScore).sum();
-        commodity.setRating(sumOfScores / numOfRatings);
-        commodity.setRateCount(numOfRatings);
-        commodityRepository.save(commodity);
-        return commodity;
+        Score score = scoreMapper.toModel(scoreDTO);
+        Commodity commodity = commodityRepository.findById(scoreDTO.getCommodityId()).orElseThrow();
+        try {
+            scoreRepository.saveAndFlush(score);
+            commodity.setRating(commodityRepository.getRating(commodity.getId()));
+            commodity = commodityRepository.save(commodity);
+        } catch (Exception e) {
+            throw e;
+        }
+        return commodityMapper.toDto(commodity);
     }
 
     @Override
-    public List<Commodity> getSuggestedCommodities(Long id) {
-        Commodity baseCommodity = getCommodityById(id).orElseThrow(() -> new OnlineShopException("Commodity not found"));
-        List<Commodity> commodityList = new ArrayList<>(getCommodities());
+    public List<CommodityDTO> getSuggestedCommodities(Long id) {
+        //todo: can we write query directly to database?
+        CommodityDTO baseCommodity = getCommodityById(id);
+        List<CommodityDTO> commodityList = new ArrayList<>(getCommodities());
         commodityList.sort((c1, c2) -> compareScore(c1, c2, baseCommodity));
         commodityList = commodityList.stream().filter(commodity -> !commodity.getId().equals(id)).limit(5).toList();
         return commodityList;
     }
 
-    private double calculateScore(Commodity commodity, Commodity base) {
+    private double calculateScore(CommodityDTO commodity, CommodityDTO base) {
         double score = commodity.getRating();
         boolean haveIntersect = false;
         for (String c : commodity.getCategories()) {
@@ -99,7 +114,7 @@ public class CommodityServiceImpl implements CommodityService {
         return score;
     }
 
-    private int compareScore(Commodity c1, Commodity c2, Commodity base) {
+    private int compareScore(CommodityDTO c1, CommodityDTO c2, CommodityDTO base) {
         Double s1 = calculateScore(c1, base);
         Double s2 = calculateScore(c2, base);
         return s2.compareTo(s1);

@@ -1,23 +1,23 @@
 package ir.ut.ece.ie.repository.commodity;
 
 import ir.ut.ece.ie.domain.commodity.Commodity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
-public interface CommodityRepository {
-    Commodity save(Commodity commodity);
-
-    Iterable<Commodity> saveAll(Iterable<Commodity> commodities);
-
-    Optional<Commodity> findById(Long id);
-
-    Iterable<Commodity> findAll();
+@Repository
+public interface CommodityRepository extends JpaRepository<Commodity, Long> {
 
     Iterable<Commodity> findAllByProviderId(Integer id);
 
-    Iterable<Commodity> findAllByCategory(String category);
+    Iterable<Commodity> findAllByCategoriesContainsIgnoreCase(String category);
 
-    Iterable<Commodity> findAllByNameContains(String searchStr);
+    Iterable<Commodity> findAllByNameIsContainingIgnoreCase(String str);
 
-    Iterable<Commodity> findAllByPriceInRange(Long from, Long to);
+    Iterable<Commodity> findAllByPriceIsBetween(Long from, Long to);
+
+    @Query(value = "SELECT avg(s.score) FROM Score s WHERE s.scoreId.commodity.id = :commodityId")
+    Double getRating(@Param("commodityId") Long commodityId);
+
 }

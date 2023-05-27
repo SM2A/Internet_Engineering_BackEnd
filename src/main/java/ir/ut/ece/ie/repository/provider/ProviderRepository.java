@@ -1,13 +1,9 @@
 package ir.ut.ece.ie.repository.provider;
 
 import ir.ut.ece.ie.domain.provider.Provider;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
-public interface ProviderRepository {
-    Provider save(Provider provider);
-
-    Iterable<Provider> saveAll(Iterable<Provider> providers);
-
-    Optional<Provider> findById(Integer id);
+@Repository
+public interface ProviderRepository extends JpaRepository<Provider, Integer> {
 }

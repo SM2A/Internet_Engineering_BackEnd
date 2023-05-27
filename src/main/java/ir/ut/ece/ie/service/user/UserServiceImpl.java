@@ -27,4 +27,14 @@ public class UserServiceImpl implements UserService {
         return repository.findById(username);
     }
 
+    @Override
+    public void increaseCredit(String username, Long credit) {
+        User user = repository.findById(username)
+                .orElseThrow(() -> new OnlineShopException("User not found!"));
+        if (credit <= 0)
+            throw new OnlineShopException("Credit must be positive value!");
+        user.setCredit(user.getCredit() + credit);
+        repository.save(user);
+    }
+
 }

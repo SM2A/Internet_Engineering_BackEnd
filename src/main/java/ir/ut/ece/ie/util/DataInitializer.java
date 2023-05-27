@@ -1,12 +1,16 @@
 package ir.ut.ece.ie.util;
 
 import com.google.gson.GsonBuilder;
-import ir.ut.ece.ie.domain.buylist.Discount;
-import ir.ut.ece.ie.domain.commodity.Comment;
+import ir.ut.ece.ie.api.dto.CommentDTO;
+import ir.ut.ece.ie.api.dto.CommodityDTO;
+import ir.ut.ece.ie.api.mapper.CommentMapper;
+import ir.ut.ece.ie.api.mapper.CommodityMapper;
+import ir.ut.ece.ie.domain.comment.Comment;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.provider.Provider;
+import ir.ut.ece.ie.domain.user.Discount;
 import ir.ut.ece.ie.domain.user.User;
-import ir.ut.ece.ie.repository.commodity.CommentRepository;
+import ir.ut.ece.ie.repository.comment.CommentRepository;
 import ir.ut.ece.ie.repository.commodity.CommodityRepository;
 import ir.ut.ece.ie.repository.provider.ProviderRepository;
 import ir.ut.ece.ie.repository.user.DiscountRepository;
@@ -22,7 +26,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 @Component
@@ -33,6 +36,8 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     private final ProviderRepository providerRepository;
     private final CommentRepository commentRepository;
     private final DiscountRepository discountRepository;
+    private final CommodityMapper commodityMapper;
+    private final CommentMapper commentMapper;
     private static final String USERS_ENDPOINT = "/api/users";
     private static final String COMMODITIES_ENDPOINT = "/api/v2/commodities";
     private static final String PROVIDERS_ENDPOINT = "/api/v2/providers";
@@ -50,24 +55,26 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
 
     private void loadData(String url) throws IOException, InterruptedException {
         readUsersData(url + USERS_ENDPOINT);
-        readCommoditiesData(url + COMMODITIES_ENDPOINT);
         readProvidersData(url + PROVIDERS_ENDPOINT);
-        readCommentsData(url + COMMENTS_ENDPOINT);
-//        readDiscountsData(url + DISCOUNTS_ENDPOINT);
+        readCommoditiesData(url + COMMODITIES_ENDPOINT);
+//        readCommentsData(url + COMMENTS_ENDPOINT);
+        readDiscountsData(url + DISCOUNTS_ENDPOINT);
     }
 
     private void readUsersData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         List<User> users = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), User[].class)).toList();
-        users.forEach(user -> user.setUsedDiscounts(new HashSet<>()));
         userRepository.saveAll(users);
     }
 
     private void readCommoditiesData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        List<Commodity> commodities = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), Commodity[].class)).toList();
+        List<Commodity> commodities = Arrays.stream(
+                        new GsonBuilder().create().fromJson(response.body(), CommodityDTO[].class))
+                .map(commodityMapper::toModel)
+                .toList();
         commodityRepository.saveAll(commodities);
     }
 
@@ -81,13 +88,17 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     private void readCommentsData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        List<Comment> comments = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), Comment[].class)).toList();
+        List<Comment> comments = Arrays.stream(
+                        new GsonBuilder().create().fromJson(response.body(), CommentDTO[].class))
+                .map(commentMapper::toModel)
+                .toList();
         commentRepository.saveAll(comments);
     }
 
     private void readDiscountsData(String uri) throws IOException, InterruptedException {
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+
         List<Discount> discounts = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), Discount[].class)).toList();
         discountRepository.saveAll(discounts);
     }

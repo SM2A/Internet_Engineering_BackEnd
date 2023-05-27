@@ -1,11 +1,10 @@
 package ir.ut.ece.ie.repository.user;
 
-import ir.ut.ece.ie.domain.buylist.Discount;
+import ir.ut.ece.ie.domain.user.Discount;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+@Repository
+public interface DiscountRepository extends JpaRepository<Discount, String> {
 
-public interface DiscountRepository {
-    Discount save(Discount discount);
-    Iterable<Discount> saveAll(Iterable<Discount> discounts);
-    Optional<Discount> findByCode(String code);
 }
