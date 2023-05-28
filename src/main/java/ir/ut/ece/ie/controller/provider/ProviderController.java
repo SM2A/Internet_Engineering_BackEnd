@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/providers")
-@CrossOrigin(origins = "http://localhost:3000")
 public class ProviderController {
     private final ProviderService providerService;
 
