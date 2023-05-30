@@ -1,3 +1,16 @@
 spring:
   profiles:
     active: dev
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID:510f5c7693d801625b28}
+            clientSecret: ${GITHUB_CLIENT_SECRET:026e604582e1cb6f2055b51a3b33726ff27f2a74}
+            scope: ${GITHUB_SCOPE:user}
+        provider:
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize
+            token-uri: https://github.com/login/oauth/access_token
+            user-info-uri: https://api.github.com/user
