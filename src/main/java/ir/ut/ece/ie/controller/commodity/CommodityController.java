@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/commodities")
+@RequestMapping("/api/commodities")
 public class CommodityController {
     private final CommodityService commodityService;
 
