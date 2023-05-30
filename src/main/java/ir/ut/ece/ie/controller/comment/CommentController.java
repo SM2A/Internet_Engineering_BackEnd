@@ -1,7 +1,7 @@
 package ir.ut.ece.ie.controller.comment;
 
-import ir.ut.ece.ie.api.dto.CommentDTO;
-import ir.ut.ece.ie.api.dto.VoteDTO;
+import ir.ut.ece.ie.api.model.comment.CommentDTO;
+import ir.ut.ece.ie.api.model.comment.VoteDTO;
 import ir.ut.ece.ie.service.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

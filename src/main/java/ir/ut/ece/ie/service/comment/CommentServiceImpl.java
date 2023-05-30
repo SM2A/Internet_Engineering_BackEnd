@@ -1,7 +1,7 @@
 package ir.ut.ece.ie.service.comment;
 
-import ir.ut.ece.ie.api.dto.CommentDTO;
-import ir.ut.ece.ie.api.dto.VoteDTO;
+import ir.ut.ece.ie.api.model.comment.CommentDTO;
+import ir.ut.ece.ie.api.model.comment.VoteDTO;
 import ir.ut.ece.ie.api.mapper.CommentMapper;
 import ir.ut.ece.ie.api.mapper.VoteMapper;
 import ir.ut.ece.ie.domain.comment.Comment;

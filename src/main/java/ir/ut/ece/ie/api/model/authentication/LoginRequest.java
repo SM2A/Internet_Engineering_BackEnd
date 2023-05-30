@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.api.dto;
+package ir.ut.ece.ie.api.model.authentication;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.api.dto;
+package ir.ut.ece.ie.api.model.commodity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,11 +7,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CommentDTO {
+public class ScoreDTO {
     private String username;
     private Long commodityId;
-    private String text;
-    private String date;
-    private Integer likes;
-    private Integer dislikes;
+    private Integer score;
 }

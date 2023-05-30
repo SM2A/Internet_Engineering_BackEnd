@@ -1,16 +1,14 @@
-package ir.ut.ece.ie.api.dto;
+package ir.ut.ece.ie.api.model.cart;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @NoArgsConstructor
 @Getter
 @Setter
-public class CartHistoryDTO {
-    private Long id;
+public class BuyItemDTO {
     private String username;
-    private List<ItemDTO> items;
+    private Long commodityId;
+    private Integer quantity;
 }

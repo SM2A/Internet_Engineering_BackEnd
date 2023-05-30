@@ -1,8 +1,8 @@
 package ir.ut.ece.ie.util;
 
 import com.google.gson.GsonBuilder;
-import ir.ut.ece.ie.api.dto.CommentDTO;
-import ir.ut.ece.ie.api.dto.CommodityDTO;
+import ir.ut.ece.ie.api.model.comment.CommentDTO;
+import ir.ut.ece.ie.api.model.commodity.CommodityDTO;
 import ir.ut.ece.ie.api.mapper.CommentMapper;
 import ir.ut.ece.ie.api.mapper.CommodityMapper;
 import ir.ut.ece.ie.domain.comment.Comment;

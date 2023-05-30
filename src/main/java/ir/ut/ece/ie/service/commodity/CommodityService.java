@@ -1,7 +1,7 @@
 package ir.ut.ece.ie.service.commodity;
 
-import ir.ut.ece.ie.api.dto.CommodityDTO;
-import ir.ut.ece.ie.api.dto.ScoreDTO;
+import ir.ut.ece.ie.api.model.commodity.CommodityDTO;
+import ir.ut.ece.ie.api.model.commodity.ScoreDTO;
 
 import java.util.List;
 
