@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.service.user;
+package ir.ut.ece.ie.security.service.authentication;
 
 import ir.ut.ece.ie.api.model.authentication.AuthenticationResponse;
 import ir.ut.ece.ie.api.model.authentication.LoginRequest;

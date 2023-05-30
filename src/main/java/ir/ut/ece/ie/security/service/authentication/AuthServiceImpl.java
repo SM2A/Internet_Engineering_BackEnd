@@ -1,8 +1,9 @@
-package ir.ut.ece.ie.service.user;
+package ir.ut.ece.ie.security.service.authentication;
 
 import ir.ut.ece.ie.api.model.authentication.AuthenticationResponse;
 import ir.ut.ece.ie.api.model.authentication.LoginRequest;
 import ir.ut.ece.ie.api.model.authentication.SignupRequest;
+import ir.ut.ece.ie.domain.user.User;
 import ir.ut.ece.ie.repository.user.UserRepository;
 import ir.ut.ece.ie.security.jwt.JWTProvider;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void signup(SignupRequest request) {
-
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setEmail(request.getEmail());
+        userRepository.save(user);
     }
 }
+
