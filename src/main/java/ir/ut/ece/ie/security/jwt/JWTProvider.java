@@ -54,7 +54,7 @@ public class JWTProvider {
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.DAYS)))
                 .setSubject(userDetails.getUsername())
-                .setClaims(claims)
+                .addClaims(claims)
                 .signWith(getKey())
                 .compact();
     }
