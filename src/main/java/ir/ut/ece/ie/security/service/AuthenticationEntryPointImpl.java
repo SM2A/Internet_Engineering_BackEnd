@@ -19,7 +19,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
                          HttpServletResponse response,
                          AuthenticationException authException) throws
             IOException, ServletException {
-        log.error("Unauthorized error: {}", authException.getMessage());
+        log.error("Unauthorized error: {}: {}", authException.getMessage(), request.getRequestURL());
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
     }
 }
