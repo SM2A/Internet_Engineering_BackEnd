@@ -1,6 +1,7 @@
 package ir.ut.ece.ie.configuration;
 
 import ir.ut.ece.ie.security.jwt.JWTAuthenticationFilter;
+import ir.ut.ece.ie.security.service.oauth2.OAuth2UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
@@ -24,6 +26,7 @@ public class WebSecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final OAuth2UserServiceImpl oAuth2UserService;
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -46,13 +49,21 @@ public class WebSecurityConfig {
     }
 
     @Bean
+    public SimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new SimpleUrlAuthenticationSuccessHandler();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/auth/**", "/login/oauth2/code/github", "/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
+                .userInfoEndpoint().userService(oAuth2UserService)
+                .and()
+                .successHandler(authenticationSuccessHandler())
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
