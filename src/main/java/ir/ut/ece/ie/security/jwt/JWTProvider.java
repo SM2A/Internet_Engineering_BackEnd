@@ -1,7 +1,7 @@
 package ir.ut.ece.ie.security.jwt;
 
 import io.jsonwebtoken.*;
-import ir.ut.ece.ie.security.service.UserDetailsImpl;
+import ir.ut.ece.ie.security.service.UserPrincipal;
 import jakarta.xml.bind.DatatypeConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -42,12 +42,12 @@ public class JWTProvider {
     }
 
     public String generateToken(Authentication authentication) {
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        UserPrincipal userDetails = (UserPrincipal) authentication.getPrincipal();
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails);
     }
 
-    private String createToken(Map<String, Object> claims, UserDetailsImpl userDetails) {
+    private String createToken(Map<String, Object> claims, UserPrincipal userDetails) {
         claims.put("userEmail", userDetails.getEmail());
         return Jwts.builder()
                 .setIssuer("baloot")
