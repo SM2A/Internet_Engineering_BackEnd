@@ -1,7 +1,8 @@
 package ir.ut.ece.ie.configuration;
 
 import ir.ut.ece.ie.security.jwt.JWTAuthenticationFilter;
-import ir.ut.ece.ie.security.service.oauth2.OAuth2UserServiceImpl;
+import ir.ut.ece.ie.security.service.oauth2.OAuth2AuthenticationSuccessHandler;
+import ir.ut.ece.ie.security.service.oauth2.OAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
@@ -24,9 +24,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final UserDetailsService userDetailsService;
+    private final OAuth2UserService oAuth2UserService;
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationEntryPoint authenticationEntryPoint;
-    private final OAuth2UserServiceImpl oAuth2UserService;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -49,26 +50,21 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new SimpleUrlAuthenticationSuccessHandler();
-    }
-
-    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint))
                 .authorizeHttpRequests()
-                .requestMatchers("/api/auth/**", "/login/oauth2/code/github", "/**").permitAll()
+                .requestMatchers("/redirect", "/error", "/api/auth/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
                 .userInfoEndpoint().userService(oAuth2UserService)
                 .and()
-                .successHandler(authenticationSuccessHandler())
+                .successHandler(oAuth2AuthenticationSuccessHandler)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider())
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
