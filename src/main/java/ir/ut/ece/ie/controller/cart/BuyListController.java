@@ -1,7 +1,7 @@
 package ir.ut.ece.ie.controller.cart;
 
-import ir.ut.ece.ie.api.dto.BuyItemDTO;
-import ir.ut.ece.ie.api.dto.CartHistoryDTO;
+import ir.ut.ece.ie.api.model.cart.BuyItemDTO;
+import ir.ut.ece.ie.api.model.cart.CartHistoryDTO;
 import ir.ut.ece.ie.service.cart.BuyListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api")
 public class BuyListController {
     private final BuyListService buyListService;
 

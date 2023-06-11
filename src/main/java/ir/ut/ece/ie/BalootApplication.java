@@ -10,5 +10,6 @@ public class BalootApplication {
     public static void main(String[] args) {
         SpringApplication.run(BalootApplication.class);
         log.info("http://localhost:8080/swagger-ui.html");
+        log.info("To authenticate using github: http://localhost:8080/oauth2/authorization/github");
     }
 }

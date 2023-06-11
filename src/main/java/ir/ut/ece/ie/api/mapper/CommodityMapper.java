@@ -1,7 +1,7 @@
 package ir.ut.ece.ie.api.mapper;
 
 import ir.ut.ece.ie.domain.commodity.Commodity;
-import ir.ut.ece.ie.api.dto.CommodityDTO;
+import ir.ut.ece.ie.api.model.commodity.CommodityDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;

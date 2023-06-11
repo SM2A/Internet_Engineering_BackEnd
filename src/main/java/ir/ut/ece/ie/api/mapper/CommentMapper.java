@@ -1,6 +1,6 @@
 package ir.ut.ece.ie.api.mapper;
 
-import ir.ut.ece.ie.api.dto.CommentDTO;
+import ir.ut.ece.ie.api.model.comment.CommentDTO;
 import ir.ut.ece.ie.domain.comment.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
