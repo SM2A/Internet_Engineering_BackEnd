@@ -1,10 +1,10 @@
 package ir.ut.ece.ie.util;
 
 import com.google.gson.GsonBuilder;
-import ir.ut.ece.ie.api.dto.CommentDTO;
-import ir.ut.ece.ie.api.dto.CommodityDTO;
 import ir.ut.ece.ie.api.mapper.CommentMapper;
 import ir.ut.ece.ie.api.mapper.CommodityMapper;
+import ir.ut.ece.ie.api.model.comment.CommentDTO;
+import ir.ut.ece.ie.api.model.commodity.CommodityDTO;
 import ir.ut.ece.ie.domain.comment.Comment;
 import ir.ut.ece.ie.domain.commodity.Commodity;
 import ir.ut.ece.ie.domain.provider.Provider;
@@ -18,6 +18,7 @@ import ir.ut.ece.ie.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -38,6 +39,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
     private final DiscountRepository discountRepository;
     private final CommodityMapper commodityMapper;
     private final CommentMapper commentMapper;
+    private final PasswordEncoder passwordEncoder;
     private static final String USERS_ENDPOINT = "/api/users";
     private static final String COMMODITIES_ENDPOINT = "/api/v2/commodities";
     private static final String PROVIDERS_ENDPOINT = "/api/v2/providers";
@@ -65,6 +67,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         HttpRequest request = createGetRequest(uri);
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         List<User> users = Arrays.stream(new GsonBuilder().create().fromJson(response.body(), User[].class)).toList();
+        users.forEach(user -> user.setPassword(passwordEncoder.encode(user.getPassword())));
         userRepository.saveAll(users);
     }
 

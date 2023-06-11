@@ -1,6 +1,6 @@
 package ir.ut.ece.ie.api.mapper;
 
-import ir.ut.ece.ie.api.dto.ScoreDTO;
+import ir.ut.ece.ie.api.model.commodity.ScoreDTO;
 import ir.ut.ece.ie.domain.commodity.Score;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

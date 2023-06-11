@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.api.dto;
+package ir.ut.ece.ie.api.model.commodity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

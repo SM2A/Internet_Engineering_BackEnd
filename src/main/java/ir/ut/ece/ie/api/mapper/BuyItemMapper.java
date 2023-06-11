@@ -1,6 +1,6 @@
 package ir.ut.ece.ie.api.mapper;
 
-import ir.ut.ece.ie.api.dto.BuyItemDTO;
+import ir.ut.ece.ie.api.model.cart.BuyItemDTO;
 import ir.ut.ece.ie.domain.cart.BuyItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

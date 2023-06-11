@@ -1,6 +1,6 @@
 package ir.ut.ece.ie.api.mapper;
 
-import ir.ut.ece.ie.api.dto.VoteDTO;
+import ir.ut.ece.ie.api.model.comment.VoteDTO;
 import ir.ut.ece.ie.domain.comment.Vote;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

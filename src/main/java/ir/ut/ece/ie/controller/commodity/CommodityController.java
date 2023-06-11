@@ -1,7 +1,7 @@
 package ir.ut.ece.ie.controller.commodity;
 
-import ir.ut.ece.ie.api.dto.CommodityDTO;
-import ir.ut.ece.ie.api.dto.ScoreDTO;
+import ir.ut.ece.ie.api.model.commodity.CommodityDTO;
+import ir.ut.ece.ie.api.model.commodity.ScoreDTO;
 import ir.ut.ece.ie.service.commodity.CommodityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +10,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/commodities")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/commodities")
 public class CommodityController {
     private final CommodityService commodityService;
 

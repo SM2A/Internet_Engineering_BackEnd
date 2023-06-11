@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.api.dto;
+package ir.ut.ece.ie.api.model.comment;
 
 import ir.ut.ece.ie.domain.comment.Vote;
 import lombok.Getter;

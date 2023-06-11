@@ -1,7 +1,7 @@
 package ir.ut.ece.ie.service.cart;
 
-import ir.ut.ece.ie.api.dto.BuyItemDTO;
-import ir.ut.ece.ie.api.dto.CartHistoryDTO;
+import ir.ut.ece.ie.api.model.cart.BuyItemDTO;
+import ir.ut.ece.ie.api.model.cart.CartHistoryDTO;
 import ir.ut.ece.ie.api.mapper.BuyItemMapper;
 import ir.ut.ece.ie.api.mapper.CartHistoryMapper;
 import ir.ut.ece.ie.domain.cart.BuyItem;
