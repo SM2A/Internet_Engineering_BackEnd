@@ -1,4 +1,4 @@
-package ir.ut.ece.ie.service;
+package ir.ut.ece.ie;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
