@@ -1,3 +1,1 @@
-# Baloot
-
-Baloot is an online shop website!
+# Internet Engineering Course Project Back-End
